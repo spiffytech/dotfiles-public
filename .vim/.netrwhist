@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/brian/Documents/money'
+let g:netrw_dirhist_2='/home/spiffy/Documents/money'
+let g:netrw_dirhist_3='/home/spiffy/Documents/school/csc/454/project/web2py/applications/kitchen/controllers'
+let g:netrw_dirhist_4='/home/spiffy/.mutt'
+let g:netrw_dirhist_5='/home/spiffy/Documents/school/csc/454/project/web2py/applications/kitchen/views/recipe'
+let g:netrw_dirhist_6='/home/spiffy/.mutt'
+let g:netrw_dirhist_7='/home/spiffy/.offlineimap'
