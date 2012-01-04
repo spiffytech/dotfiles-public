@@ -41,9 +41,11 @@ all = CONTACTOLOGY.INBOX:select_all()
 -- Move stuck messages to their own folder, and mark them as read
 msgs = recent:contain_subject("Stuck:") +
     recent:contain_subject("Unstuck Manually") 
+CONTACTOLOGY.INBOX:mark_seen(msgs)
 msgs:move_messages(CONTACTOLOGY['stuck_campaigns'])
 
 msgs = recent:contain_subject("Contactoloy - Build #")
+CONTACTOLOGY.INBOX:mark_seen(msgs)
 msgs:move_messages(CONTACTOLOGY['build_status'])
 
 
