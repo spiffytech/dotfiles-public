@@ -159,8 +159,9 @@ localrepository = localSpiffytechGmail
 remoterepository = remoteSpiffytechGmail
 
 autorefresh = .5
-
 quick = 10
+postsynchook = notmuch new
+
 
 [Account contactology]
 
@@ -168,8 +169,8 @@ localrepository = localContactology
 remoterepository = remoteContactology
 
 autorefresh = .5
-
 quick = 10
+presynchook = imapfilter -vc ~/.imapfilter_contactology
 
 
 [Repository localSpiffytechGmail]

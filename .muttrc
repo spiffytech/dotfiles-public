@@ -2,7 +2,7 @@ macro index <f1> '<change-folder>~/mail/spiffytechGmail/INBOX<enter>'
 macro index <f2> '<change-folder>~/mail/contactology/INBOX<enter>'
 
 folder-hook ~/mail/spiffytechGmail 'set folder=~/mail/spiffytechGmail from=spiffytech@gmail.com sendmail="/usr/bin/msmtp -a default" query_command="goobook -c ~/.goobookrc-spiffytech_gmail query %s"'
-folder-hook ~/mail/contactology 'set from=brian@contactology.com sendmail="/usr/bin/msmtp -a contactology" query_command="goobook -c ~/.goobookrc-contactology query %s"'
+folder-hook ~/mail/contactology 'set folder=~/mail/contactology from=brian@contactology.com sendmail="/usr/bin/msmtp -a contactology" query_command="goobook -c ~/.goobookrc-contactology query %s"'
 
 # options
 set mbox_type   = Maildir # mailbox type
@@ -71,7 +71,7 @@ unignore from: to: cc: date: subject:                   # show only these
 hdr_order from: to: cc: date: subject:                  # and in this order
 
 # Custom macros
-macro index / "<enter-command>unset wait_key<enter><shell-escape>~/bin/mutt-notmuch --prompt search<enter><change-folder-readonly>~/.cache/mutt_results<enter>" "search mail (using notmuch)"
+macro index <F8> "<enter-command>unset wait_key<enter><shell-escape>~/bin/mutt-notmuch --prompt search<enter><change-folder-readonly>~/.cache/mutt_results<enter>" "search mail (using notmuch)"
 macro index <F9> "<enter-command>unset wait_key<enter><pipe-message>~/bin/mutt-notmuch thread<enter><change-folder-readonly>~/.cache/mutt_results<enter><enter-command>set wait_key<enter>" "search and reconstruct owning thread (using notmuch)"
 bind editor <Tab> complete-query
 macro index,pager a "<pipe-message>goobook add<return>" "add the sender address to Google contacts"

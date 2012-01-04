@@ -1,0 +1,84 @@
+----------------------------------------------
+-- This is the configuration file for my school
+-- account.  I'm separating out my configuration
+-- for each account so I can call instances of
+-- imapfilter for each account individually.
+----------------------------------------------
+
+-------------
+-- Options --
+-------------
+options.timeout = 60
+options.subscribe = true
+options.namespace = false
+options.create = true
+
+-- for debugging purposes
+options.info = true
+
+-- Accounts
+
+CONTACTOLOGY = IMAP {
+    server = 'imap.gmail.com',
+    username = 'brian@contactology.com',
+    password = 'Re6UFdYshuDx',
+    ssl = 'ssl3'
+}
+
+-- Functions
+-- none
+
+-- Filters
+-- * implements logical and
+-- + implements logical or
+-- - implements logical not
+
+-- Get some basic tables loaded so we can just look at those
+-- rather than searching the mailbox multiple times
+recent = CONTACTOLOGY.INBOX:is_unseen()
+all = CONTACTOLOGY.INBOX:select_all()
+
+-- Move stuck messages to their own folder, and mark them as read
+msgs = recent:contain_subject("Stuck:") +
+    recent:contain_subject("Unstuck Manually") 
+msgs:move_messages(CONTACTOLOGY['stuck_campaigns'])
+
+msgs = recent:contain_subject("Contactoloy - Build #")
+msgs:move_messages(CONTACTOLOGY['build_status'])
+
+
+------
+---- stuck_campaigns folder
+------
+--all = CONTACTOLOGY['stuck_campaigns'].select_all()
+--msgs = all:contain_subject('Unstuck Manually')
+--msgs:move_messages(CONTACTOLOGY['unstuck_campaigns'])
+
+-- --------------------------------------------------
+-- -- EE Classes
+-- 
+-- -- Move ee508 emails into their own folder
+-- 
+-- msgs = recent:match_subject('\\b[Ee]{2}\\W?508')
+--        --SCHOOL.INBOX:contain_from('ee508_teacher@school.edu') +
+--        --SCHOOL.INBOX:contain_to('ee508_teacher@school.edu')
+-- msgs:move_messages(SCHOOL['ee508'])
+-- 
+-- msgs = recent:contain_to('ee555_list@school.edu') +
+--     recent:contain_from('ee555_teacher@school.edu') +
+--     recent:contain_to('ee555_teacher@school.edu')
+-- msgs:move_messages(SCHOOL['ee555'])
+-- 
+-- -- Move ee551 emails into their own folder
+-- 
+-- msgs = recent:match_subject('\\b[Ee]{2}\\W?551')
+--        --SCHOOL.INBOX:contain_from('ee551_teacher@school.edu') +
+--        --SCHOOL.INBOX:contain_to('ee551_teacher@school.edu')
+-- msgs:move_messages(SCHOOL['ee551'])
+-- 
+-- -- Move ee582 emails into their own folder
+-- 
+-- msgs = recent:match_subject('\\b[Ee]{2}\\W?582')
+--        --SCHOOL.INBOX:contain_from('ee582_teacher@school.edu') +
+--        --SCHOOL.INBOX:contain_to('ee582_teacher@school.edu')
+-- msgs:move_messages(SCHOOL['ee582'])
