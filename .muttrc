@@ -1,24 +1,30 @@
-# options
-set mbox_type   = Maildir               # mailbox type
-set folder      = ~/mail/spiffytechGmail               # root folder
-set spoolfile   = "+INBOX"              # inbox
-set mbox        = "+all_mail"            # [Gmail]/All Mail
-set postponed   = "+drafts"             # [Gmail]/Drafts
-unset record                            # required to prevent duplicates in Sent
+macro index <f1> '<change-folder>~/mail/spiffytechGmail/INBOX<enter>'
+macro index <f2> '<change-folder>~/mail/contactology/INBOX<enter>'
 
-set sendmail    = /usr/bin/msmtp        # use msmtp 'default' account
+folder-hook ~/mail/spiffytechGmail 'set folder=~/mail/spiffytechGmail from=spiffytech@gmail.com sendmail="/usr/bin/msmtp -a default"'
+folder-hook ~/mail/contactology 'set from=brian@contactology.com sendmail="/usr/bin/msmtp -a contactology"'
+
+# options
+set mbox_type   = Maildir # mailbox type
+set folder      = ~/mail/spiffytechGmail # Default folder to open when mutt starts
+set spoolfile   = "+INBOX"  # inbox
+set mbox        = "+all_mail"  # [Gmail]/All Mail
+set postponed   = "+drafts"  # [Gmail]/Drafts
+unset record  # required to prevent duplicates in Sent
 
 # mailboxes
-mailboxes +INBOX +archive +sent +drafts +spam +trash
+mailboxes +INBOX +all_mail +sent +drafts +spam +trash
 
 # bindings
 macro index D "<save-message>+trash<enter>"   "move message to the trash"
 macro index S "<save-message>+spam<enter>"    "mark message as spam"
 macro index A "<save-message>+all_mail<enter>"    "archive message"
 
-# main options
+# Default identity
 set realname            = "Brian Cottingham"            # who am i?
 set from                = "spiffytech@gmail.com"        # who am i?
+
+# Main options
 set envelope_from                                       # which from?
 set mail_check          = 0                             # check for mail always
 unset move                                              # gmail does that
@@ -52,22 +58,21 @@ set forward_quote                                       # include message in for
 set reply_to                                            # reply to the reply-to address, not the from address
 set reverse_name                                        # reply as who it was sent to (see alternates)
 
+auto_view text/html
+set sleep_time=-1
+set date_format = "%m/%d/%y at %I:%M%P"
+alternates spiffytech@gmail.com spiffytech@spiffyte.ch b.p.cottingham@gmail.com brian@contactology.com bpcottin@ncsu.edu
+source /home/spiffy/.mutt-colors-solarized
+
 # headers to show
 ignore *                                                # ignore all headers
 unignore from: to: cc: date: subject:                   # show only these
 hdr_order from: to: cc: date: subject:                  # and in this order
 
-auto_view text/html
-source /home/spiffy/.mutt-colors-solarized
-macro index <f1> '<change-folder>imaps://imap.gmail.com:993/<enter>'
-
+# Custom macros
 macro index / "<enter-command>unset wait_key<enter><shell-escape>~/bin/mutt-notmuch --prompt search<enter><change-folder-readonly>~/.cache/mutt_results<enter>" "search mail (using notmuch)"
 macro index <F9> "<enter-command>unset wait_key<enter><pipe-message>~/bin/mutt-notmuch thread<enter><change-folder-readonly>~/.cache/mutt_results<enter><enter-command>set wait_key<enter>" "search and reconstruct owning thread (using notmuch)"
-set sleep_time=-1
-set date_format         = "%m/%d/%y at %I:%M%P"
 set query_command="goobook query '%s'"
 bind editor <Tab> complete-query
 macro index,pager a "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
 
-
-alternates spiffytech@gmail.com spiffytech@spiffyte.ch b.p.cottingham@gmail.com brian@contactology.com bpcottin@ncsu.edu

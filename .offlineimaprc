@@ -36,7 +36,7 @@ metadata = ~/.offlineimap
 # not use "general" for an account name.
 #
 
-accounts = spiffytechGmail
+accounts = spiffytechGmail,contactology
 
 # Offlineimap can synchronize more the one account at a time.  If you
 # want to enable this feature, set the below value to something
@@ -205,7 +205,7 @@ nametrans = lambda folder: re.sub('^inbox$', 'INBOX',
                            re.sub(r'.*/(.*)$', r'\1', folder).lower()))
 
 
-[Repository remoteContactologyGmail]
+[Repository remoteContactology]
 
 type = Gmail
 
