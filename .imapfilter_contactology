@@ -44,7 +44,8 @@ msgs = recent:contain_subject("Stuck:") +
 CONTACTOLOGY.INBOX:mark_seen(msgs)
 msgs:move_messages(CONTACTOLOGY['stuck_campaigns'])
 
-msgs = recent:contain_subject("Contactoloy - Build #")
+msgs = recent:contain_subject("Contactoloy - Build #") +
+    recent:contain_subject("Release - Build #")
 CONTACTOLOGY.INBOX:mark_seen(msgs)
 msgs:move_messages(CONTACTOLOGY['build_status'])
 
@@ -55,6 +56,14 @@ msgs:move_messages(CONTACTOLOGY['build_status'])
 --all = CONTACTOLOGY['stuck_campaigns'].select_all()
 --msgs = all:contain_subject('Unstuck Manually')
 --msgs:move_messages(CONTACTOLOGY['unstuck_campaigns'])
+
+
+-- Rule violations
+msgs = recent:match_subject('Client [0-9]+.*exceeded rule [0-9]+.*')
+msgs:move_messages(CONTACTOLOGY['rule_violations'])
+
+
+
 
 -- --------------------------------------------------
 -- -- EE Classes
