@@ -63,7 +63,7 @@ auto_view text/html
 set sleep_time=-1
 set date_format = "%m/%d/%y at %I:%M%P"
 alternates spiffytech@gmail.com spiffytech@spiffyte.ch b.p.cottingham@gmail.com brian@contactology.com bpcottin@ncsu.edu
-source /home/spiffy/.mutt-colors-solarized
+source ~/.mutt-colors-solarized
 
 # headers to show
 ignore *                                                # ignore all headers
