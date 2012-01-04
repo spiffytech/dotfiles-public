@@ -2,9 +2,9 @@
 [DEFAULT]
 # If not given here, email and password is taken from .netrc using
 # machine google.com
-email: spiffytech@gmail.com
-password: urjtcceacjgdiaee
+email: brian@contactology.com
+password: Re6UFdYshuDx
 # The following are optional, defaults are shown
-cache_filename: ~/.goobook_cache
+cache_filename: ~/.goobook_cache-contactology
 cache_expiry_hours: 24
 
