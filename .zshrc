@@ -79,6 +79,8 @@ alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias char='ssh _XC spiffytech@char.csc.ncsu.edu'
 alias bobby='ssh -X spiffytech@bobby.spiffyte.ch -p 7000'
 
+alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
+
 ## Ultimus RDP aliases
 #alias uss-bpm2008='rdesktop -g 1280x1024 -u bcottingham -d ultimus.com -p - -r "disk:spiffytop=/home/brian" -P -z -x l uss-BPM2008.ultimus.com'
 #alias uss-bpm2008-low-res='rdesktop -g 1024x768 -u bcottingham -d ultimus.com -p - -r "disk:spiffytop=/home/brian" -P -z -x l uss-BPM2008.ultimus.com'
