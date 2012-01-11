@@ -127,7 +127,7 @@ TIMEFMT="%U user %S system %P cpu %*Es total"
 
 vim() {
     if [ -e /usr/bin/tmux ]; then
-        tmux rename-window ${@: -1}
+        tmux rename-window ${@:-1}
     fi
 
     if [ -e /usr/bin/vimx ]; then 
