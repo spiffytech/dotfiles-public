@@ -49,7 +49,7 @@ alias ssh='ssh -Y'
 alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'
 alias vi=vim
-if [ -e /usr/bin/vimx ]; then alias vim='/usr/bin/vimx'; fi
+#if [ -e /usr/bin/vimx ]; then alias vim='/usr/bin/vimx'; fi  # Replaced by vim/tmux function
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -124,3 +124,13 @@ $(prompt_git_info)$ %{${fg[default]}%}"
 
 REPORTTIME=10  # Report the time taken by a command that runs longer than n seconds
 TIMEFMT="%U user %S system %P cpu %*Es total"
+
+vim() {
+    tmux rename-window ${@: -1}
+    if [ -e /usr/bin/vimx ]; then 
+        /usr/bin/vimx $@
+    else 
+        /usr/bin/vim $@
+    fi
+    tmux rename-window zsh
+}
