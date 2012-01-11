@@ -125,9 +125,10 @@ $(prompt_git_info)$ %{${fg[default]}%}"
 REPORTTIME=10  # Report the time taken by a command that runs longer than n seconds
 TIMEFMT="%U user %S system %P cpu %*Es total"
 
-vim() {
+vim() {  # Sets the tmux window title when you open a file in Vim
     if [ -e /usr/bin/tmux ]; then
-        tmux rename-window ${@:-1}
+        filename=`echo ${@:-1} | awk -F'/' '{print $NF}'`  # We don't want the whole path to the file- just the filename
+        tmux rename-window $filename
     fi
 
     if [ -e /usr/bin/vimx ]; then 
