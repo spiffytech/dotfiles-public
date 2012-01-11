@@ -126,11 +126,17 @@ REPORTTIME=10  # Report the time taken by a command that runs longer than n seco
 TIMEFMT="%U user %S system %P cpu %*Es total"
 
 vim() {
-    tmux rename-window ${@: -1}
+    if [ -e /usr/bin/tmux ]; then
+        tmux rename-window ${@: -1}
+    fi
+
     if [ -e /usr/bin/vimx ]; then 
         /usr/bin/vimx $@
     else 
         /usr/bin/vim $@
     fi
-    tmux rename-window zsh
+
+    if [ -e /usr/bin/tmux ]; then
+        tmux rename-window zsh
+    fi
 }
