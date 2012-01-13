@@ -49,7 +49,7 @@ alias ssh='ssh -Y'
 alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'
 alias vi=vim
-#if [ -e /usr/bin/vimx ]; then alias vim='/usr/bin/vimx'; fi  # Replaced by vim/tmux function
+alias ack='ack --type-add php=.tpl"
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
