@@ -49,7 +49,7 @@ alias ssh='ssh -Y'
 alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'
 alias vi=vim
-alias ack='ack --type-add php=.tpl"
+alias ack='ack --type-add php=.tpl'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
