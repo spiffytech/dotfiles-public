@@ -134,7 +134,12 @@ vim() {  # Sets the tmux window title when you open a file in Vim
     if [ -e /usr/bin/vimx ]; then 
         /usr/bin/vimx $@
     else 
-        /usr/bin/vim $@
+        if [ -e /usr/bin/vim ]; then
+            /usr/bin/vim $@
+
+        else
+            ~/bin/vim $@
+        fi
     fi
 
     if [ -e /usr/bin/tmux ]; then

@@ -663,7 +663,7 @@ class Debugger:
   #
   def __init__(self, port = 9000, max_children = '32', max_data = '1024', max_depth = '1', minibufexpl = '0', debug = 0):
     """ initialize Debugger """
-    socket.setdefaulttimeout(5)
+    socket.setdefaulttimeout(15)
     self.port       = port
     self.debug      = debug
 
