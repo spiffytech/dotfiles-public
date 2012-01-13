@@ -50,6 +50,7 @@ alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'
 alias vi=vim
 alias ack='ack --type-add php=.tpl'
+alias dc='sl'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
