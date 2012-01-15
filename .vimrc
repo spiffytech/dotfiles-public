@@ -18,7 +18,7 @@ set showmatch  " Show matching brackets.
 "set hidden  " Hide buffers when they are abandoned
 
 set autoindent
-"set smartindent  " Only helpful for C-like files. Supercedes (disables) autoindent
+"set smartindent  " Only helpful for C-like files. Disables autoindent
 set hlsearch  " Highlight all search results
 set shiftwidth=4  " Tab = 4 spaces
 set tabstop=4  " Tab = 4 spaces
@@ -74,3 +74,10 @@ if version >= 7.7
 else
     set number  " Show line numbers. Disabled in favor of relative line numbers in Vim >= 7.3
 endif
+
+let g:syntastic_auto_loc_list=1
+
+" when BufRead or BufNewFile event is triggered, pop off the .svn-base extension and
+" manually restart filetype autocommands
+autocmd! BufRead    *.svn-base execute 'doautocmd filetypedetect BufRead ' . expand('%:r')
+autocmd! BufNewFile *.svn-base execute 'doautocmd filetypedetect BufNewFile ' . expand('%:r')

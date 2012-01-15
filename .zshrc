@@ -49,7 +49,8 @@ alias ssh='ssh -Y'
 alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'
 alias vi=vim
-if [ -e /usr/bin/vimx ]; then alias vim='/usr/bin/vimx'; fi
+alias ack='ack --type-add php=.tpl'
+alias dc='sl'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -126,3 +127,25 @@ $(prompt_git_info)$ %{${fg[default]}%}"
 
 REPORTTIME=10  # Report the time taken by a command that runs longer than n seconds
 TIMEFMT="%U user %S system %P cpu %*Es total"
+
+vim() {  # Sets the tmux window title when you open a file in Vim
+    if [ -e /usr/bin/tmux ]; then
+        filename=`echo ${@:-1} | awk -F'/' '{print $NF}'`  # We don't want the whole path to the file- just the filename
+        tmux rename-window $filename
+    fi
+
+    if [ -e /usr/bin/vimx ]; then 
+        /usr/bin/vimx $@
+    else 
+        if [ -e /usr/bin/vim ]; then
+            /usr/bin/vim $@
+
+        else
+            ~/bin/vim $@
+        fi
+    fi
+
+    if [ -e /usr/bin/tmux ]; then
+        tmux rename-window zsh
+    fi
+}
