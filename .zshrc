@@ -96,6 +96,7 @@ export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
 setopt PROMPT_SUBST
+setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zshexpn` for more info.
 
 #Autoload zsh functions.
 fpath=(~/.zsh/functions $fpath)
