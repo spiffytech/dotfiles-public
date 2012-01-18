@@ -100,16 +100,6 @@ alias sbox='ssh -XC root@files.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias char='ssh _XC spiffytech@char.csc.ncsu.edu'
 
-## Ultimus RDP aliases
-#alias uss-bpm2008='rdesktop -g 1280x1024 -u bcottingham -d ultimus.com -p - -r "disk:spiffytop=/home/brian" -P -z -x l uss-BPM2008.ultimus.com'
-#alias uss-bpm2008-low-res='rdesktop -g 1024x768 -u bcottingham -d ultimus.com -p - -r "disk:spiffytop=/home/brian" -P -z -x l uss-BPM2008.ultimus.com'
-#alias uss-bpm2008-native='rdesktop -g 1280x800 -u bcottingham -d ultimus.com -p - -r "disk:spiffytop=/home/brian" -P -z -x l uss-BPM2008.ultimus.com'
-#alias ultimus-workstation='rdesktop -f -u bcottingham -d ultimus.com -p - -r "disk:spiffytop=/home/brian" -P -z -x l 192.168.0.109'
-##alias connect-ultimus='cd ~/slackbuilds/openconnect/openconnect && sudo ./openconnect -b -s /etc/vpnc/vpnc-script -u bcottingham usvpn.ultimus.com && cd ~/Documents/ultimus/incident_launcher'
-#alias connect-ultimus='sudo openconnect --no-cert-check -b -s /etc/vpnc/vpnc-script -u bcottingham usvpn.ultimus.com'
-##alias connect-ultimus='cd ~/slackbuilds/openconnect/openconnect && sudo sudo ./openconnect -b -s /etc/vpnc/vpnc-script -u bcottingham usvpn.ultimus.com && cd ~/Documents/ultimus/incident_launcher && sshfs bcottingham@194.168.0.109:/cygdrive/c/Documents\ and\ Settings/bcottingham/My\ Documents /home/brian/Documents/ultimus/incident_launcher/mount/'
-
-
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
