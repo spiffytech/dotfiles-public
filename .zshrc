@@ -16,15 +16,6 @@ setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zsh
 setopt correct  # Offer to correct mistyped commands
 setopt auto_list  # Automatically list choices on an ambiguous completion
 setopt AUTO_CD # If you type a dir whose name isn't a command, automatically cd into the dir
-###
-# Pick up new commands every time you tab-complete
-###
-_force_rehash() {
-  (( CURRENT == 1 )) && rehash
-  return 1  # Because we didn't really complete anything
-}
-zstyle ':completion:*' completer oldlist _expand _force_rehash _complete
-###
 zstyle ':completion:*:functions' ignored-patterns '_*'  # Ignore completion functions for commands you don't have
 zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
 autoload -U compinit
