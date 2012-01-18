@@ -16,6 +16,7 @@ setopt correct  # Offer to correct mistyped commands
 setopt auto_list  # Automatically list choices on an ambiguous completion
 
 unsetopt beep  # Don't beep
+unsetopt hup  # Don't kill background jobs when the shell exits
 
 zstyle ':completion:*:functions' ignored-patterns '_*'  # Ignore completion functions for commands you don't have
 zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
