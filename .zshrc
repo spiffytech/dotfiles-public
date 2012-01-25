@@ -1,7 +1,11 @@
+if [ -z "$ZDOTDIR" ]; then 
+    ZDOTDIR=$HOME
+fi
+
 # zsh options
 # ===========
 # history stuff
-export HISTFILE=~/.zsh_history
+export HISTFILE=$ZDOTDIR/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
 setopt appendhistory  # Append to history
@@ -47,14 +51,14 @@ fi
 # Paths and files
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
-PATH=$PATH:/usr/local/bin:~/bin
+PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
 
 # Command aliases
 alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -lA'
-alias s='sudo su -'
+alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'
 alias grep='grep --color="auto"'
 alias rm='rm -I'
 alias ssh='ssh -Y'
@@ -95,9 +99,17 @@ export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
 
+# Set the prompt
+PROMPT="
+
+%(?.%{${fg[green]}%}.%{${fg[red]}%}) %~ %* %n@%M
+
+$(prompt_git_info)$ %{${fg[default]}%}"
+
+
 #Autoload zsh functions.
-fpath=(~/.zsh/functions $fpath)
-autoload -U ~/.zsh/functions/*(:t)
+fpath=($ZDOTDIR/.zsh/functions $fpath)
+autoload -U $ZDOTDIR/.zsh/functions/*(:t)
  
 # Enable auto-execution of functions.
 typeset -ga preexec_functions
@@ -110,16 +122,8 @@ typeset -ga chpwd_functions
 #chpwd_functions+='chpwd_update_git_vars'
 
 
-# Set the prompt
-PROMPT="
-
-%(?.%{${fg[green]}%}.%{${fg[red]}%}) %~ %* %n@%M
-
-$(prompt_git_info)$ %{${fg[default]}%}"
-
-
-
-vim() {  # Sets the tmux window title when you open a file in Vim
+# Sets the tmux window title when you open a file in Vim
+vim() {
     if [ -e /usr/bin/tmux ]; then
         filename=`echo ${@:-1} | awk -F'/' '{print $NF}'`  # We don't want the whole path to the file- just the filename
         tmux rename-window $filename
@@ -132,7 +136,7 @@ vim() {  # Sets the tmux window title when you open a file in Vim
             /usr/bin/vim $@
 
         else
-            ~/bin/vim $@
+            $ZDOTDIR/bin/vim $@
         fi
     fi
 
@@ -144,12 +148,12 @@ vim() {  # Sets the tmux window title when you open a file in Vim
 # Fix special keys like home, end page-up, page-down
 autoload zkbd
 function zkbd_file() {
-    [[ -f ~/.zkbd/${TERM}-${VENDOR}-${OSTYPE} ]] && printf '%s' ~/".zkbd/${TERM}-${VENDOR}-${OSTYPE}" && return 0
-    [[ -f ~/.zkbd/${TERM}-${DISPLAY}          ]] && printf '%s' ~/".zkbd/${TERM}-${DISPLAY}"          && return 0
+    [[ -f $ZDOTDIR/.zkbd/${TERM}-${VENDOR}-${OSTYPE} ]] && printf '%s' $ZDOTDIR/".zkbd/${TERM}-${VENDOR}-${OSTYPE}" && return 0
+    [[ -f $ZDOTDIR/.zkbd/${TERM}-${DISPLAY}          ]] && printf '%s' $ZDOTDIR/".zkbd/${TERM}-${DISPLAY}"          && return 0
     return 1
 }
 
-[[ ! -d ~/.zkbd ]] && mkdir ~/.zkbd
+[[ ! -d $ZDOTDIR/.zkbd ]] && mkdir $ZDOTDIR/.zkbd
 keyfile=$(zkbd_file)
 ret=$?
 if [[ ${ret} -ne 0 ]]; then
@@ -164,7 +168,7 @@ else
 fi
 unfunction zkbd_file; unset keyfile ret
 
-# setup key accordingly
+# Setup key accordingly
 [[ -n "${key[Home]}"    ]]  && bindkey  "${key[Home]}"    beginning-of-line
 [[ -n "${key[End]}"     ]]  && bindkey  "${key[End]}"     end-of-line
 [[ -n "${key[Insert]}"  ]]  && bindkey  "${key[Insert]}"  overwrite-mode
