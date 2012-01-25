@@ -54,6 +54,7 @@ export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
 
+# Aliases
 # Command aliases
 alias ls='ls --color=auto'
 alias ll='ls -l'
@@ -61,9 +62,9 @@ alias la='ls -lA'
 alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'
 alias grep='grep --color="auto"'
 alias rm='rm -I'
-alias ssh='ssh -Y'
+alias ssh='ssh -Y'  # Automatic X forwarding
 alias gcc='gcc -Wall -std=c99'
-alias cronedit='crontab -e'
+alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
 alias vi=vim
 alias ack='ack --type-add php=.tpl'
 alias dc='sl'  # Gimme teh trainz!
@@ -73,7 +74,7 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias -g L=" | less"
 alias -g T=" | tail"
-
+alias history='history 1000'  # By default, `history` only shows a handful of recent commands
 # File extension openers
 alias -s tex=vim
 alias -s txt=vim
@@ -86,7 +87,6 @@ alias -s tar.bz2=dtrx
 alias -s rar=dtrx
 alias -s zip=dtrx
 alias -s 7z=dtrx
-
 # Server aliases
 alias ncsu='ssh -YC bpcottin@remote-linux.eos.ncsu.edu'
 alias trilug='ssh -YC spiffytech@pilot.trilug.org'
