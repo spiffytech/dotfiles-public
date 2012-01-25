@@ -74,7 +74,7 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias -g L=" | less"
 alias -g T=" | tail"
-alias history='history 1000'  # By default, `history` only shows a handful of recent commands
+alias history='history 1'  # By default, `history` only shows a handful of recent commands. This shows all of them.
 # File extension openers
 alias -s tex=vim
 alias -s txt=vim
