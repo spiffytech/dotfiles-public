@@ -59,7 +59,7 @@ PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -lA'
-alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'
+alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use my personal .zshrc and zsh scripts
 alias grep='grep --color="auto"'
 alias rm='rm -I'
 alias ssh='ssh -Y'  # Automatic X forwarding
