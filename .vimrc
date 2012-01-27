@@ -40,7 +40,7 @@ let c_space_errors = 1  " Highlight extraneous whitespace
 
 "Enable omni-compl (Intellisense)
 filetype plugin on
-set ofu=syntaxcomplete#Complete
+"set ofu=syntaxcomplete#Complete
 
 "Automatic text substitutions
 ab pymain if __name__ ==  "__main__": main()
@@ -52,13 +52,11 @@ let g:pydiction_menu_height=15
 
 set lbr  " Makes vim wrap lines on word boundaries, not in the middle of a word. 
 
-colorscheme solarized
-
 " C# folding : http://vim.wikia.com/wiki/Syntax-based_folding, see comment by
-au FileType cs set foldmethod=marker
-au FileType cs set foldmarker={,}
-au FileType cs set foldtext=substitute(getline(v:foldstart),'{.*','{...}',)
-au FileType cs set foldlevelstart=2
+"au FileType cs set foldmethod=marker
+"au FileType cs set foldmarker={,}
+"au FileType cs set foldtext=substitute(getline(v:foldstart),'{.*','{...}',)
+"au FileType cs set foldlevelstart=2
 
 map <Leader>wb <Plug>VimwikiGoBackLink  " Go to the previous Vom Wiki page you had open
 
@@ -66,14 +64,11 @@ map <Leader>wb <Plug>VimwikiGoBackLink  " Go to the previous Vom Wiki page you h
 set cursorline  " Horizontal line where cursor is
 highlight CursorLine cterm=underline  " Solarized theme overrides the underline
 
-if version >= 7.7
-    set rnu  " Displayed line numbers aro relative to your current position
-    set undofile  " Sets a permanent undo file, so your undo history is preserved between Vim sessions
-    set undodir=/tmp
-    set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default
-else
-    set number  " Show line numbers. Disabled in favor of relative line numbers in Vim >= 7.3
-endif
+set rnu  " Displayed line numbers aro relative to your current position
+set undofile  " Sets a permanent undo file, so your undo history is preserved between Vim sessions
+set undodir=/tmp
+set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default
+"set number  " Show line numbers. Disabled in favor of relative line numbers in Vim >= 7.3
 
 let g:syntastic_auto_loc_list=1
 
@@ -81,3 +76,5 @@ let g:syntastic_auto_loc_list=1
 " manually restart filetype autocommands
 autocmd! BufRead    *.svn-base execute 'doautocmd filetypedetect BufRead ' . expand('%:r')
 autocmd! BufNewFile *.svn-base execute 'doautocmd filetypedetect BufNewFile ' . expand('%:r')
+
+colorscheme solarized
