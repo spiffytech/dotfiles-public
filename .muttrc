@@ -60,6 +60,9 @@ set reply_to                                            # reply to the reply-to 
 set reverse_name                                        # reply as who it was sent to (see alternates)
 
 auto_view text/html
+alternative_order text/plain text/html
+mime_lookup application/octet-stream  # Does something to help with Office files
+
 set sleep_time=-1
 set date_format = "%m/%d/%y at %I:%M%P"
 alternates spiffytech@gmail.com spiffytech@spiffyte.ch b.p.cottingham@gmail.com brian@contactology.com bpcottin@ncsu.edu
