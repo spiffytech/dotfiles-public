@@ -37,6 +37,8 @@ set noincsearch  " Disable find-as-you-type searching
 set mouse-=a  " Disable mouse so you can actually copy/paste with your real clipboard and not with Vim selections
 syntax on  " Syntax highlighting!
 let c_space_errors = 1  " Highlight extraneous whitespace
+set ttyfast  " Smooths out Vim scrolling
+set lazyredraw  " Buffers screen updates instead of playing them constantly. Helps with draw speed with e.g. syntax highlighting
 
 "Enable omni-compl (Intellisense)
 filetype plugin on

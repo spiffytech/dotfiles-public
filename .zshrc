@@ -67,7 +67,7 @@ alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
 alias vi=vim
 alias ack='ack --type-add php=.tpl'
-alias dc='sl'  # Gimme teh trainz!
+#alias dc='sl'  # Gimme teh trainz!
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
