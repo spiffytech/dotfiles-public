@@ -180,3 +180,5 @@ fix_keyboard() {
     [[ -n "${key[Left]}"    ]]  && bindkey  "${key[Left]}"    backward-char
     [[ -n "${key[Right]}"   ]]  && bindkey  "${key[Right]}"   forward-char
 }
+
+$ZDOTDIR/bin/screenfetch.sh
