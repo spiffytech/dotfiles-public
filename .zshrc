@@ -105,7 +105,7 @@ PROMPT="
 
 %(?.%{${fg[green]}%}.%{${fg[red]}%}) %~ %* %n@%M
 
-$(prompt_git_info)$ %{${fg[default]}%}"
+$ %{${fg[default]}%}"
 
 
 #Autoload zsh functions.
