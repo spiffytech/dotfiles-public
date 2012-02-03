@@ -40,6 +40,8 @@ let c_space_errors = 1  " Highlight extraneous whitespace
 set ttyfast  " Smooths out Vim scrolling
 set lazyredraw  " Buffers screen updates instead of playing them constantly. Helps with draw speed with e.g. syntax highlighting
 
+colorscheme solarized
+
 "Enable omni-compl (Intellisense)
 filetype plugin on
 "set ofu=syntaxcomplete#Complete
@@ -72,11 +74,10 @@ set undodir=/tmp
 set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default
 "set number  " Show line numbers. Disabled in favor of relative line numbers in Vim >= 7.3
 
-let g:syntastic_auto_loc_list=1
+"let g:syntastic_auto_loc_list=1  " Used for the Vim xdebug extension that
+"works like garbage
 
 " when BufRead or BufNewFile event is triggered, pop off the .svn-base extension and
 " manually restart filetype autocommands
 autocmd! BufRead    *.svn-base execute 'doautocmd filetypedetect BufRead ' . expand('%:r')
 autocmd! BufNewFile *.svn-base execute 'doautocmd filetypedetect BufNewFile ' . expand('%:r')
-
-colorscheme solarized
