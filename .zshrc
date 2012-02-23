@@ -56,7 +56,7 @@ PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 
 # Aliases
 # Command aliases
-alias ls='ls --color=auto'
+alias ls='ls --color=auto -F'
 alias ll='ls -l'
 alias la='ls -lA'
 alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use my personal .zshrc and zsh scripts
@@ -113,9 +113,9 @@ fpath=($ZDOTDIR/.zsh/functions $fpath)
 autoload -U $ZDOTDIR/.zsh/functions/*(:t)
  
 # Enable auto-execution of functions.
-typeset -ga preexec_functions
-typeset -ga precmd_functions
-typeset -ga chpwd_functions
+#typeset -ga preexec_functions
+#typeset -ga precmd_functions
+#typeset -ga chpwd_functions
  
 ## Append git functions needed for prompt.
 #preexec_functions+='preexec_update_git_vars'
@@ -181,4 +181,4 @@ fix_keyboard() {
     [[ -n "${key[Right]}"   ]]  && bindkey  "${key[Right]}"   forward-char
 }
 
-$ZDOTDIR/bin/screenfetch.sh
+#$ZDOTDIR/bin/screenfetch.sh

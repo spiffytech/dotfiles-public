@@ -81,3 +81,6 @@ set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by defa
 " manually restart filetype autocommands
 autocmd! BufRead    *.svn-base execute 'doautocmd filetypedetect BufRead ' . expand('%:r')
 autocmd! BufNewFile *.svn-base execute 'doautocmd filetypedetect BufNewFile ' . expand('%:r')
+
+setlocal foldmethod=manual  " Don't use the PHP syntax folding 
+"EnableFastPHPFolds  " Turn on PHP fast folds 
