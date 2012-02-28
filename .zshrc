@@ -142,7 +142,7 @@ vim() {
     fi
 
     if [ -e /usr/bin/tmux ]; then
-        tmux rename-window zsh
+        tmux set automatic-rename on
     fi
 }
 
