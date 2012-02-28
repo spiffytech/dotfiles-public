@@ -38,6 +38,11 @@ CONTACTOLOGY = IMAP {
 recent = CONTACTOLOGY.INBOX:is_unseen()
 all = CONTACTOLOGY.INBOX:select_all()
 
+
+----
+-- Filters
+----
+
 -- Move stuck messages to their own folder, and mark them as read
 msgs = recent:contain_subject("Stuck:") +
     recent:contain_subject("Unstuck Manually") 
@@ -50,9 +55,7 @@ CONTACTOLOGY.INBOX:mark_seen(msgs)
 msgs:move_messages(CONTACTOLOGY['build_status'])
 
 
-------
----- stuck_campaigns folder
-------
+-- stuck_campaigns 
 --all = CONTACTOLOGY['stuck_campaigns'].select_all()
 --msgs = all:contain_subject('Unstuck Manually')
 --msgs:move_messages(CONTACTOLOGY['unstuck_campaigns'])
@@ -61,6 +64,11 @@ msgs:move_messages(CONTACTOLOGY['build_status'])
 -- Rule violations
 msgs = recent:match_subject('Client [0-9]+.*exceeded rule [0-9]+.*')
 msgs:move_messages(CONTACTOLOGY['rule_violations'])
+
+-- zabbix alerts
+all = CONTACTOLOGY.INBOX:select_all()
+msgs = all:contain_from('zabbix@contactology.com')
+msgs:move_messages(CONTACTOLOGY['zabbix_alerts'])
 
 
 
