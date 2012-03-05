@@ -126,7 +126,7 @@ autoload -U $ZDOTDIR/.zsh/functions/*(:t)
 # Sets the tmux window title when you open a file in Vim
 vim() {
     if [ -e /usr/bin/tmux ]; then
-        filename=`echo ${@:-1} | awk -F'/' '{print $NF}'`  # We don't want the whole path to the file- just the filename
+        filename=`echo ${@:-1} | awk -F'/' '{print $NF}' | cut -d '+' -f 1`  # We don't want the whole path to the file- just the filename. Also, remove Vim line number from filename
         tmux rename-window $filename
     fi
 
