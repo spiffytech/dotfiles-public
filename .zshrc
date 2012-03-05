@@ -129,6 +129,7 @@ vim() {
     has_tmux=$?
     if [ $has_tmux -eq 0 ]; then
         filename=`echo ${@:-1} | awk -F'/' '{print $NF}' | cut -d '+' -f 1`  # We don't want the whole path to the file- just the filename. Also, remove Vim line number from filename
+        filename=`echo $filename`  # Remove trailing whitespace
         tmux rename-window $filename
     fi
 
