@@ -82,20 +82,11 @@ alias ll='ls -l'
 alias la='ls -lA'
 
 alias ncsu='ssh -Y bpcottin@remote-linux.eos.ncsu.edu'
-alias devblog='ssh -Y root@devblog.us'
-alias home='ssh -Y root@home.devblog.us'
-alias www='ssh -Y root@home.devblog.us -p 222'
 
 alias trilug='ssh -Y spiffytech@pilot.trilug.org'
 alias xa='ssh -Y -p 1122 ncsuxa@xa-ncsu.com'
-alias sbox='ssh root@spiffybox.k.vu'
+alias sbox='ssh root@files.spiffyte.ch'
 alias short='ssh spiffytech@short.csc.ncsu.edu'
-alias char='ssh spiffytech@char.csc.ncsu.edu'
-alias bobby='ssh -X spiffytech@bobby.spiffyte.ch -p 7000'
-
-alias uss-bpm2008='rdesktop -g 1280x1024 -u bcottingham -d ultimus.com -p - -r "disk:spiffytop=/home/brian" -P -z -x l uss-BPM2008.ultimus.com'
-alias uss-bpm2008-low-res='rdesktop -g 1024x768 -u bcottingham -d ultimus.com -p - -r "disk:spiffytop=/home/brian" -P -z -x l uss-BPM2008.ultimus.com'
-alias uss-bpm2008-native='rdesktop -g 1440x900 -u bcottingham -d ultimus.com -p - -r "disk:spiffytop=/home/brian" -P -z -x l uss-BPM2008.ultimus.com'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
