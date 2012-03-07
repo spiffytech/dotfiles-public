@@ -92,7 +92,7 @@ setlocal foldmethod=manual  " Don't use the PHP syntax folding
 " http://www.outflux.net/blog/archives/2007/03/09/detecting-space-vs-tab-indentation-type-in-vim/
 function Kees_settabs()
     if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
-        set noet ts=4 sw=4
+        set noet ts=4 sw=4 list!
     endif
 endfunction
 autocmd BufReadPost * call Kees_settabs()
