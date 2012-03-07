@@ -36,9 +36,10 @@ set background=dark  " Change syntax color to better contrast with black backgro
 set noincsearch  " Disable find-as-you-type searching
 set mouse-=a  " Disable mouse so you can actually copy/paste with your real clipboard and not with Vim selections
 syntax on  " Syntax highlighting!
-let c_space_errors = 1  " Highlight extraneous whitespace
 set ttyfast  " Smooths out Vim scrolling
 set lazyredraw  " Buffers screen updates instead of playing them constantly. Helps with draw speed with e.g. syntax highlighting
+set list  " Reveal tabs and trailing spaces  " http://www.iovene.com/61/
+set listchars=tab:>-,trail:.,extends:#  " Make tabs show up as 4 spaces wide, no EOL char (set 'eol' here to show one)
 
 colorscheme solarized
 
@@ -79,8 +80,19 @@ set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by defa
 
 " when BufRead or BufNewFile event is triggered, pop off the .svn-base extension and
 " manually restart filetype autocommands
+"  
 autocmd! BufRead    *.svn-base execute 'doautocmd filetypedetect BufRead ' . expand('%:r')
 autocmd! BufNewFile *.svn-base execute 'doautocmd filetypedetect BufNewFile ' . expand('%:r')
 
 setlocal foldmethod=manual  " Don't use the PHP syntax folding 
 "EnableFastPHPFolds  " Turn on PHP fast folds 
+
+" Detects whether the open file is mostly tabs or spaces and changes expandtab
+" accordingly. 
+" http://www.outflux.net/blog/archives/2007/03/09/detecting-space-vs-tab-indentation-type-in-vim/
+function Kees_settabs()
+    if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
+        set noet ts=4 sw=4
+    endif
+endfunction
+autocmd BufReadPost * call Kees_settabs()
