@@ -187,3 +187,9 @@ fix_keyboard() {
 }
 
 #$ZDOTDIR/bin/screenfetch.sh
+
+has_tmux=`which keychain`
+has_tmux=$?
+if [ $has_tmux -eq 0 ]; then
+    eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
+fi
