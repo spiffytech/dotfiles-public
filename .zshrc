@@ -52,6 +52,7 @@ fi
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
+export PATH=~/Documents/contactology-app/bin:~/Documents/contactology-app/php/bin:$PATH
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
 
 # Aliases
