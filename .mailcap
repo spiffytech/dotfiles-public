@@ -1,0 +1,3 @@
+application/pdf; /usr/bin/okular '%s'; test=test "$DISPLAY" != ""; description=Portable Document Format; nametemplate=%s.pdf
+application/x-pdf; /usr/bin/okular '%s'; test=test "$DISPLAY" != ""; description=Portable Document Format; nametemplate=%s.pdf
+text/html; elinks -dump -eval "set document.codepage.assume = %{charset}" %s; copiousoutput
