@@ -166,6 +166,29 @@ vim() {
     fi
 }
 
+
+# Sets the tmux window title when you SSH somewhere
+ssh() {
+    has_tmux=`which tmux`
+    has_tmux=$?
+    if [ $has_tmux -eq 0 ]; then
+        host=`echo $@ | pyp '[foo for foo in w if foo.count("@") > 0][0] | p.partition("@")[2] | p.split(".")[0].strip()'`
+        if [ ! -n $host ] 
+        then
+            host="ssh"
+        fi
+
+        tmux rename-window $host
+    fi
+
+    /usr/bin/ssh $@
+
+    if [ $has_tmux -eq 0 ]; then
+        tmux set automatic-rename on
+    fi
+}
+
+
 fix_keyboard() {
     # Fix special keys like home, end page-up, page-down
     autoload zkbd
