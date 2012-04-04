@@ -96,7 +96,7 @@ alias sbox='ssh -XC root@files.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 alias avalon='ssh brian@avalon.sourcekit.com'
-alias sprint='ssh brian@sprint.sourcekit.com'
+alias sprint='ssh brian@sprint.testology.net'
 alias release='ssh brian@release.sourcekit.com'
 alias mercury='ssh brian@mercury.sourcekit.com'
 alias vulcan='ssh brian@vulcan.sourcekit.com'
@@ -116,6 +116,12 @@ bindkey -e  # Override the viins line editor setting the previous line sets with
 
 
 # Set the prompt
+if [ `whoami` = "root" ]
+then
+    user_color="red"
+else
+    usercolor="green"
+fi
 PROMPT="
 
 %(?.%{${fg[green]}%}.%{${fg[red]}%}) %~ %* %n@%M
