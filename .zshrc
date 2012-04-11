@@ -14,7 +14,7 @@ setopt hist_expire_dups_first # expire duplicates in history first
 setopt hist_ignore_dups # don't add dupes to history
 
 
-# completion and expansion stuff
+# completion and expanstion stuff
 setopt PROMPT_SUBST
 setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zshexpn` for more info.
 setopt correct  # Offer to correct mistyped commands
@@ -51,7 +51,8 @@ fi
 # Paths and files
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
-PATH=/sbin:$PATH:/usr/local/bin:$ZDOTDIR/bin
+PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
+export PATH=~/Documents/contactology-app/bin:~/Documents/contactology-app/php/bin:$PATH
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
 
 # Aliases
@@ -95,8 +96,9 @@ alias xa='ssh -Y -p 1122 ncsuxa@xa-ncsu.com'
 alias sbox='ssh -XC root@files.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
-alias avalon='ssh brian@avalon.sourcekit.com'
-alias sprint='ssh brian@sprint.sourcekit.com'
+alias avalon='ssh brian@avalon.testology.net'
+alias sprint='ssh brian@sprint.testology.net'
+alias indigo='ssh brian@indigo.testology.net'
 alias release='ssh brian@release.sourcekit.com'
 alias mercury='ssh brian@mercury.sourcekit.com'
 alias vulcan='ssh brian@vulcan.sourcekit.com'
@@ -114,37 +116,13 @@ alias web10='ssh brian@web10.sourcekit.com'
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
-##############
-# Prompt stuff
-##############
-
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git svn  # See this for more info: man zshcontrib | less -p GATHER
-function precmd {
-    vcs_info
-}
-
-prompt_default_color="%(?.%{${fg[green]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
-prompt_user=$prompt_default_color
-whoami | grep root > /dev/null
-if [ `echo $?` -eq 0 ]; then
-    prompt_user="cyan"
-fi
-
-prompt_host=$prompt_default_color
-hostname | grep spiffy > /dev/null
-if [ `echo $?` -ne 0 ]; then
-    prompt_host="blue"
-fi
-
 
 # Set the prompt
-PROMPT='
+PROMPT="
 
-%{$prompt_default_color%} %~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}_
+%(?.%{${fg[green]}%}.%{${fg[red]}%}) %~ %* %n@%M
 
-
-$ %{${fg[default]}%}'
+$ %{${fg[default]}%}"
 
 
 #Autoload zsh functions.
