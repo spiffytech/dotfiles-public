@@ -114,11 +114,24 @@ alias web10='ssh brian@web10.sourcekit.com'
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
+prompt_default_color="%(?.%{${fg[green]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
+prompt_user=$prompt_default_color
+whoami | grep root > /dev/null
+if [ `echo $?` -eq 0 ]; then
+    prompt_user="cyan"
+fi
+
+prompt_host=$prompt_default_color
+hostname | grep spiffy > /dev/null
+if [ `echo $?` -ne 0 ]; then
+    prompt_host="blue"
+fi
+
 
 # Set the prompt
 PROMPT="
 
-%(?.%{${fg[green]}%}.%{${fg[red]}%}) %~ %* %n@%M
+%{$prompt_default_color%} %~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%}
 
 $ %{${fg[default]}%}"
 
