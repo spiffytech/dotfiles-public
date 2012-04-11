@@ -14,7 +14,7 @@ setopt hist_expire_dups_first # expire duplicates in history first
 setopt hist_ignore_dups # don't add dupes to history
 
 
-# completion and expanstion stuff
+# completion and expansion stuff
 setopt PROMPT_SUBST
 setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zshexpn` for more info.
 setopt correct  # Offer to correct mistyped commands
@@ -114,6 +114,16 @@ alias web10='ssh brian@web10.sourcekit.com'
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
+##############
+# Prompt stuff
+##############
+
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn  # See this for more info: man zshcontrib | less -p GATHER
+function precmd {
+    vcs_info
+}
+
 prompt_default_color="%(?.%{${fg[green]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
 prompt_user=$prompt_default_color
 whoami | grep root > /dev/null
@@ -129,11 +139,12 @@ fi
 
 
 # Set the prompt
-PROMPT="
+PROMPT='
 
-%{$prompt_default_color%} %~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%}
+%{$prompt_default_color%} %~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}_
 
-$ %{${fg[default]}%}"
+
+$ %{${fg[default]}%}'
 
 
 #Autoload zsh functions.
