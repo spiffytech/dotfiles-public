@@ -2,6 +2,9 @@ if [ -z "$ZDOTDIR" ]; then
     ZDOTDIR=$HOME
 fi
 
+export CLICOLOR=1;
+
+
 # zsh options
 # ===========
 # history stuff
@@ -56,7 +59,6 @@ PATH=/sbin:$PATH:/usr/local/bin:$ZDOTDIR/bin
 
 # Aliases
 # Command aliases
-alias ls='ls --color=auto -F'
 alias ll='ls -l'
 alias la='ls -lA'
 alias lah='ls -lAh'
@@ -67,8 +69,7 @@ alias ssh='ssh -Y'  # Automatic X forwarding
 alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
 alias vi=vim
-alias ack='ack --type-add php=.tpl --type-add html=.tpl'
-#alias dc='sl'  # Gimme teh trainz!
+alias ch='sl'  # Gimme teh trainz!
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -97,7 +98,9 @@ alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 alias avalon='ssh brian@avalon.sourcekit.com'
 alias sprint='ssh brian@sprint.testology.net'
-alias release='ssh brian@release.sourcekit.com'
+alias staging='ssh brian@staging.testology.net'
+alias release='ssh brian@release.testology.net'
+alias live='ssh brian@live.testology.net'
 alias mercury='ssh brian@mercury.sourcekit.com'
 alias vulcan='ssh brian@vulcan.sourcekit.com'
 alias web1='ssh brian@web1.sourcekit.com'
@@ -110,6 +113,17 @@ alias web7='ssh brian@web7.sourcekit.com'
 alias web8='ssh brian@web8.sourcekit.com'
 alias web9='ssh brian@web9.sourcekit.com'
 alias web10='ssh brian@web10.sourcekit.com'
+
+has_ack=`which ack`
+has_ack=$?
+if [ $has_ack -ne 0 ]; then
+    has_ack_grep=`which ack-grep`
+    has_ack_grep=$?
+    if [ $has_ack_grep -neq 0 ]; then
+        alias ack='ack-grep'
+    fi
+fi
+alias ack='ack --type-add php=.tpl --type-add html=.tpl'
 
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
@@ -130,7 +144,7 @@ $ %{${fg[default]}%}"
 
 
 #Autoload zsh functions.
-fpath=($ZDOTDIR/.zsh/functions $fpath)
+#fpath=($ZDOTDIR/.zsh/functions $fpath)
 autoload -U $ZDOTDIR/.zsh/functions/*(:t)
  
 # Enable auto-execution of functions.
