@@ -54,7 +54,8 @@ fi
 # Paths and files
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
-PATH=/sbin:$PATH:/usr/local/bin:$ZDOTDIR/bin
+PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
+export PATH=~/Documents/contactology-app/bin:~/Documents/contactology-app/php/bin:$PATH
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
 
 # Aliases
@@ -101,6 +102,7 @@ alias sprint='ssh brian@sprint.testology.net'
 alias staging='ssh brian@staging.testology.net'
 alias release='ssh brian@release.testology.net'
 alias live='ssh brian@live.testology.net'
+alias indigo='ssh brian@indigo.testology.net'
 alias mercury='ssh brian@mercury.sourcekit.com'
 alias vulcan='ssh brian@vulcan.sourcekit.com'
 alias web1='ssh brian@web1.sourcekit.com'
@@ -119,7 +121,7 @@ has_ack=$?
 if [ $has_ack -ne 0 ]; then
     has_ack_grep=`which ack-grep`
     has_ack_grep=$?
-    if [ $has_ack_grep -neq 0 ]; then
+    if [ $has_ack_grep -ne 0 ]; then
         alias ack='ack-grep'
     fi
 fi
@@ -127,6 +129,29 @@ alias ack='ack --type-add php=.tpl --type-add html=.tpl'
 
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
+
+##############
+# Prompt stuff
+##############
+
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn  # See this for more info: man zshcontrib | less -p GATHER
+function precmd {
+    vcs_info
+}
+
+prompt_default_color="%(?.%{${fg[green]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
+prompt_user=$prompt_default_color
+whoami | grep root > /dev/null
+if [ `echo $?` -eq 0 ]; then
+    prompt_user="cyan"
+fi
+
+prompt_host=$prompt_default_color
+hostname | grep spiffy > /dev/null
+if [ `echo $?` -ne 0 ]; then
+    prompt_host="blue"
+fi
 
 
 # Set the prompt
@@ -136,11 +161,11 @@ then
 else
     usercolor="green"
 fi
-PROMPT="
+PROMPT='
 
-%(?.%{${fg[green]}%}.%{${fg[red]}%}) %~ %* %n@%M
+%{$prompt_default_color%} %~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}_
 
-$ %{${fg[default]}%}"
+$ %{${fg[default]}%}'
 
 
 #Autoload zsh functions.
