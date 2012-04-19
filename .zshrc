@@ -68,7 +68,6 @@ alias ssh='ssh -Y'  # Automatic X forwarding
 alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
 alias vi=vim
-alias ack='ack --type-add php=.tpl --type-add html=.tpl'
 #alias dc='sl'  # Gimme teh trainz!
 # Location aliases
 alias -g ...='../..'
@@ -151,7 +150,7 @@ $ %{${fg[default]}%}'
 
 #Autoload zsh functions.
 fpath=($ZDOTDIR/.zsh/functions $fpath)
-autoload -U $ZDOTDIR/.zsh/functions/*(:t)
+#autoload -U $ZDOTDIR/.zsh/functions/*(:t)
  
 # Enable auto-execution of functions.
 #typeset -ga preexec_functions
@@ -164,10 +163,27 @@ autoload -U $ZDOTDIR/.zsh/functions/*(:t)
 #chpwd_functions+='chpwd_update_git_vars'
 
 
+function ack {
+    has_ack=`which ack`
+    has_ack=$?
+    if [ $has_ack -ne 0 ]; then
+        has_ack_grep=`which ack-grep`
+        has_ack_grep=$?
+        if [ $has_ack_grep -ne 0 ]; then
+            alias ack='ack-grep'
+        fi
+    fi
+    ack $@
+}
+alias ack='ack --type-add php=.tpl --type-add html=.tpl'
+
+
 # Sets the tmux window title when you open a file in Vim
-vim() {
+function vim {
     has_tmux=`which tmux`
     has_tmux=$?
+    echo 'here'
+    echo $@
     if [ $has_tmux -eq 0 ]; then
         filename=`echo ${@:-1} | awk -F'/' '{print $NF}' | cut -d '+' -f 1`  # We don't want the whole path to the file- just the filename. Also, remove Vim line number from filename
         filename=`echo $filename`  # Remove trailing whitespace
@@ -188,11 +204,12 @@ vim() {
     fi
 
     if [ $has_tmux -eq 0 ]; then
-        tmux set automatic-rename on
+        tmux set-window-option automatic-rename on
     fi
 }
+v() {vim($@)}
 
-fix_keyboard() {
+function fix_keyboard {
     # Fix special keys like home, end page-up, page-down
     autoload zkbd
     function zkbd_file() {
