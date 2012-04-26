@@ -184,12 +184,13 @@ $ %{${fg[default]}%}'
 
 
 function ack {
+    ack_which=`which -a ack | tail -n 1`
     if [ ! -f /usr/bin/ack ]; then
         if [ -f /campaigns/src/bin/codesearch ]; then
             /campaigns/src/bin/codesearch $@
         fi
     else
-        /usr/bin/ack $@
+        ack_which $@
     fi
 }
 alias ack='ack --type-add php=.tpl --type-add html=.tpl'
@@ -199,8 +200,6 @@ alias ack='ack --type-add php=.tpl --type-add html=.tpl'
 function vim {
     has_tmux=`which tmux`
     has_tmux=$?
-    echo 'here'
-    echo $@
     if [ $has_tmux -eq 0 ]; then
         filename=`echo ${@:-1} | awk -F'/' '{print $NF}' | cut -d '+' -f 1`  # We don't want the whole path to the file- just the filename. Also, remove Vim line number from filename
         filename=`echo $filename`  # Remove trailing whitespace
@@ -229,7 +228,7 @@ v() {vim($@)}
 
 # Sets the tmux window title when you SSH somewhere
 ssh() {
-    has_tmux=`which tmux`
+    tmux_which=`which tmux`
     has_tmux=$?
     if [ $has_tmux -eq 0 ]; then
         host=`echo $@ | pyp '[foo for foo in w if foo.count("@") > 0][0] | p.partition("@")[2] | p.split(".")[0].strip()'`
@@ -241,7 +240,7 @@ ssh() {
         tmux rename-window $host
     fi
 
-    /usr/bin/ssh $@
+    `which -a ssh | tail -n 1` $@
 
     if [ $has_tmux -eq 0 ]; then
         tmux set automatic-rename on
