@@ -184,16 +184,13 @@ $ %{${fg[default]}%}'
 
 
 function ack {
-    has_ack=`which ack`
-    has_ack=$?
-    if [ $has_ack -ne 0 ]; then
-        has_ack_grep=`which ack-grep`
-        has_ack_grep=$?
-        if [ $has_ack_grep -ne 0 ]; then
-            alias ack='ack-grep'
+    if [ ! -f /usr/bin/ack ]; then
+        if [ -f /campaigns/src/bin/codesearch ]; then
+            /campaigns/src/bin/codesearch $@
         fi
+    else
+        /usr/bin/ack $@
     fi
-    ack $@
 }
 alias ack='ack --type-add php=.tpl --type-add html=.tpl'
 
