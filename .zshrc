@@ -180,7 +180,7 @@ $ %{${fg[default]}%}'
 
 #Autoload zsh functions.
 #fpath=($ZDOTDIR/.zsh/functions $fpath)
-autoload -U $ZDOTDIR/.zsh/functions/*(:t)
+#autoload -U $ZDOTDIR/.zsh/functions/*(:t)
  
 # Enable auto-execution of functions.
 #typeset -ga preexec_functions
@@ -193,8 +193,21 @@ autoload -U $ZDOTDIR/.zsh/functions/*(:t)
 #chpwd_functions+='chpwd_update_git_vars'
 
 
+function ack {
+    ack_which=`which -a ack | tail -n 1`
+    if [ ! -f /usr/bin/ack ]; then
+        if [ -f /campaigns/src/bin/codesearch ]; then
+            /campaigns/src/bin/codesearch $@
+        fi
+    else
+        ack_which $@
+    fi
+}
+alias ack='ack --type-add php=.tpl --type-add html=.tpl'
+
+
 # Sets the tmux window title when you open a file in Vim
-vim() {
+function vim {
     has_tmux=`which tmux`
     has_tmux=$?
     if [ $has_tmux -eq 0 ]; then
@@ -217,14 +230,15 @@ vim() {
     fi
 
     if [ $has_tmux -eq 0 ]; then
-        tmux set automatic-rename on
+        tmux set-window-option automatic-rename on
     fi
 }
+v() {vim($@)}
 
 
 # Sets the tmux window title when you SSH somewhere
 ssh() {
-    has_tmux=`which tmux`
+    tmux_which=`which tmux`
     has_tmux=$?
     if [ $has_tmux -eq 0 ]; then
         host=`echo $@ | pyp '[foo for foo in w if foo.count("@") > 0][0] | p.partition("@")[2] | p.split(".")[0].strip()'`
@@ -236,7 +250,7 @@ ssh() {
         tmux rename-window $host
     fi
 
-    /usr/bin/ssh $@
+    `which -a ssh | tail -n 1` $@
 
     if [ $has_tmux -eq 0 ]; then
         tmux set automatic-rename on
@@ -244,7 +258,7 @@ ssh() {
 }
 
 
-fix_keyboard() {
+function fix_keyboard {
     # Fix special keys like home, end page-up, page-down
     autoload zkbd
     function zkbd_file() {
