@@ -58,19 +58,29 @@ PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 export PATH=~/Documents/contactology-app/bin:~/Documents/contactology-app/php/bin:$PATH
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
 
+OS=`uname`
+
 # Aliases
 # Command aliases
 alias ll='ls -l'
 alias la='ls -lA'
 alias lah='ls -lAh'
+if [ $OS = 'Darwin' ]; then
+    alias ls='ls -G'
+else
+    alias ls='ls --color=auto'
+fi
+
 alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use my personal .zshrc and zsh scripts
 alias grep='grep --color="auto"'
-alias rm='rm -I'
+#alias rm='rm -I'
 alias ssh='ssh -Y'  # Automatic X forwarding
 alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
 alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
+alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
+alias cssh='~/Downloads/csshX-0.74/csshX --screen 2'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
