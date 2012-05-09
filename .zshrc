@@ -193,6 +193,13 @@ $ %{${fg[default]}%}'
 #chpwd_functions+='chpwd_update_git_vars'
 
 
+haste() { 
+    curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
+    sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
+    sed -e 's/.*\.//')\n/"
+}
+
+
 function ack {
     ack_which=`which -a ack | tail -n 1`
     if [ ! -f /usr/bin/ack ]; then
