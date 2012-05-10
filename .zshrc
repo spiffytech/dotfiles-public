@@ -50,15 +50,18 @@ fi
 
 # Personal stuff
 # ==============
+OS=`uname`
 
 # Paths and files
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 export PATH=~/Documents/contactology-app/bin:~/Documents/contactology-app/php/bin:$PATH
+if [ $OS = 'Darwin' ]; then
+    export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
+fi
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
 
-OS=`uname`
 
 # Aliases
 # Command aliases
