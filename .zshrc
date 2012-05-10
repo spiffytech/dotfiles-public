@@ -251,7 +251,7 @@ ssh() {
     tmux_which=`which tmux`
     has_tmux=$?
     if [ $has_tmux -eq 0 ]; then
-        host=`echo $@ | pyp '[foo for foo in w if foo.count("@") > 0][0] | p.partition("@")[2] | p.split(".")[0].strip()'`
+        host=`echo $@ | sed 's/.* \([[:alnum:].]\{1,\}@[[:alnum:].]\{1,\}\).*/\1/g' | sed 's/.*@\([^.]*\).*/\1/'`
         if [ ! -n $host ] 
         then
             host="ssh"
