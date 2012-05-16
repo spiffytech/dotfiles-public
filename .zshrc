@@ -208,7 +208,7 @@ function ack {
             /campaigns/src/bin/codesearch $@
         fi
     else
-        eval $ack_which $@
+        $ack_which $@
     fi
 }
 alias ack='ack --type-add php=.tpl --type-add html=.tpl'
