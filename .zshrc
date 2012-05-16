@@ -50,15 +50,18 @@ fi
 
 # Personal stuff
 # ==============
+OS=`uname`
 
 # Paths and files
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 export PATH=~/Documents/contactology-app/bin:~/Documents/contactology-app/php/bin:$PATH
+if [ $OS = 'Darwin' ]; then
+    export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
+fi
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
 
-OS=`uname`
 
 # Aliases
 # Command aliases
@@ -191,6 +194,13 @@ if [ $has_ack -ne 0 ]; then
     fi
 fi
 
+haste() { 
+    curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
+    sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
+    sed -e 's/.*\.//')\n/"
+}
+
+
 function ack {
     ack_which=`which -a ack | tail -n 1`
     if [ -z $ack_which ]; then
@@ -239,7 +249,7 @@ ssh() {
     tmux_which=`which tmux`
     has_tmux=$?
     if [ $has_tmux -eq 0 ]; then
-        host=`echo $@ | pyp '[foo for foo in w if foo.count("@") > 0][0] | p.partition("@")[2] | p.split(".")[0].strip()'`
+        host=`echo $@ | sed 's/.* \([[:alnum:].]\{1,\}@[[:alnum:].]\{1,\}\).*/\1/g' | sed 's/.*@\([^.]*\).*/\1/'`
         if [ ! -n $host ] 
         then
             host="ssh"
