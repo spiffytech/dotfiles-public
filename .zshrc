@@ -142,7 +142,7 @@ function precmd {
     vcs_info
 }
 
-prompt_default_color="%(?.%{${fg[green]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
+prompt_default_color="%(?.%{${fg[yellow]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
 prompt_user=$prompt_default_color
 whoami | grep root > /dev/null
 if [ `echo $?` -eq 0 ]; then
