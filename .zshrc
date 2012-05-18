@@ -184,33 +184,12 @@ $ %{${fg[default]}%}'
 #precmd_functions+='precmd_update_git_vars'
 #chpwd_functions+='chpwd_update_git_vars'
 
-has_ack=`which ack`
-has_ack=$?
-if [ $has_ack -ne 0 ]; then
-    has_ack_grep=`which ack-grep`
-    has_ack_grep=$?
-    if [ $has_ack_grep -ne 0 ]; then
-        alias ack='ack-grep'
-    fi
-fi
-
 haste() { 
     curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
     sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
     sed -e 's/.*\.//')\n/"
 }
 
-
-function ack {
-    ack_which=`which -a ack | tail -n 1`
-    if [ -z $ack_which ]; then
-        if [ -f /campaigns/src/bin/codesearch ]; then
-            /campaigns/src/bin/codesearch $@
-        fi
-    else
-        $ack_which $@
-    fi
-}
 alias ack='ack --type-add php=.tpl --type-add html=.tpl'
 
 
