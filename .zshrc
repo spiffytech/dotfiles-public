@@ -134,17 +134,6 @@ alias web8='ssh brian@web8.sourcekit.com'
 alias web9='ssh brian@web9.sourcekit.com'
 alias web10='ssh brian@web10.sourcekit.com'
 
-has_ack=`which ack`
-has_ack=$?
-if [ $has_ack -ne 0 ]; then
-    has_ack_grep=`which ack-grep`
-    has_ack_grep=$?
-    if [ $has_ack_grep -ne 0 ]; then
-        alias ack='ack-grep'
-    fi
-fi
-alias ack='ack --type-add php=.tpl --type-add html=.tpl'
-
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
@@ -158,7 +147,7 @@ function precmd {
     vcs_info
 }
 
-prompt_default_color="%(?.%{${fg[green]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
+prompt_default_color="%(?.%{${fg[yellow]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
 prompt_user=$prompt_default_color
 whoami | grep root > /dev/null
 if [ `echo $?` -eq 0 ]; then
@@ -200,24 +189,12 @@ $ %{${fg[default]}%}'
 #precmd_functions+='precmd_update_git_vars'
 #chpwd_functions+='chpwd_update_git_vars'
 
-
 haste() { 
     curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
     sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
     sed -e 's/.*\.//')\n/"
 }
 
-
-function ack {
-    ack_which=`which -a ack | tail -n 1`
-    if [ ! -f /usr/bin/ack ]; then
-        if [ -f /campaigns/src/bin/codesearch ]; then
-            /campaigns/src/bin/codesearch $@
-        fi
-    else
-        ack_which $@
-    fi
-}
 alias ack='ack --type-add php=.tpl --type-add html=.tpl'
 
 
