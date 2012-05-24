@@ -114,6 +114,7 @@ alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroo
 alias avalon='ssh brian@avalon.sourcekit.com'
 alias sprint='ssh brian@sprint.testology.net'
 alias staging='ssh brian@staging.testology.net'
+alias dev='ssh brian@dev.testology.net'
 alias release='ssh brian@release.testology.net'
 alias live='ssh brian@live.testology.net'
 alias indigo='ssh brian@indigo.testology.net'
@@ -292,3 +293,6 @@ has_tmux=$?
 if [ $has_tmux -eq 0 ]; then
     eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
 fi
+
+
+curl http://isuckatdomains.net:3168/loud.pl  # Better than fortune
