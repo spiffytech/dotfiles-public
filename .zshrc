@@ -84,6 +84,7 @@ alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
 alias cssh='~/Downloads/csshX-0.74/csshX --screen 2'
+alias hgrep='history | grep'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
