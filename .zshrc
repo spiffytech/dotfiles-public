@@ -50,15 +50,18 @@ fi
 
 # Personal stuff
 # ==============
+OS=`uname`
 
 # Paths and files
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 export PATH=~/Documents/contactology-app/bin:~/Documents/contactology-app/php/bin:$PATH
+if [ $OS = 'Darwin' ]; then
+    export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
+fi
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
 
-OS=`uname`
 
 # Aliases
 # Command aliases
@@ -81,6 +84,7 @@ alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
 alias cssh='~/Downloads/csshX-0.74/csshX --screen 2'
+alias hgrep='history | grep'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -107,14 +111,20 @@ alias xa='ssh -Y -p 1122 ncsuxa@xa-ncsu.com'
 alias sbox='ssh -XC root@files.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
+# Work aliases
 alias avalon='ssh brian@avalon.sourcekit.com'
 alias sprint='ssh brian@sprint.testology.net'
 alias staging='ssh brian@staging.testology.net'
+alias dev='ssh brian@dev.testology.net'
 alias release='ssh brian@release.testology.net'
 alias live='ssh brian@live.testology.net'
 alias indigo='ssh brian@indigo.testology.net'
+alias red='ssh brian@red.testology.net'
+alias white='ssh brian@white.testology.net'
+alias navy='ssh brian@navy.testology.net'
 alias mercury='ssh brian@mercury.sourcekit.com'
 alias vulcan='ssh brian@vulcan.sourcekit.com'
+alias camelot='ssh brian@camelot.sourcekit.com'
 alias web1='ssh brian@web1.sourcekit.com'
 alias web2='ssh brian@web2.sourcekit.com'
 alias web3='ssh brian@web3.sourcekit.com'
@@ -125,17 +135,6 @@ alias web7='ssh brian@web7.sourcekit.com'
 alias web8='ssh brian@web8.sourcekit.com'
 alias web9='ssh brian@web9.sourcekit.com'
 alias web10='ssh brian@web10.sourcekit.com'
-
-has_ack=`which ack`
-has_ack=$?
-if [ $has_ack -ne 0 ]; then
-    has_ack_grep=`which ack-grep`
-    has_ack_grep=$?
-    if [ $has_ack_grep -ne 0 ]; then
-        alias ack='ack-grep'
-    fi
-fi
-alias ack='ack --type-add php=.tpl --type-add html=.tpl'
 
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
@@ -150,7 +149,7 @@ function precmd {
     vcs_info
 }
 
-prompt_default_color="%(?.%{${fg[green]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
+prompt_default_color="%(?.%{${fg[yellow]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
 prompt_user=$prompt_default_color
 whoami | grep root > /dev/null
 if [ `echo $?` -eq 0 ]; then
@@ -192,24 +191,12 @@ $ %{${fg[default]}%}'
 #precmd_functions+='precmd_update_git_vars'
 #chpwd_functions+='chpwd_update_git_vars'
 
-
 haste() { 
     curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
     sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
     sed -e 's/.*\.//')\n/"
 }
 
-
-function ack {
-    ack_which=`which -a ack | tail -n 1`
-    if [ ! -f /usr/bin/ack ]; then
-        if [ -f /campaigns/src/bin/codesearch ]; then
-            /campaigns/src/bin/codesearch $@
-        fi
-    else
-        ack_which $@
-    fi
-}
 alias ack='ack --type-add php=.tpl --type-add html=.tpl'
 
 
@@ -248,7 +235,7 @@ ssh() {
     tmux_which=`which tmux`
     has_tmux=$?
     if [ $has_tmux -eq 0 ]; then
-        host=`echo $@ | pyp '[foo for foo in w if foo.count("@") > 0][0] | p.partition("@")[2] | p.split(".")[0].strip()'`
+        host=`echo $@ | sed 's/.* \([[:alnum:].]\{1,\}@[[:alnum:].]\{1,\}\).*/\1/g' | sed 's/.*@\([^.]*\).*/\1/'`
         if [ ! -n $host ] 
         then
             host="ssh"
@@ -307,3 +294,6 @@ has_keychain=$?
 if [ $has_keychain -eq 0 ]; then
     eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
 fi
+
+
+curl http://isuckatdomains.net:3168/loud.pl  # Better than fortune
