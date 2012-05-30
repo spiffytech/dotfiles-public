@@ -135,6 +135,7 @@ alias web7='ssh brian@web7.sourcekit.com'
 alias web8='ssh brian@web8.sourcekit.com'
 alias web9='ssh brian@web9.sourcekit.com'
 alias web10='ssh brian@web10.sourcekit.com'
+alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
 
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
@@ -296,4 +297,4 @@ if [ $has_tmux -eq 0 ]; then
 fi
 
 
-curl http://isuckatdomains.net:3168/loud.pl  # Better than fortune
+#sleep .1 > >(curl http://isuckatdomains.net:3168/loud.pl > /tmp/loudbot_fortune; cat /tmp/loudbot_fortune)  # Better than fortune
