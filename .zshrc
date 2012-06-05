@@ -296,4 +296,4 @@ if [ $has_tmux -eq 0 ]; then
 fi
 
 
-curl http://isuckatdomains.net:3168/loud.pl  # Better than fortune
+python ~/bin/loudbot.py
