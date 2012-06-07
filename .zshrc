@@ -17,7 +17,7 @@ setopt hist_expire_dups_first # expire duplicates in history first
 setopt hist_ignore_dups # don't add dupes to history
 
 
-# completion and expanstion stuff
+# completion and expansion stuff
 setopt PROMPT_SUBST
 setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zshexpn` for more info.
 setopt correct  # Offer to correct mistyped commands
@@ -27,6 +27,8 @@ zstyle ':completion:*:functions' ignored-patterns '_*'  # Ignore completion func
 zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
 autoload -U compinit
 compinit
+
+# Tab-complete command parameters from man pages
 zstyle ':completion:*:manuals'    separate-sections true
 zstyle ':completion:*:manuals.*'  insert-sections   true
 zstyle ':completion:*:man:*'      menu yes select
