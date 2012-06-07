@@ -27,7 +27,9 @@ zstyle ':completion:*:functions' ignored-patterns '_*'  # Ignore completion func
 zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
 autoload -U compinit
 compinit
-
+zstyle ':completion:*:manuals'    separate-sections true
+zstyle ':completion:*:manuals.*'  insert-sections   true
+zstyle ':completion:*:man:*'      menu yes select
 
 #bindkey '^' reverse-menu-complete  # Shift-tab
 #bindkey "^${key[Left]}" emacs-backward-word
