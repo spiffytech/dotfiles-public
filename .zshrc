@@ -17,7 +17,7 @@ setopt hist_expire_dups_first # expire duplicates in history first
 setopt hist_ignore_dups # don't add dupes to history
 
 
-# completion and expanstion stuff
+# completion and expansion stuff
 setopt PROMPT_SUBST
 setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zshexpn` for more info.
 setopt correct  # Offer to correct mistyped commands
@@ -28,6 +28,10 @@ zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
 autoload -U compinit
 compinit
 
+# Tab-complete command parameters from man pages
+zstyle ':completion:*:manuals'    separate-sections true
+zstyle ':completion:*:manuals.*'  insert-sections   true
+zstyle ':completion:*:man:*'      menu yes select
 
 #bindkey '^' reverse-menu-complete  # Shift-tab
 #bindkey "^${key[Left]}" emacs-backward-word
@@ -84,6 +88,7 @@ alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
 alias cssh='~/Downloads/csshX-0.74/csshX --screen 2'
+alias hgrep='history | grep'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -110,24 +115,32 @@ alias xa='ssh -Y -p 1122 ncsuxa@xa-ncsu.com'
 alias sbox='ssh -XC root@files.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
-alias avalon='ssh brian@avalon.sourcekit.com'
-alias sprint='ssh brian@sprint.testology.net'
-alias staging='ssh brian@staging.testology.net'
-alias release='ssh brian@release.testology.net'
-alias live='ssh brian@live.testology.net'
-alias indigo='ssh brian@indigo.testology.net'
-alias mercury='ssh brian@mercury.sourcekit.com'
-alias vulcan='ssh brian@vulcan.sourcekit.com'
-alias web1='ssh brian@web1.sourcekit.com'
-alias web2='ssh brian@web2.sourcekit.com'
-alias web3='ssh brian@web3.sourcekit.com'
-alias web4='ssh brian@web4.sourcekit.com'
-alias web5='ssh brian@web5.sourcekit.com'
-alias web6='ssh brian@web6.sourcekit.com'
-alias web7='ssh brian@web7.sourcekit.com'
-alias web8='ssh brian@web8.sourcekit.com'
-alias web9='ssh brian@web9.sourcekit.com'
-alias web10='ssh brian@web10.sourcekit.com'
+# Work aliases
+alias avalon='ssh -Y brian@avalon.sourcekit.com'
+alias sprint='ssh -Y brian@sprint.testology.net'
+alias staging='ssh -Y brian@staging.testology.net'
+alias dev='ssh -Y brian@dev.testology.net'
+alias release='ssh -Y brian@release.testology.net'
+alias live='ssh -Y brian@live.testology.net'
+alias indigo='ssh -Y brian@indigo.testology.net'
+alias red='ssh -Y brian@red.testology.net'
+alias orange='ssh -Y brian@orange.testology.net'
+alias white='ssh -Y brian@white.testology.net'
+alias navy='ssh -Y brian@navy.testology.net'
+alias mercury='ssh -Y brian@mercury.sourcekit.com'
+alias vulcan='ssh -Y brian@vulcan.sourcekit.com'
+alias camelot='ssh -Y brian@camelot.sourcekit.com'
+alias web1='ssh -Y brian@web1.sourcekit.com'
+alias web2='ssh -Y brian@web2.sourcekit.com'
+alias web3='ssh -Y brian@web3.sourcekit.com'
+alias web4='ssh -Y brian@web4.sourcekit.com'
+alias web5='ssh -Y brian@web5.sourcekit.com'
+alias web6='ssh -Y brian@web6.sourcekit.com'
+alias web7='ssh -Y brian@web7.sourcekit.com'
+alias web8='ssh -Y brian@web8.sourcekit.com'
+alias web9='ssh -Y brian@web9.sourcekit.com'
+alias web10='ssh -Y brian@web10.sourcekit.com'
+alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
 
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
@@ -282,8 +295,11 @@ function fix_keyboard {
 
 #$ZDOTDIR/bin/screenfetch.sh
 
-has_tmux=`which keychain`
-has_tmux=$?
-if [ $has_tmux -eq 0 ]; then
+has_keychain=`which keychain`
+has_keychain=$?
+if [ $has_keychain -eq 0 ]; then
     eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
 fi
+
+
+python ~/bin/loudbot.py
