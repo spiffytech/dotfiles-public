@@ -17,7 +17,7 @@ setopt hist_expire_dups_first # expire duplicates in history first
 setopt hist_ignore_dups # don't add dupes to history
 
 
-# completion and expanstion stuff
+# completion and expansion stuff
 setopt PROMPT_SUBST
 setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zshexpn` for more info.
 setopt correct  # Offer to correct mistyped commands
@@ -28,6 +28,10 @@ zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
 autoload -U compinit
 compinit
 
+# Tab-complete command parameters from man pages
+zstyle ':completion:*:manuals'    separate-sections true
+zstyle ':completion:*:manuals.*'  insert-sections   true
+zstyle ':completion:*:man:*'      menu yes select
 
 #bindkey '^' reverse-menu-complete  # Shift-tab
 #bindkey "^${key[Left]}" emacs-backward-word
@@ -291,9 +295,9 @@ function fix_keyboard {
 
 #$ZDOTDIR/bin/screenfetch.sh
 
-has_tmux=`which keychain`
-has_tmux=$?
-if [ $has_tmux -eq 0 ]; then
+has_keychain=`which keychain`
+has_keychain=$?
+if [ $has_keychain -eq 0 ]; then
     eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
 fi
 
