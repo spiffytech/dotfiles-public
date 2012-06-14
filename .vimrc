@@ -38,7 +38,7 @@ set mouse-=a  " Disable mouse so you can actually copy/paste with your real clip
 syntax on  " Syntax highlighting!
 set ttyfast  " Smooths out Vim scrolling
 set lazyredraw  " Buffers screen updates instead of playing them constantly. Helps with draw speed with e.g. syntax highlighting
-set list  " Reveal tabs and trailing spaces  " http://www.iovene.com/61/
+"set list  " Reveal tabs and trailing spaces  " http://www.iovene.com/61/
 set listchars=tab:>-,trail:.,extends:#  " Make tabs show up as 4 spaces wide, no EOL char (set 'eol' here to show one)
 
 colorscheme solarized
@@ -70,10 +70,13 @@ set cursorline  " Horizontal line where cursor is
 highlight CursorLine cterm=underline  " Solarized theme overrides the underline
 
 set number  " Show line numbers. rnu overrides this if Vim >= 7.3 is available
-set rnu  " Displayed line numbers are relative to your current position
-set undofile  " Sets a permanent undo file, so your undo history is preserved between Vim sessions
-set undodir=/tmp  " Store the undo files here
-set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default with a real encryption function
+
+if version >= 703
+    set rnu  " Displayed line numbers are relative to your current position
+    set undofile  " Sets a permanent undo file, so your undo history is preserved between Vim sessions
+    set undodir=/tmp  " Store the undo files here
+    set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default with a real encryption function
+endif
 
 "let g:syntastic_auto_loc_list=1  " Used for the Vim xdebug extension that
 "works like garbage
