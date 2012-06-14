@@ -69,11 +69,11 @@ map <Leader>wb <Plug>VimwikiGoBackLink  " Go to the previous Vom Wiki page you h
 set cursorline  " Horizontal line where cursor is
 highlight CursorLine cterm=underline  " Solarized theme overrides the underline
 
-set rnu  " Displayed line numbers aro relative to your current position
+set number  " Show line numbers. rnu overrides this if Vim >= 7.3 is available
+set rnu  " Displayed line numbers are relative to your current position
 set undofile  " Sets a permanent undo file, so your undo history is preserved between Vim sessions
-set undodir=/tmp
-set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default
-"set number  " Show line numbers. Disabled in favor of relative line numbers in Vim >= 7.3
+set undodir=/tmp  " Store the undo files here
+set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default with a real encryption function
 
 "let g:syntastic_auto_loc_list=1  " Used for the Vim xdebug extension that
 "works like garbage
