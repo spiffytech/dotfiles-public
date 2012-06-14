@@ -28,7 +28,8 @@ scriptVersion="2.3.8"
 
 # This sets the information to be displayed. Available: distro, Kernel, DE, WM, Win_theme, Theme, Icons, Font, Background, ASCII. To get just the information, and not a text-art logo, you would take "ASCII" out of the below variable.
 #display="host distro kernel uptime shell res de wm wmtheme gtk icons font background"
-display=( host distro kernel uptime shell res de wm wmtheme gtk )
+#display=( host distro kernel uptime shell res de wm wmtheme gtk )
+display=( host distro uptime shell )
 # Display Type: ASCII or Text
 display_type="ASCII"
 

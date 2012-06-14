@@ -302,4 +302,6 @@ if [ $has_keychain -eq 0 ]; then
 fi
 
 
+~/bin/screenfetch.sh
+echo
 python ~/bin/loudbot.py
