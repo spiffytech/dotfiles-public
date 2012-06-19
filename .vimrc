@@ -41,6 +41,10 @@ set lazyredraw  " Buffers screen updates instead of playing them constantly. Hel
 "set list  " Reveal tabs and trailing spaces  " http://www.iovene.com/61/
 set listchars=tab:>-,trail:.,extends:#  " Make tabs show up as 4 spaces wide, no EOL char (set 'eol' here to show one)
 
+" Do normal filename tab completion, not cycle-through-all completion
+set wildmode=longest,list,full
+set wildmenu
+
 colorscheme solarized
 
 "Enable omni-compl (Intellisense)
