@@ -74,7 +74,10 @@ alias la='ls -lA'
 alias lah='ls -lAh'
 if [ $OS = 'Darwin' ]; then
     alias ls='ls -G'
+    alias cssh='~/Downloads/csshX-0.74/csshX'
+    alias weball='cssh --screen 2 brian@web{{1..2},{4..10}}.sourcekit.com'
 else
+    alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
     alias ls='ls --color=auto'
 fi
 
@@ -87,7 +90,6 @@ alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r do
 alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
-alias cssh='~/Downloads/csshX-0.74/csshX --screen 2'
 alias hgrep='history | grep'
 # Location aliases
 alias -g ...='../..'
@@ -140,7 +142,6 @@ alias web7='ssh -Y brian@web7.sourcekit.com'
 alias web8='ssh -Y brian@web8.sourcekit.com'
 alias web9='ssh -Y brian@web9.sourcekit.com'
 alias web10='ssh -Y brian@web10.sourcekit.com'
-alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
 
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
