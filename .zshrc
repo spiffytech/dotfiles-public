@@ -120,7 +120,7 @@ alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroo
 # Work aliases
 alias avalon='ssh -Y brian@avalon.sourcekit.com'
 alias sprint='ssh -Y brian@sprint.testology.net'
-alias staging='ssh -Y brian@staging.testology.net'
+alias staging='ssh -Y brian@staging1.testology.net'
 alias dev='ssh -Y brian@dev.testology.net'
 alias release='ssh -Y brian@release.testology.net'
 alias live='ssh -Y brian@live.testology.net'
