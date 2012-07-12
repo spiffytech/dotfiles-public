@@ -60,7 +60,7 @@ OS=`uname`
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
-export PATH=~/Documents/contactology-app/bin:~/Documents/contactology-app/php/bin:$PATH
+export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:$PATH
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
 fi
@@ -118,7 +118,7 @@ alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroo
 # Work aliases
 alias avalon='ssh -Y brian@avalon.sourcekit.com'
 alias sprint='ssh -Y brian@sprint.testology.net'
-alias staging='ssh -Y brian@staging.testology.net'
+alias staging='ssh -Y brian@staging1.testology.net'
 alias dev='ssh -Y brian@dev.testology.net'
 alias release='ssh -Y brian@release.testology.net'
 alias live='ssh -Y brian@live.testology.net'
@@ -302,6 +302,6 @@ if [ $has_keychain -eq 0 ]; then
 fi
 
 
-~/bin/screenfetch.sh
+$ZDOTDIR/bin/screenfetch.sh
 echo
-python ~/bin/loudbot.py
+python $ZDOTDIR/bin/loudbot.py
