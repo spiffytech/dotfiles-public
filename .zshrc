@@ -143,6 +143,10 @@ alias web8='ssh -Y brian@web8.sourcekit.com'
 alias web9='ssh -Y brian@web9.sourcekit.com'
 alias web10='ssh -Y brian@web10.sourcekit.com'
 
+function uslist {
+    ls | grep $1 | sort -t '.' -k 2,2 -n
+}
+
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
