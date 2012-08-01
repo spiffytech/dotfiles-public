@@ -60,7 +60,7 @@ OS=`uname`
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
-export PATH=~/Documents/contactology-app/bin:~/Documents/contactology-app/php/bin:$PATH
+export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:$PATH
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
 fi
@@ -74,7 +74,10 @@ alias la='ls -lA'
 alias lah='ls -lAh'
 if [ $OS = 'Darwin' ]; then
     alias ls='ls -G'
+    alias cssh='~/Downloads/csshX-0.74/csshX'
+    alias weball='cssh --screen 2 brian@web{{1..2},{4..10}}.sourcekit.com'
 else
+    alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
     alias ls='ls --color=auto'
 fi
 
@@ -87,7 +90,6 @@ alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r do
 alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
-alias cssh='~/Downloads/csshX-0.74/csshX --screen 2'
 alias hgrep='history | grep'
 # Location aliases
 alias -g ...='../..'
@@ -118,7 +120,7 @@ alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroo
 # Work aliases
 alias avalon='ssh -Y brian@avalon.sourcekit.com'
 alias sprint='ssh -Y brian@sprint.testology.net'
-alias staging='ssh -Y brian@staging.testology.net'
+alias staging='ssh -Y brian@staging1.testology.net'
 alias dev='ssh -Y brian@dev.testology.net'
 alias release='ssh -Y brian@release.testology.net'
 alias live='ssh -Y brian@live.testology.net'
@@ -140,7 +142,6 @@ alias web7='ssh -Y brian@web7.sourcekit.com'
 alias web8='ssh -Y brian@web8.sourcekit.com'
 alias web9='ssh -Y brian@web9.sourcekit.com'
 alias web10='ssh -Y brian@web10.sourcekit.com'
-alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
 
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
@@ -302,6 +303,6 @@ if [ $has_keychain -eq 0 ]; then
 fi
 
 
-~/bin/screenfetch.sh
+$ZDOTDIR/bin/screenfetch.sh
 echo
-python ~/bin/loudbot.py
+python $ZDOTDIR/bin/loudbot.py
