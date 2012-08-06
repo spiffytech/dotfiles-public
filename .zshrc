@@ -132,6 +132,7 @@ alias navy='ssh -Y brian@navy.testology.net'
 alias mercury='ssh -Y brian@mercury.sourcekit.com'
 alias vulcan='ssh -Y brian@vulcan.sourcekit.com'
 alias camelot='ssh -Y brian@camelot.sourcekit.com'
+alias shangrila='ssh -Y brian@shangrila.sourcekit.com'
 alias web1='ssh -Y brian@web1.sourcekit.com'
 alias web2='ssh -Y brian@web2.sourcekit.com'
 alias web3='ssh -Y brian@web3.sourcekit.com'
@@ -142,6 +143,7 @@ alias web7='ssh -Y brian@web7.sourcekit.com'
 alias web8='ssh -Y brian@web8.sourcekit.com'
 alias web9='ssh -Y brian@web9.sourcekit.com'
 alias web10='ssh -Y brian@web10.sourcekit.com'
+alias wally='ssh wally@wally.sourcekit.com -p 2222'
 
 function uslist {
     ls | grep $1 | sort -t '.' -k 2,2 -n
