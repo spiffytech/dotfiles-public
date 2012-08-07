@@ -59,7 +59,7 @@ filetype plugin on
 let g:pydiction_location = '~/.vim/after/pydiction/complete-dict'
 let g:pydiction_menu_height=15
 
-set lbr  " Makes vim wrap lines on word boundaries, not in the middle of a word. 
+set linebreak  " Makes vim wrap lines on word boundaries, not in the middle of a word. 
 
 " C# folding : http://vim.wikia.com/wiki/Syntax-based_folding, see comment by
 "au FileType cs set foldmethod=marker
@@ -91,15 +91,31 @@ endif
 autocmd! BufRead    *.svn-base execute 'doautocmd filetypedetect BufRead ' . expand('%:r')
 autocmd! BufNewFile *.svn-base execute 'doautocmd filetypedetect BufNewFile ' . expand('%:r')
 
-setlocal foldmethod=manual  " Don't use the PHP syntax folding 
+"setlocal foldmethod=manual  " Don't use the PHP syntax folding 
 "EnableFastPHPFolds  " Turn on PHP fast folds 
 
 " Detects whether the open file is mostly tabs or spaces and changes expandtab
 " accordingly. 
 " http://www.outflux.net/blog/archives/2007/03/09/detecting-space-vs-tab-indentation-type-in-vim/
-function Kees_settabs()
-    if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
-        set noet ts=4 sw=4 list!
-    endif
-endfunction
-autocmd BufReadPost * call Kees_settabs()
+"function Kees_settabs()
+"    if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
+"        set noet ts=4 sw=4 list!
+"    endif
+"endfunction
+"autocmd BufReadPost * call Kees_settabs()
+
+" Hide search results when pressing 'space'. Helps after performing a
+" search/replace
+:noremap <silent> <Space> :silent noh<Bar>echo<CR>
+
+set fileformats+=dos  " Should prevent Vim from adding random newlines to files. http://stackoverflow.com/questions/1050640/vim-disable-automatic-newline-at-end-of-file
+
+" Splits appear in sensible places- on the right, or below
+set splitbelow
+set splitright
+
+set gdefault  " Search and replace defaults to replacing all occurrances. Use /g to employ normal behavior.
+set nobackup  " No files~ backup files
+
+" Jumping centers the screen
+nnoremap n nzz
