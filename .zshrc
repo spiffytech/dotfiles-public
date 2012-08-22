@@ -310,6 +310,6 @@ if [ $has_keychain -eq 0 ]; then
 fi
 
 
-$ZDOTDIR/bin/screenfetch.sh
-echo
+#$ZDOTDIR/bin/screenfetch.sh
+#echo
 python $ZDOTDIR/bin/loudbot.py
