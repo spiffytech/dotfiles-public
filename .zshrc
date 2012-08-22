@@ -126,12 +126,14 @@ alias release='ssh -Y brian@release.testology.net'
 alias live='ssh -Y brian@live.testology.net'
 alias indigo='ssh -Y brian@indigo.testology.net'
 alias red='ssh -Y brian@red.testology.net'
+alias rose='ssh -Y brian@rose.testology.net'
 alias orange='ssh -Y brian@orange.testology.net'
 alias white='ssh -Y brian@white.testology.net'
 alias navy='ssh -Y brian@navy.testology.net'
 alias mercury='ssh -Y brian@mercury.sourcekit.com'
 alias vulcan='ssh -Y brian@vulcan.sourcekit.com'
 alias camelot='ssh -Y brian@camelot.sourcekit.com'
+alias shangrila='ssh -Y brian@shangrila.sourcekit.com'
 alias web1='ssh -Y brian@web1.sourcekit.com'
 alias web2='ssh -Y brian@web2.sourcekit.com'
 alias web3='ssh -Y brian@web3.sourcekit.com'
@@ -142,6 +144,11 @@ alias web7='ssh -Y brian@web7.sourcekit.com'
 alias web8='ssh -Y brian@web8.sourcekit.com'
 alias web9='ssh -Y brian@web9.sourcekit.com'
 alias web10='ssh -Y brian@web10.sourcekit.com'
+alias wally='ssh wally@wally.sourcekit.com -p 2222'
+
+function uslist {
+    ls | grep $1 | sort -t '.' -k 2,2 -n
+}
 
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
@@ -303,6 +310,6 @@ if [ $has_keychain -eq 0 ]; then
 fi
 
 
-$ZDOTDIR/bin/screenfetch.sh
-echo
+#$ZDOTDIR/bin/screenfetch.sh
+#echo
 python $ZDOTDIR/bin/loudbot.py
