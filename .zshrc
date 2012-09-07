@@ -204,7 +204,7 @@ haste() {
     sed -e 's/.*\.//')\n/"
 }
 
-alias ack='ack --type-add php=.tpl --type-add html=.tpl'
+alias ack='ack --type-add php=.tpl --type-add html=.tpl --type-set less=.less'
 
 
 # Sets the tmux window title when you open a file in Vim
