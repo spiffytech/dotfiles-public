@@ -75,9 +75,9 @@ alias lah='ls -lAh'
 if [ $OS = 'Darwin' ]; then
     alias ls='ls -G'
     alias cssh='~/Downloads/csshX-0.74/csshX'
-    alias weball='cssh --screen 2 brian@web{{1..2},{4..10}}.sourcekit.com'
+    #alias weball='cssh --screen 2 brian@web{{1..2},{4..10}}.sourcekit.com'
 else
-    alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
+    #alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
     alias ls='ls --color=auto'
 fi
 
@@ -300,6 +300,28 @@ function fix_keyboard {
     [[ -n "${key[Left]}"    ]]  && bindkey  "${key[Left]}"    backward-char
     [[ -n "${key[Right]}"   ]]  && bindkey  "${key[Right]}"   forward-char
 }
+
+
+function tssh {
+    for server in $@
+    do
+        tmux send-keys "ssh $server"
+        tmux send-keys "Enter"
+        tmux select-layout tiled
+        tmux split-window
+    done
+    tmux kill-pane
+    tmux set-window-option synchronize-panes on 
+}
+
+
+function weball {
+    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com
+}
+function websome {
+    tssh brian@web{7..10}.sourcekit.com
+}
+
 
 #$ZDOTDIR/bin/screenfetch.sh
 
