@@ -1,0 +1,8 @@
+[color]
+	ui = auto
+[user]
+	email = brian@contactology.com
+	name = Brian Cottingham
+[alias]
+	w = diff --word-diff
+	s = status --short
