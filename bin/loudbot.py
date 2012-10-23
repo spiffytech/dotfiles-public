@@ -31,10 +31,11 @@ try:
         louds = list(f)
 
     if len(louds) < 5:
+        if len(louds) == 1 and louds[0].strip() == "<noloud>":
+            print "not louding"
+            sys.exit(1)
         update_louds()
     else:
-        if louds[0] == "<noloud>":
-            sys.exit(1)
         print louds[0]
         with open(os.getenv("HOME") + "/.louds-new", "a") as f:
             for loud in louds[1:]:
@@ -44,7 +45,6 @@ except IOError:
     try:
         update_louds()
     except (RuntimeError, IOError):
-        print "NO CAN LOUD"
         with open(os.getenv("HOME") + "/.louds") as f:
             f.write("<noloud>")
 except RuntimeError:
