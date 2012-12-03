@@ -17,7 +17,7 @@ set showcmd	 " Show (partial) command in status line.
 set showmatch  " Show matching brackets.
 "set hidden  " Hide buffers when they are abandoned
 
-set autoindent
+set autoindent  " Match your current indentation level when creating a new line
 "set smartindent  " Only helpful for C-like files. Disables autoindent
 set hlsearch  " Highlight all search results
 set shiftwidth=4  " Tab = 4 spaces
@@ -45,6 +45,10 @@ set listchars=tab:>-,trail:.,extends:#  " Make tabs show up as 4 spaces wide, no
 set wildmode=longest,list,full
 set wildmenu
 
+" Keep five lines visible above and below the cursor when scrolling
+set scrolloff=5
+set sidescrolloff=5
+
 colorscheme solarized
 
 "Enable omni-compl (Intellisense)
@@ -66,6 +70,9 @@ set linebreak  " Makes vim wrap lines on word boundaries, not in the middle of a
 "au FileType cs set foldmarker={,}
 "au FileType cs set foldtext=substitute(getline(v:foldstart),'{.*','{...}',)
 "au FileType cs set foldlevelstart=2
+
+" Give PHP template files appropriate highlighting
+au BufNewFile,BufRead *.tpl set filetype=php
 
 map <Leader>wb <Plug>VimwikiGoBackLink  " Go to the previous Vom Wiki page you had open
 
@@ -90,6 +97,7 @@ endif
 "  
 autocmd! BufRead    *.svn-base execute 'doautocmd filetypedetect BufRead ' . expand('%:r')
 autocmd! BufNewFile *.svn-base execute 'doautocmd filetypedetect BufNewFile ' . expand('%:r')
+au BufWritePost *.coffee silent CoffeeMake!
 
 "setlocal foldmethod=manual  " Don't use the PHP syntax folding 
 "EnableFastPHPFolds  " Turn on PHP fast folds 
@@ -104,10 +112,6 @@ autocmd! BufNewFile *.svn-base execute 'doautocmd filetypedetect BufNewFile ' . 
 "endfunction
 "autocmd BufReadPost * call Kees_settabs()
 
-" Hide search results when pressing 'space'. Helps after performing a
-" search/replace
-:noremap <silent> <Space> :silent noh<Bar>echo<CR>
-
 set fileformats+=dos  " Should prevent Vim from adding random newlines to files. http://stackoverflow.com/questions/1050640/vim-disable-automatic-newline-at-end-of-file
 
 " Splits appear in sensible places- on the right, or below
@@ -116,6 +120,14 @@ set splitright
 
 set gdefault  " Search and replace defaults to replacing all occurrances. Use /g to employ normal behavior.
 set nobackup  " No files~ backup files
+set directory=~/.vim/tmp  " Put temp files here instead of the same dir as the originating file
 
 " Jumping centers the screen
 nnoremap n nzz
+
+" <space> hides search results
+:noremap <silent> <Space> :silent noh<Bar>echo<CR>
+
+" Make j/k work as expected with wrapped lines
+map j gj
+map k gk

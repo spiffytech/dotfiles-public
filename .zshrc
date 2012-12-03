@@ -76,9 +76,9 @@ alias lah='ls -lAh'
 if [ $OS = 'Darwin' ]; then
     alias ls='ls -G'
     alias cssh='~/Downloads/csshX-0.74/csshX'
-    alias weball='cssh --screen 2 brian@web{{1..2},{4..10}}.sourcekit.com'
+    #alias weball='cssh --screen 2 brian@web{{1..2},{4..10}}.sourcekit.com'
 else
-    alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
+    #alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
     alias ls='ls --color=auto'
 fi
 
@@ -92,6 +92,8 @@ alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
 alias hgrep='history | grep'
+alias update_dbdo='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/UpdateDBDO.php'
+alias ir='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/InstanceRunner.php'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -212,7 +214,7 @@ haste() {
     sed -e 's/.*\.//')\n/"
 }
 
-alias ack='ack --type-add php=.tpl --type-add html=.tpl'
+alias ack='ack --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less'
 
 
 # Sets the tmux window title when you open a file in Vim
@@ -301,6 +303,28 @@ function fix_keyboard {
     [[ -n "${key[Left]}"    ]]  && bindkey  "${key[Left]}"    backward-char
     [[ -n "${key[Right]}"   ]]  && bindkey  "${key[Right]}"   forward-char
 }
+
+
+function tssh {
+    for server in $@
+    do
+        tmux send-keys "ssh $server"
+        tmux send-keys "Enter"
+        tmux select-layout tiled
+        tmux split-window
+    done
+    tmux kill-pane
+    tmux set-window-option synchronize-panes on 
+}
+
+
+function weball {
+    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com
+}
+function websome {
+    tssh brian@web{7..10}.sourcekit.com
+}
+
 
 #$ZDOTDIR/bin/screenfetch.sh
 

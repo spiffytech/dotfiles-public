@@ -1,8 +1,8 @@
 macro index <f1> '<change-folder>~/mail/spiffytechGmail/INBOX<enter>'
 macro index <f2> '<change-folder>~/mail/contactology/INBOX<enter>'
 
-folder-hook ~/mail/spiffytechGmail 'set folder=~/mail/spiffytechGmail from=spiffytech@gmail.com sendmail="/usr/bin/msmtp -a default" query_command="goobook -c ~/.goobookrc-spiffytech_gmail query %s"'
-folder-hook ~/mail/contactology 'set folder=~/mail/contactology from=brian@contactology.com sendmail="/usr/bin/msmtp -a contactology" query_command="goobook -c ~/.goobookrc-contactology query %s"'
+folder-hook ~/mail/spiffytechGmail/INBOX 'set folder=~/mail/spiffytechGmail from=spiffytech@gmail.com sendmail="msmtp -a default" query_command="goobook -c ~/.goobookrc-spiffytech_gmail query %s"'
+folder-hook ~/mail/contactology/INBOX 'set folder=~/mail/contactology from=brian@contactology.com sendmail="msmtp -a contactology" query_command="goobook -c ~/.goobookrc-contactology query %s"'
 
 # options
 set mbox_type   = Maildir # mailbox type
@@ -17,8 +17,11 @@ mailboxes +INBOX +all_mail +sent +drafts +spam +trash
 
 # bindings
 macro index D "<save-message>+trash<enter>"   "move message to the trash"
+macro pager D "<save-message>+trash<enter>"   "move message to the trash"
 macro index S "<save-message>+spam<enter>"    "mark message as spam"
+macro pager S "<save-message>+spam<enter>"    "mark message as spam"
 macro index A "<save-message>+all_mail<enter>"    "archive message"
+macro pager A "<save-message>+all_mail<enter>"    "archive message"
 
 # Default identity
 set realname            = "Brian Cottingham"            # who am i?
@@ -65,6 +68,7 @@ mime_lookup application/octet-stream  # Does something to help with Office files
 
 set sleep_time=-1
 set date_format = "%m/%d/%y at %I:%M%P"
+set index_format="%4C %Z %{%Y-%m-%d %H:%M} %3N  %-15.15F (%4l)"  # This one actually sets the date format in the message index
 alternates spiffytech@gmail.com spiffytech@spiffyte.ch b.p.cottingham@gmail.com brian@contactology.com bpcottin@ncsu.edu
 source ~/.mutt-colors-solarized
 
