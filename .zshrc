@@ -65,6 +65,7 @@ if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
 fi
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
+PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin/
 
 
 # Aliases
@@ -188,7 +189,7 @@ else
 fi
 PROMPT='
 
-%{$prompt_default_color%} %~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}_
+%{$prompt_default_color%}%~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}_
 
 $ %{${fg[default]}%}'
 
