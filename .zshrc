@@ -65,6 +65,7 @@ if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
 fi
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
+PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin/
 
 
 # Aliases
@@ -91,6 +92,8 @@ alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
 alias hgrep='history | grep'
+alias update_dbdo='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/UpdateDBDO.php'
+alias ir='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/InstanceRunner.php'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -190,7 +193,7 @@ else
 fi
 PROMPT='
 
-%{$prompt_default_color%} %~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}_
+%{$prompt_default_color%}%~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}_
 
 $ %{${fg[default]}%}'
 
@@ -215,7 +218,7 @@ haste() {
     sed -e 's/.*\.//')\n/"
 }
 
-alias ack='ack --type-add php=.tpl --type-add html=.tpl --type-set less=.less'
+alias ack='ack --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less'
 
 
 # Sets the tmux window title when you open a file in Vim

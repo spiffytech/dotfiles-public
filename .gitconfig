@@ -6,3 +6,10 @@
 [alias]
 	w = diff --word-diff
 	s = status --short
+[merge]
+	conflictstyle = diff3
+[rerere]
+	enabled = 1
+[push]
+	default = current
+	default = upstream
