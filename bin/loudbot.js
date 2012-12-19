@@ -8,17 +8,14 @@ loudfile = "/home/spiffytech/2.louds";
 
 step(
     function() {
-        fs.exists(loudfile, this);
-    },
-    function(exists) {
-        if(exists) {
-            fs.readFile(loudfile, this);
-        } else {
-            this(null, "");
-        }
+        fs.readFile(loudfile, this);
     },
     function(err, data) {
-        num_entries = data.toString().split("\n").length;
+        if(data !== undefined) {
+            num_entries = data.toString().split("\n").length;
+        } else {
+            num_entries = 0;
+        }
         if(num_entries < 5) {
             for(var i=num_entries; i<15; i++) {
                 step(
