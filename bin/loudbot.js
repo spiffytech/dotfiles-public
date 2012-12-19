@@ -3,17 +3,53 @@ var step = require("step");
 var Requester = require("requester");
 requester = new Requester();
 
+loudurl = "http://isuckatdomains.net:3168/loud.pl"
+loudfile = "/home/spiffytech/2.louds";
+
 step(
     function() {
-        requester.get("http://isuckatdomains.net:3168/loud.pl", this);
+        fs.exists(loudfile, this);
     },
-    function(body) {
-        this.body = body;
-        fs.readFile("~/.louds", this);
+    function(exists) {
+        if(exists) {
+            fs.readFile(loudfile, this);
+        } else {
+            this(null, "");
+        }
     },
     function(err, data) {
-        console.log(err);
-        console.log(data);
-        console.log(this.body);
+        num_entries = data.toString().split("\n").length;
+        if(num_entries < 5) {
+            for(var i=num_entries; i<15; i++) {
+                step(
+                    function() {
+                        requester.get(loudurl, this);
+                    }, 
+                    function(body) {
+                        fs.appendFile(loudfile, "\n" + body);
+                    }
+                );
+            }
+
+            step(
+                function() {
+                    requester.get(loudurl, this);
+                }, 
+                function(body) {
+                    console.log(body);
+                }
+            );
+        } else{
+            step(
+                function() {
+                    fs.readFile(loudfile, this);
+                },
+                function(err, data) {
+                    datas = data.toString().split("\n");
+                    console.log(datas[0]);
+                    fs.writeFile(loudfile, datas.slice(1).join("\n"));
+                }
+            );
+        }
     }
-)
+);
