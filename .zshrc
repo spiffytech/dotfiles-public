@@ -64,8 +64,7 @@ export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactol
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
 fi
-#export OPCODEDIR64=/usr/local/lib/csound/plugins64
-PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin/
+export PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin/
 
 
 # Aliases
@@ -212,6 +211,27 @@ haste() {
     curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
     sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
     sed -e 's/.*\.//')\n/"
+}
+
+coffeewatch() {
+    while true; do
+        inotifywait --format '%w' -qe modify -e create **/*.coffee
+        for f in `ls **/*.coffee`; do
+            echo "Recompiling $f"
+            jsfile=${f%.*}.js
+            jsfilename=`basename $jsfile`
+            jsdirname=`dirname $jsfile`
+            coffeefilename=`basename $f`
+
+            coffee --js -i $f > $jsfile && 
+            cd $jsdirname
+            echo '' >> $jsfilename
+            echo '//@ sourceMappingURL='$jsfilename'.map' >> $jsfilename
+            coffee --source-map -i $coffeefilename > $jsfilename.map
+            cd - >> /dev/null
+        done 
+        echo 
+    done
 }
 
 alias ack='ack --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less'
