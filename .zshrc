@@ -59,7 +59,7 @@ OS=`uname`
 # Paths and files
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
-PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
+PATH=/usr/local/bin:$ZDOTDIR/bin:$PATH
 export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:$PATH
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
@@ -128,14 +128,18 @@ alias release='ssh -Y brian@release.testology.net'
 alias live='ssh -Y brian@live.testology.net'
 alias indigo='ssh -Y brian@indigo.testology.net'
 alias red='ssh -Y brian@red.testology.net'
-alias rose='ssh -Y brian@rose.testology.net'
 alias orange='ssh -Y brian@orange.testology.net'
+alias yellow='ssh -Y brian@yellow.testology.net'
+alias green='ssh -Y brian@green.testology.net'
+alias rose='ssh -Y brian@rose.testology.net'
 alias white='ssh -Y brian@white.testology.net'
+alias pink='ssh -Y brian@pink.testology.net'
 alias navy='ssh -Y brian@navy.testology.net'
 alias mercury='ssh -Y brian@mercury.sourcekit.com'
 alias vulcan='ssh -Y brian@vulcan.sourcekit.com'
 alias camelot='ssh -Y brian@camelot.sourcekit.com'
 alias shangrila='ssh -Y brian@shangrila.sourcekit.com'
+alias midgard='ssh -Y brian@midgard.sourcekit.com'
 alias web1='ssh -Y brian@web1.sourcekit.com'
 alias web2='ssh -Y brian@web2.sourcekit.com'
 alias web3='ssh -Y brian@web3.sourcekit.com'
@@ -252,9 +256,10 @@ function vim {
     if [ $has_vimx -eq 0 ]; then
         vimx $@
     else 
-        if [ -e /usr/bin/vim ]; then
+        if [ -e /usr/local/bin/vim ]; then
+            /usr/local/bin/vim $@
+        elif [ -e /usr/bin/vim ]; then
             /usr/bin/vim $@
-
         else
             $ZDOTDIR/bin/vim $@
         fi
