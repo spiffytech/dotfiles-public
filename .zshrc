@@ -60,12 +60,13 @@ OS=`uname`
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
-export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:$PATH
+export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:~/helpers:$PATH
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
 fi
 #export OPCODEDIR64=/usr/local/lib/csound/plugins64
-PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin/
+PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin
+PATH=$PATH:/campaigns/bin:/campaigns/php/bin
 
 
 # Aliases
@@ -208,13 +209,18 @@ $ %{${fg[default]}%}'
 #precmd_functions+='precmd_update_git_vars'
 #chpwd_functions+='chpwd_update_git_vars'
 
+spm() {
+    /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/GetSendsPerMinute.php -c $1 --campaignid $2
+}
+
+
 haste() { 
     curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
     sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
     sed -e 's/.*\.//')\n/"
 }
 
-alias ack='ack --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less'
+alias ack='ack --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear'
 
 
 # Sets the tmux window title when you open a file in Vim
