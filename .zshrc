@@ -64,7 +64,6 @@ export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactol
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
 fi
-#export OPCODEDIR64=/usr/local/lib/csound/plugins64
 PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin
 PATH=$PATH:/campaigns/bin:/campaigns/php/bin
 
@@ -122,22 +121,25 @@ alias sbox='ssh -XC root@files.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
-alias avalon='ssh -Y brian@avalon.sourcekit.com'
-alias sprint='ssh -Y brian@sprint.testology.net'
 alias staging='ssh -Y brian@staging1.testology.net'
 alias dev='ssh -Y brian@dev.testology.net'
-alias release='ssh -Y brian@release.testology.net'
 alias live='ssh -Y brian@live.testology.net'
-alias indigo='ssh -Y brian@indigo.testology.net'
+alias white='ssh -Y brian@white.testology.net'
 alias red='ssh -Y brian@red.testology.net'
 alias rose='ssh -Y brian@rose.testology.net'
+alias pink='ssh -Y brian@pink.testology.net'
 alias orange='ssh -Y brian@orange.testology.net'
-alias white='ssh -Y brian@white.testology.net'
+alias yellow='ssh -Y brian@yellow.testology.net'
+alias green='ssh -Y brian@green.testology.net'
+alias indigo='ssh -Y brian@indigo.testology.net'
 alias navy='ssh -Y brian@navy.testology.net'
+alias avalon='ssh -Y brian@avalon.sourcekit.com'
+alias send1='ssh -Y brian@send1.sourcekit.com'
 alias mercury='ssh -Y brian@mercury.sourcekit.com'
 alias vulcan='ssh -Y brian@vulcan.sourcekit.com'
 alias camelot='ssh -Y brian@camelot.sourcekit.com'
 alias shangrila='ssh -Y brian@shangrila.sourcekit.com'
+alias midgard='ssh -Y brian@midgard.sourcekit.com'
 alias web1='ssh -Y brian@web1.sourcekit.com'
 alias web2='ssh -Y brian@web2.sourcekit.com'
 alias web3='ssh -Y brian@web3.sourcekit.com'
@@ -222,6 +224,27 @@ haste() {
 
 alias ack='ack --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear'
 
+coffeewatch() {
+    while true; do
+        inotifywait --format '%w' -qe modify -e create **/*.coffee
+        for f in `ls **/*.coffee`; do
+            echo "Recompiling $f"
+            jsfile=${f%.*}.js
+            jsfilename=`basename $jsfile`
+            jsdirname=`dirname $jsfile`
+            coffeefilename=`basename $f`
+
+            coffee --js -i $f > $jsfile && 
+            cd $jsdirname
+            echo '' >> $jsfilename
+            echo '//@ sourceMappingURL='$jsfilename'.map' >> $jsfilename
+            coffee --source-map -i $coffeefilename > $jsfilename.map
+            cd - >> /dev/null
+        done 
+        echo 
+    done
+}
+
 
 # Sets the tmux window title when you open a file in Vim
 function vim {
@@ -238,9 +261,10 @@ function vim {
     if [ $has_vimx -eq 0 ]; then
         vimx $@
     else 
-        if [ -e /usr/bin/vim ]; then
+        if [ -e /usr/local/bin/vim ]; then
+            /usr/local/bin/vim $@
+        elif [ -e /usr/bin/vim ]; then
             /usr/bin/vim $@
-
         else
             $ZDOTDIR/bin/vim $@
         fi
