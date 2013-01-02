@@ -1,10 +1,15 @@
+conf = require("./unstick_conf.json");
+
 var step = require("step");
+
+var exec = require("executive");
+var tty = require("tty");
 
 var util = require("util");
 var ImapConnection = require("imap").ImapConnection;
 var imap = new ImapConnection({
-    username: "brian@contactology.com",
-    password: "Re6UFdYshuDx",
+    username: conf.username,
+    password: conf.password,
     host: "imap.gmail.com",
     port: 993,
     secure: true
@@ -13,6 +18,7 @@ var imap = new ImapConnection({
 var MailParser = require("mailparser").MailParser;
 var mp = new MailParser();
 
+commands = [];
 
 step(
     function() {
@@ -25,7 +31,7 @@ step(
     function(err, mailbox) {
         if(err) ide(err);
 
-        imap.search(["UNSEEN", ["SINCE", "December 18, 2012"], ["!HEADER", "SUBJECT", "Unstuck Manually"]], this);
+        imap.search(["UNSEEN", ["SINCE", "December 21, 2012"], ["!HEADER", "SUBJECT", "Unstuck Manually"]], this);
     },
     function(err, results) {
         var fetch = imap.fetch(results, {
@@ -42,15 +48,25 @@ step(
             });
 
             msg.on("end", function() {
-                console.log(msg.headers.subject);
-                console.log(msg.headers.date);
-                //console.log(msg);
-                console.log(body.slice(0, 50));
+                var matches = body.match(/command=(.*--client [0-9]+ --campaign [0-9]+)/);
+                if(matches) {
+                    console.log(msg.headers.subject[0]);
+                    console.log(msg.headers.date[0]);
+                    console.log(matches[1]);
+                    cmd = matches[1];
+                    commands.push(cmd);
+                }
             });
         });
+
         fetch.on("end", function() {
             console.log("All done.");
             imap.logout();
+            if(commands.length > 0) {
+                exec(commands, function(err, stdout, stderr) {});
+            } else {
+                console.log("No campaigns to unstick");
+            }
         });
     }
 );

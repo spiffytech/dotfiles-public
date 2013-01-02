@@ -1,9 +1,13 @@
 var fs = require("fs");
 var step = require("step");
 var Requester = require("requester");
-requester = new Requester();
+requester = new Requester({
+    timeout: 1500,
+    retries: 0
+});
 
 loudurl = "http://isuckatdomains.net:3168/loud.pl"
+loudurl = "http://192.168.99.254"
 loudfile = "/home/spiffytech/2.louds";
 
 step(
@@ -23,7 +27,11 @@ step(
                         requester.get(loudurl, this);
                     }, 
                     function(body) {
-                        fs.appendFile(loudfile, "\n" + body);
+                        if(body !== null) {
+                            fs.appendFile(loudfile, "\n" + body);
+                        } else {
+                            throw "Not louding";
+                        }
                     }
                 );
             }
@@ -33,7 +41,9 @@ step(
                     requester.get(loudurl, this);
                 }, 
                 function(body) {
-                    console.log(body);
+                    if(body !== null) {
+                        console.log(body);
+                    }
                 }
             );
         } else{
