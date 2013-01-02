@@ -62,13 +62,8 @@ step(
         fetch.on("end", function() {
             console.log("All done.");
             imap.logout();
-            cmds = [];
-            for(command in commands) {
-                //cmd = "./test.sh";
-                cmds.push(cmd);
-            }
-            if(cmds.length > 0) {
-                exec(cmds, function(err, stdout, stderr) {});
+            if(commands.length > 0) {
+                exec(commands, function(err, stdout, stderr) {});
             } else {
                 console.log("No campaigns to unstick");
             }

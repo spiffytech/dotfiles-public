@@ -94,6 +94,7 @@ alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
 alias hgrep='history | grep'
 alias update_dbdo='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/UpdateDBDO.php'
 alias ir='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/InstanceRunner.php'
+alias unstick='node ~/bin/unstick.js'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -367,4 +368,5 @@ fi
 
 #$ZDOTDIR/bin/screenfetch.sh
 #echo
-python $ZDOTDIR/bin/loudbot.py
+#python $ZDOTDIR/bin/loudbot.py
+node $ZDOTDIR/bin/loudbot.js
