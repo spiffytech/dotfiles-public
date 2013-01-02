@@ -7,8 +7,7 @@ requester = new Requester({
 });
 
 loudurl = "http://isuckatdomains.net:3168/loud.pl"
-loudurl = "http://192.168.99.254"
-loudfile = "/home/spiffytech/2.louds";
+loudfile = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + "/.louds";
 
 step(
     function() {
