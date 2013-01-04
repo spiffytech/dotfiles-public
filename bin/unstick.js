@@ -81,8 +81,11 @@ var unstick_campaigns = function(messages) {
         console.log(message.headers.subject[0] + " " + message.headers.date[0]);
         console.log(message.command);
 
-        exec(message.command, function(err, stdout, stderr) {});
-        unstick_campaigns(messages);
+        exec(message.command, function(err, stdout, stderr) {
+            (function(messages) {
+                unstick_campaigns(messages);
+            })(messages);
+        });
     } else {
         console.log("No more campaigns to unstick");
         imap.logout();
