@@ -26,7 +26,7 @@ step(
     },
     function(err) {
         if(err) die(err);
-        imap.openBox("stuck_campaigns", false, this);
+        imap.openBox(conf.stucks_folder, false, this);
     },
     function(err, mailbox) {
         if(err) ide(err);
