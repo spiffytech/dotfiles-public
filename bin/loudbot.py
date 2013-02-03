@@ -12,12 +12,12 @@ signal.signal(signal.SIGALRM, handler)
 def update_louds():
     if os.fork():
         signal.alarm(3)
-        print urllib.urlopen("http://isuckatdomains.net:3168/loud.pl").read()
+        print urllib.urlopen("http://iank.org/loudbot/loud").read()
     else:
         signal.alarm(45)
         louds = []
         for i in range(20):
-            louds.append(urllib.urlopen("http://isuckatdomains.net:3168/loud.pl").read())
+            louds.append(urllib.urlopen("http://iank.org/loudbot/loud").read())
 
         with open(os.getenv("HOME") + "/.louds-new", "a") as f:
             for loud in louds:

@@ -6,9 +6,8 @@ requester = new Requester({
     retries: 0
 });
 
-loudurl = "http://isuckatdomains.net:3168/loud.pl"
-loudurl = "http://192.168.99.254"
-loudfile = "/home/spiffytech/2.louds";
+loudurl = "http://iank.org/loudbot/loud"
+loudfile = "/home/spiffytech/.louds";
 
 step(
     function() {
@@ -28,7 +27,7 @@ step(
                     }, 
                     function(body) {
                         if(body !== null) {
-                            fs.appendFile(loudfile, "\n" + body);
+                            fs.appendFile(loudfile, "\n" + JSON.parse(body)["loud"]);
                         } else {
                             throw "Not louding";
                         }
@@ -42,7 +41,7 @@ step(
                 }, 
                 function(body) {
                     if(body !== null) {
-                        console.log(body);
+                        console.log(JSON.parse(body)["loud"]);
                     }
                 }
             );

@@ -362,3 +362,5 @@ fi
 #$ZDOTDIR/bin/screenfetch.sh
 #echo
 python $ZDOTDIR/bin/loudbot.py
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
