@@ -59,12 +59,13 @@ OS=`uname`
 # Paths and files
 export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
-PATH=/usr/local/bin:$ZDOTDIR/bin:$PATH
-export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:$PATH
+PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
+export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:~/helpers:$PATH
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
 fi
-export PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin/
+PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin
+PATH=$PATH:/campaigns/bin:/campaigns/php/bin
 
 
 # Aliases
@@ -90,9 +91,10 @@ alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r do
 alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
-alias hgrep='history | grep'
+alias hgrep='history | grep -i'
 alias update_dbdo='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/UpdateDBDO.php'
 alias ir='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/InstanceRunner.php'
+alias unstick='node ~/bin/unstick.js'
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -134,6 +136,7 @@ alias indigo='ssh -Y brian@indigo.testology.net'
 alias navy='ssh -Y brian@navy.testology.net'
 alias avalon='ssh -Y brian@avalon.sourcekit.com'
 alias send1='ssh -Y brian@send1.sourcekit.com'
+alias send2='ssh -Y brian@send2.sourcekit.com'
 alias mercury='ssh -Y brian@mercury.sourcekit.com'
 alias vulcan='ssh -Y brian@vulcan.sourcekit.com'
 alias camelot='ssh -Y brian@camelot.sourcekit.com'
@@ -210,11 +213,18 @@ $ %{${fg[default]}%}'
 #precmd_functions+='precmd_update_git_vars'
 #chpwd_functions+='chpwd_update_git_vars'
 
+spm() {
+    /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/GetSendsPerMinute.php -c $1 --campaignid $2
+}
+
+
 haste() { 
     curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
     sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
     sed -e 's/.*\.//')\n/"
 }
+
+alias ack='ack --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear'
 
 coffeewatch() {
     while true; do
@@ -236,8 +246,6 @@ coffeewatch() {
         echo 
     done
 }
-
-alias ack='ack --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less'
 
 
 # Sets the tmux window title when you open a file in Vim
@@ -361,6 +369,5 @@ fi
 
 #$ZDOTDIR/bin/screenfetch.sh
 #echo
-python $ZDOTDIR/bin/loudbot.py
-
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+node $ZDOTDIR/bin/loudbot.js

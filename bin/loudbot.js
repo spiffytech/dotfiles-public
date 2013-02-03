@@ -7,7 +7,7 @@ requester = new Requester({
 });
 
 loudurl = "http://iank.org/loudbot/loud"
-loudfile = "/home/spiffytech/.louds";
+loudfile = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + "/.louds";
 
 step(
     function() {
