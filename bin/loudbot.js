@@ -6,7 +6,7 @@ requester = new Requester({
     retries: 0
 });
 
-loudurl = "http://isuckatdomains.net:3168/loud.pl"
+loudurl = "http://iank.org/loudbot/loud"
 loudfile = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + "/.louds";
 
 step(
@@ -27,7 +27,7 @@ step(
                     }, 
                     function(body) {
                         if(body !== null) {
-                            fs.appendFile(loudfile, "\n" + body);
+                            fs.appendFile(loudfile, "\n" + JSON.parse(body)["loud"]);
                         } else {
                             throw "Not louding";
                         }
@@ -41,7 +41,7 @@ step(
                 }, 
                 function(body) {
                     if(body !== null) {
-                        console.log(body);
+                        console.log(JSON.parse(body)["loud"]);
                     }
                 }
             );
