@@ -273,7 +273,7 @@ function vim {
     fi
 
     if [ $has_tmux -eq 0 ]; then
-        tmux set-window-option automatic-rename on
+        tmux set-window-option automatic-rename on > /dev/null
     fi
 }
 v() {vim($@)}
@@ -296,7 +296,7 @@ ssh() {
     `which -a ssh | tail -n 1` $@
 
     if [ $has_tmux -eq 0 ]; then
-        tmux set automatic-rename on
+        tmux set automatic-rename on > /dev/null
     fi
 }
 
@@ -351,7 +351,7 @@ function tssh {
 
 
 function weball {
-    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com
+    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com $1
 }
 function websome {
     tssh brian@web{7..10}.sourcekit.com
