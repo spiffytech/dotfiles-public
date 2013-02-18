@@ -56,10 +56,23 @@ step(
             });
 
             message.on("end", function() {
-                var matches = body.match(/command=(.*--client [0-9]+ --campaign [0-9]+)/);
+                // Detect campaign type
+                var matches = body.match(/type: ([0-9]+)/);
+                var type = parseInt(matches[1]);
+                if(type == 0) {
+                    type = "standard";
+                } else if(type == 1) {
+                    type = "triggered";
+                }
+                message.type = type;
+
+                // Get campaign unstick command
+                matches = body.match(/\/campaigns\/src\/ServerApps\/gearman\/UnstickCampaign.php.*--client ([0-9]+) --campaign ([0-9]+)/);
                 if(matches) {
-                    cmd = matches[1];
-                    message.command = cmd;
+                    message.data = {
+                        client_id: matches[1],
+                        campaign_id: matches[2]
+                    };
                     messages.push(message);
                 }
             });
@@ -78,10 +91,11 @@ var unstick_campaigns = function(messages) {
         messages.shift();
 
         console.log("");
-        console.log(message.headers.subject[0] + " " + message.headers.date[0]);
-        console.log(message.command);
+        console.log(message.headers.subject[0] + " " + message.headers.date[0] + ", type: " + message.type);
+        command = "/campaigns/php/bin/php /campaigns/src/ServerApps/gearman/UnstickCampaign.php --client " + message.data.client_id + " --campaign " + message.data.campaign_id + " --justdoit"
+        console.log(command);
 
-        exec(message.command + " --justdoit", function(err, stdout, stderr) {
+        exec(command, function(err, stdout, stderr) {
             (function(messages) {
                 unstick_campaigns(messages);
             })(messages);
