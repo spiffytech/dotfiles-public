@@ -158,6 +158,10 @@ function uslist {
     ls | grep $1 | sort -t '.' -k 2,2 -n
 }
 
+function smtp_lookup {
+    clients_run_command.sh "select smtp_server from clients where client_id = '$1'"
+}
+
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
