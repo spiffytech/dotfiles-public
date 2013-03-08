@@ -101,6 +101,7 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias -g L=" | less"
 alias -g T=" | tail"
+alias -g VG=" | grep -v"
 alias history='history 1'  # By default, `history` only shows a handful of recent commands. This shows all of them.
 # File extension openers
 alias -s tex=vim
@@ -155,7 +156,7 @@ alias web10='ssh -Y brian@web10.sourcekit.com'
 alias wally='ssh wally@wally.sourcekit.com -p 2222'
 
 function uslist {
-    ls | grep $1 | sort -t '.' -k 2,2 -n
+    ls | grep -P "^$1" | sort -t '.' -k 2,2 -n
 }
 
 export EDITOR=vim
@@ -224,7 +225,7 @@ haste() {
     sed -e 's/.*\.//')\n/"
 }
 
-alias ack='ack --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear'
+alias ack='ack --type-add tpl=.tpl --type-add tpl=.xtpl --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear'
 
 coffeewatch() {
     while true; do
@@ -371,3 +372,5 @@ fi
 #echo
 #python $ZDOTDIR/bin/loudbot.py
 node $ZDOTDIR/bin/loudbot.js
+
+source $ZDOTDIR/.zsh/git-flow-completion.zsh
