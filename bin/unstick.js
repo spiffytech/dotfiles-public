@@ -76,7 +76,12 @@ step(
                         client_id: cmd_matches[1],
                         campaign_id: cmd_matches[2]
                     };
-                    messages.push(message);
+
+                    if((new Date() - new Date(message.headers.date)) > (1000 * 60 * 7)) {  // Give the autounsticker a chance to come through and do its thing, to avoid race conditions and duplicate unsticks
+                        messages.push(message);
+                    } else {
+                        console.log("Skipping: " + message.headers.subject[0] + " " + message.headers.date[0] + ", type: " + message.type);
+                    }
                 }
             });
         });
