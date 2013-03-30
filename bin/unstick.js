@@ -29,7 +29,7 @@ step(
         imap.openBox(conf.stucks_folder, false, this);
     },
     function(err, mailbox) {
-        if(err) ide(err);
+        if(err) console.log(err);
 
         imap.search(["UNSEEN", ["SINCE", "December 21, 2012"], ["!HEADER", "SUBJECT", "Unstuck Manually"]], this);
     },
@@ -77,10 +77,11 @@ step(
                         campaign_id: cmd_matches[2]
                     };
 
-                    if((new Date() - new Date(message.headers.date)) > (1000 * 60 * 7)) {  // Give the autounsticker a chance to come through and do its thing, to avoid race conditions and duplicate unsticks
+                    if((new Date() - new Date(message.headers.date)) > (1000 * 60 * 7000)) {  // Give the autounsticker a chance to come through and do its thing, to avoid race conditions and duplicate unsticks
                         messages.push(message);
                     } else {
                         console.log("Skipping: " + message.headers.subject[0] + " " + message.headers.date[0] + ", type: " + message.type);
+                        imap.delFlags(message.uid, '\\SEEN');
                     }
                 }
             });
