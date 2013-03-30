@@ -29,7 +29,7 @@ step(
         imap.openBox(conf.stucks_folder, false, this);
     },
     function(err, mailbox) {
-        if(err) ide(err);
+        if(err) console.log(err);
 
         imap.search(["UNSEEN", ["SINCE", "December 21, 2012"], ["!HEADER", "SUBJECT", "Unstuck Manually"]], this);
     },
@@ -56,11 +56,33 @@ step(
             });
 
             message.on("end", function() {
-                var matches = body.match(/command=(.*--client [0-9]+ --campaign [0-9]+)/);
-                if(matches) {
-                    cmd = matches[1];
-                    message.command = cmd;
-                    messages.push(message);
+                // Get campaign unstick command
+                cmd_matches = body.match(/\/campaigns\/src\/ServerApps\/gearman\/UnstickCampaign.php.*--client ([0-9]+) --campaign ([0-9]+)/);
+                if(cmd_matches) {
+                    // Detect campaign type
+                    var type_matches = body.match(/type: ([0-9]+)/);
+                    if(type_matches == null) {
+                        console.log(body);
+                    }
+                    var type = parseInt(type_matches[1]);
+                    if(type == 0) {
+                        type = "standard";
+                    } else if(type == 1) {
+                        type = "triggered";
+                    }
+                    message.type = type;
+
+                    message.data = {
+                        client_id: cmd_matches[1],
+                        campaign_id: cmd_matches[2]
+                    };
+
+                    if((new Date() - new Date(message.headers.date)) > (1000 * 60 * 7000)) {  // Give the autounsticker a chance to come through and do its thing, to avoid race conditions and duplicate unsticks
+                        messages.push(message);
+                    } else {
+                        console.log("Skipping: " + message.headers.subject[0] + " " + message.headers.date[0] + ", type: " + message.type);
+                        imap.delFlags(message.uid, '\\SEEN');
+                    }
                 }
             });
         });
@@ -78,10 +100,11 @@ var unstick_campaigns = function(messages) {
         messages.shift();
 
         console.log("");
-        console.log(message.headers.subject[0] + " " + message.headers.date[0]);
-        console.log(message.command);
+        console.log(message.headers.subject[0] + " " + message.headers.date[0] + ", type: " + message.type);
+        command = "/campaigns/php/bin/php /campaigns/src/ServerApps/gearman/UnstickCampaign.php --client " + message.data.client_id + " --campaign " + message.data.campaign_id + " --justdoit"
+        console.log(command);
 
-        exec(message.command, function(err, stdout, stderr) {
+        exec(command, function(err, stdout, stderr) {
             (function(messages) {
                 unstick_campaigns(messages);
             })(messages);

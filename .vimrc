@@ -73,6 +73,8 @@ set linebreak  " Makes vim wrap lines on word boundaries, not in the middle of a
 
 " Give PHP template files appropriate highlighting
 au BufNewFile,BufRead *.tpl set filetype=php
+" Go syntax highlighting
+au BufRead,BufNewFile *.go set filetype=go
 
 map <Leader>wb <Plug>VimwikiGoBackLink  " Go to the previous Vom Wiki page you had open
 
@@ -105,12 +107,12 @@ autocmd! BufNewFile *.svn-base execute 'doautocmd filetypedetect BufNewFile ' . 
 " Detects whether the open file is mostly tabs or spaces and changes expandtab
 " accordingly. 
 " http://www.outflux.net/blog/archives/2007/03/09/detecting-space-vs-tab-indentation-type-in-vim/
-"function Kees_settabs()
-"    if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
-"        set noet ts=4 sw=4 list!
-"    endif
-"endfunction
-"autocmd BufReadPost * call Kees_settabs()
+function Kees_settabs()
+    if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
+        set noet ts=4 sw=4 list!
+    endif
+endfunction
+autocmd BufReadPost * call Kees_settabs()
 
 set fileformats+=dos  " Should prevent Vim from adding random newlines to files. http://stackoverflow.com/questions/1050640/vim-disable-automatic-newline-at-end-of-file
 
