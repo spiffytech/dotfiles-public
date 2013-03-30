@@ -8,6 +8,7 @@
 	s = status --short
 [merge]
 	conflictstyle = diff3
+	renormalize = true
 [rerere]
 	enabled = 1
 [push]

@@ -133,3 +133,11 @@ nnoremap n nzz
 " Make j/k work as expected with wrapped lines
 map j gj
 map k gk
+
+"set rtp+=~/.vim/bundle/vundle/
+"call vundle#rc()
+"Bundle 'Valloric/YouCompleteMe'
+
+" Convert all files you save to unix, regardless of what their original format was
+set fileformats=unix,dos,mac
+autocmd BufWritePre * set ff=unix
