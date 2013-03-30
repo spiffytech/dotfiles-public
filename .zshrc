@@ -61,6 +61,7 @@ export LEDGER=/home/brian/Documents/money/ledger.dat
 export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:~/helpers:$PATH
+export PATH=$PATH:/usr/local/go/bin
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
 fi
