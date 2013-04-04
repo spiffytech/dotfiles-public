@@ -29,7 +29,7 @@ step(
         imap.openBox(conf.stucks_folder, false, this);
     },
     function(err, mailbox) {
-        if(err) ide(err);
+        if(err) console.log(err);
 
         imap.search(["UNSEEN", ["SINCE", "December 21, 2012"], ["!HEADER", "SUBJECT", "Unstuck Manually"]], this);
     },
@@ -56,24 +56,33 @@ step(
             });
 
             message.on("end", function() {
-                // Detect campaign type
-                var matches = body.match(/type: ([0-9]+)/);
-                var type = parseInt(matches[1]);
-                if(type == 0) {
-                    type = "standard";
-                } else if(type == 1) {
-                    type = "triggered";
-                }
-                message.type = type;
-
                 // Get campaign unstick command
-                matches = body.match(/\/campaigns\/src\/ServerApps\/gearman\/UnstickCampaign.php.*--client ([0-9]+) --campaign ([0-9]+)/);
-                if(matches) {
+                cmd_matches = body.match(/\/campaigns\/src\/ServerApps\/gearman\/UnstickCampaign.php.*--client ([0-9]+) --campaign ([0-9]+)/);
+                if(cmd_matches) {
+                    // Detect campaign type
+                    var type_matches = body.match(/type: ([0-9]+)/);
+                    if(type_matches == null) {
+                        console.log(body);
+                    }
+                    var type = parseInt(type_matches[1]);
+                    if(type == 0) {
+                        type = "standard";
+                    } else if(type == 1) {
+                        type = "triggered";
+                    }
+                    message.type = type;
+
                     message.data = {
-                        client_id: matches[1],
-                        campaign_id: matches[2]
+                        client_id: cmd_matches[1],
+                        campaign_id: cmd_matches[2]
                     };
-                    messages.push(message);
+
+                    if((new Date() - new Date(message.headers.date)) > (1000 * 60 * 7000)) {  // Give the autounsticker a chance to come through and do its thing, to avoid race conditions and duplicate unsticks
+                        messages.push(message);
+                    } else {
+                        console.log("Skipping: " + message.headers.subject[0] + " " + message.headers.date[0] + ", type: " + message.type);
+                        imap.delFlags(message.uid, '\\SEEN');
+                    }
                 }
             });
         });
