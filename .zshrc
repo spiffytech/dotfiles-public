@@ -25,6 +25,7 @@ setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zsh
 setopt correct  # Offer to correct mistyped commands
 setopt auto_list  # Automatically list choices on an ambiguous completion
 setopt AUTO_CD # If you type a dir whose name isn't a command, automatically cd into the dir
+setopt cdspell  # Correct spelling mistakes when changing directories
 zstyle ':completion:*:functions' ignored-patterns '_*'  # Ignore completion functions for commands you don't have
 zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
 autoload -U compinit
@@ -108,6 +109,7 @@ alias -g .....='../../../..'
 alias -g L=" | less"
 alias -g T=" | tail"
 alias -g VG=" | grep -v"
+alias -g t2h=" | ansi2html.sh --bg=dark --palette=solarized"
 alias history='history 1'  # By default, `history` only shows a handful of recent commands. This shows all of them.
 # File extension openers
 alias -s tex=vim
