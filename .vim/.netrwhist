@@ -1,5 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/Users/spiffytech/Documents/programs/jit/sample_data/CombinedXMLs (for comparison)'
 let g:netrw_dirhist_2='/home/spiffytech/.offlineimap'
 let g:netrw_dirhist_3='/campaigns/src/www.api'
@@ -7,3 +7,4 @@ let g:netrw_dirhist_4='/campaigns/src/www.api/2'
 let g:netrw_dirhist_5='/campaigns/src/www.api/2/REST'
 let g:netrw_dirhist_6='/home/brian'
 let g:netrw_dirhist_7='/campaigns/src/lib'
+let g:netrw_dirhist_8='/campaigns/src/lib/Api/2/Service'

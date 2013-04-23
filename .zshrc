@@ -8,6 +8,7 @@ export CLICOLOR=1;
 # zsh options
 # ===========
 # history stuff
+echo 1
 export HISTFILE=$ZDOTDIR/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
@@ -15,6 +16,7 @@ setopt appendhistory  # Append to history
 setopt inc_append_history  # Append immediately
 setopt hist_expire_dups_first # expire duplicates in history first
 setopt hist_ignore_dups # don't add dupes to history
+echo 2
 
 
 # completion and expansion stuff
@@ -23,15 +25,18 @@ setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zsh
 setopt correct  # Offer to correct mistyped commands
 setopt auto_list  # Automatically list choices on an ambiguous completion
 setopt AUTO_CD # If you type a dir whose name isn't a command, automatically cd into the dir
+setopt cdspell  # Correct spelling mistakes when changing directories
 zstyle ':completion:*:functions' ignored-patterns '_*'  # Ignore completion functions for commands you don't have
 zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
 autoload -U compinit
 compinit
+echo 3
 
 # Tab-complete command parameters from man pages
 zstyle ':completion:*:manuals'    separate-sections true
 zstyle ':completion:*:manuals.*'  insert-sections   true
 zstyle ':completion:*:man:*'      menu yes select
+echo 4
 
 #bindkey '^' reverse-menu-complete  # Shift-tab
 #bindkey "^${key[Left]}" emacs-backward-word
@@ -50,6 +55,7 @@ autoload colors zsh/terminfo
 if [[ "$terminfo[colors]" -ge 8 ]]; then
   colors
 fi
+echo 5
 
 
 # Personal stuff
@@ -66,6 +72,7 @@ if [ $OS = 'Darwin' ]; then
 fi
 PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin
 PATH=$PATH:/campaigns/bin:/campaigns/php/bin
+echo 6
 
 
 # Aliases
@@ -102,6 +109,7 @@ alias -g .....='../../../..'
 alias -g L=" | less"
 alias -g T=" | tail"
 alias -g VG=" | grep -v"
+alias -g t2h=" | ansi2html.sh --bg=dark --palette=solarized"
 alias history='history 1'  # By default, `history` only shows a handful of recent commands. This shows all of them.
 # File extension openers
 alias -s tex=vim
@@ -119,7 +127,8 @@ alias -s 7z=dtrx
 alias ncsu='ssh -YC bpcottin@remote-linux.eos.ncsu.edu'
 alias trilug='ssh -YC spiffytech@pilot.trilug.org'
 alias xa='ssh -Y -p 1122 ncsuxa@xa-ncsu.com'
-alias sbox='ssh -XC root@files.spiffyte.ch'
+#alias sbox='ssh -XC spiffytech@direct.spiffybox.spiffyte.ch'
+alias sbox='mosh spiffytech@direct.spiffybox.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
@@ -128,16 +137,24 @@ alias dev='ssh -Y brian@dev.testology.net'
 alias live='ssh -Y brian@live.testology.net'
 alias white='ssh -Y brian@white.testology.net'
 alias red='ssh -Y brian@red.testology.net'
-alias rose='ssh -Y brian@rose.testology.net'
+alias rose='mosh brian@rose.testology.net'
 alias pink='ssh -Y brian@pink.testology.net'
 alias orange='ssh -Y brian@orange.testology.net'
+alias tangerine='ssh -Y brian@tangerine.testology.net'
 alias yellow='ssh -Y brian@yellow.testology.net'
 alias green='ssh -Y brian@green.testology.net'
 alias indigo='ssh -Y brian@indigo.testology.net'
 alias navy='ssh -Y brian@navy.testology.net'
+alias purple='ssh -Y brian@purple.testology.net'
+alias aquamarine='ssh -Y brian@aquamarine.testology.net'
+alias brown='ssh -Y brian@brown.testology.net'
+alias maroon='ssh -Y brian@maroon.testology.net'
+alias barn='ssh -Y brian@barn.testology.net'
 alias avalon='ssh -Y brian@avalon.sourcekit.com'
 alias send1='ssh -Y brian@send1.sourcekit.com'
 alias send2='ssh -Y brian@send2.sourcekit.com'
+alias send3='ssh -Y brian@send3.sourcekit.com'
+alias send4='ssh -Y brian@send4.sourcekit.com'
 alias mercury='ssh -Y brian@mercury.sourcekit.com'
 alias vulcan='ssh -Y brian@vulcan.sourcekit.com'
 alias camelot='ssh -Y brian@camelot.sourcekit.com'
@@ -154,6 +171,7 @@ alias web8='ssh -Y brian@web8.sourcekit.com'
 alias web9='ssh -Y brian@web9.sourcekit.com'
 alias web10='ssh -Y brian@web10.sourcekit.com'
 alias wally='ssh wally@wally.sourcekit.com -p 2222'
+echo 7
 
 function uslist {
     ls | grep -P "^$1" | sort -t '.' -k 2,2 -n
@@ -175,6 +193,7 @@ zstyle ':vcs_info:*' enable git svn  # See this for more info: man zshcontrib | 
 function precmd {
     vcs_info
 }
+echo 8
 
 prompt_default_color="%(?.%{${fg[yellow]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
 prompt_user=$prompt_default_color
@@ -202,6 +221,7 @@ PROMPT='
 %{$prompt_default_color%}%~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}_
 
 $ %{${fg[default]}%}'
+echo 9
 
 
 #Autoload zsh functions.
@@ -278,7 +298,7 @@ function vim {
     fi
 
     if [ $has_tmux -eq 0 ]; then
-        tmux set-window-option automatic-rename on
+        tmux set-window-option automatic-rename on > /dev/null
     fi
 }
 v() {vim($@)}
@@ -301,8 +321,19 @@ ssh() {
     `which -a ssh | tail -n 1` $@
 
     if [ $has_tmux -eq 0 ]; then
-        tmux set automatic-rename on
+        tmux set automatic-rename on > /dev/null
     fi
+}
+
+
+xlsconv() {
+    # Converts the given csv file to xls
+    if [ $OS = 'Darwin' ]; then
+        lo="/Applications/LibreOffice.app/Contents/MacOS/soffice"
+    else
+        lo="libreoffice"
+    fi
+    sudo $lo --headless --convert-to xls $@
 }
 
 
@@ -356,10 +387,19 @@ function tssh {
 
 
 function weball {
-    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com
+    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com $@
 }
 function websome {
-    tssh brian@web{7..10}.sourcekit.com
+    tssh brian@web{7..10}.sourcekit.com $@
+}
+function sendall {
+    tssh brian@send{1..4}.sourcekit.com $@
+}
+function codeservers {
+    tssh brian@web{1..2}.sourcekit.com brian@send{1..4}.sourcekit.com brian@{vulcan,mercury}.sourcekit.com $@
+}
+function allservers {
+    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@send{1..4}.sourcekit.com brian@{vulcan,mercury}.sourcekit.com $@
 }
 
 
@@ -372,9 +412,11 @@ if [ $has_keychain -eq 0 ]; then
 fi
 
 
+echo 10
 #$ZDOTDIR/bin/screenfetch.sh
 #echo
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 node $ZDOTDIR/bin/loudbot.js
 
 source $ZDOTDIR/.zsh/git-flow-completion.zsh
+echo 11
