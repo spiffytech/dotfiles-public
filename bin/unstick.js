@@ -43,7 +43,7 @@ step(
         var fetch = imap.fetch(results, {
             request: {
                 headers: ["from", "to", "subject", "date"],
-                body: true
+                body: true,
             },
             markSeen: true
         });
@@ -77,10 +77,11 @@ step(
                         campaign_id: cmd_matches[2]
                     };
 
-                    if((new Date() - new Date(message.headers.date)) > (1000 * 60 * 7)) {  // Give the autounsticker a chance to come through and do its thing, to avoid race conditions and duplicate unsticks
+                    if(true) {  // Give the autounsticker a chance to come through and do its thing, to avoid race conditions and duplicate unsticks
                         messages.push(message);
                     } else {
                         console.log("Skipping: " + message.headers.subject[0] + " " + message.headers.date[0] + ", type: " + message.type);
+                        imap.delFlags(message.uid, '\\SEEN');
                     }
                 }
             });
