@@ -309,7 +309,7 @@ ssh() {
     tmux_which=`which tmux`
     has_tmux=$?
 
-    mosh_which=`which tmux`
+    mosh_which=`which mosh`
     has_mosh=$?
 
     if [ $has_tmux -eq 0 ]; then
