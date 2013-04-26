@@ -323,8 +323,7 @@ ssh() {
     fi
 
     if [ $has_mosh -eq 0 ]; then
-        var=`echo $@ | sed 's/-.\{1,\} //g'`  # mosh mistakes flags for its own. Can't find a way around that.
-        mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident $var
+        mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident $@
     else
         `which -a ssh | tail -n 1` $@
     fi
