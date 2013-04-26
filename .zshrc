@@ -92,7 +92,7 @@ fi
 alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use my personal .zshrc and zsh scripts
 alias grep='grep --color="auto"'
 #alias rm='rm -I'
-alias ssh='ssh -Y'  # Automatic X forwarding
+#alias ssh='ssh -Y'  # Automatic X forwarding  # Disabled because ssh-ident on sbox doesn't support it
 alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
 alias vi=vim
@@ -128,48 +128,48 @@ alias ncsu='ssh -YC bpcottin@remote-linux.eos.ncsu.edu'
 alias trilug='ssh -YC spiffytech@pilot.trilug.org'
 alias xa='ssh -Y -p 1122 ncsuxa@xa-ncsu.com'
 #alias sbox='ssh -XC spiffytech@direct.spiffybox.spiffyte.ch'
-alias sbox='mosh spiffytech@direct.spiffybox.spiffyte.ch'
+alias sbox='ssh spiffytech@direct.spiffybox.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
-alias staging='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@staging1.testology.net'
-alias dev='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@dev.testology.net'
-alias live='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@live.testology.net'
-alias white='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@white.testology.net'
-alias red='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@red.testology.net'
-alias rose='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@rose.testology.net'
-alias pink='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@pink.testology.net'
-alias orange='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@orange.testology.net'
-alias tangerine='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@tangerine.testology.net'
-alias yellow='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@yellow.testology.net'
-alias green='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@green.testology.net'
-alias indigo='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@indigo.testology.net'
-alias navy='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@navy.testology.net'
-alias purple='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@purple.testology.net'
-alias aquamarine='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@aquamarine.testology.net'
-alias brown='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@brown.testology.net'
-alias maroon='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@maroon.testology.net'
-alias barn='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@barn.testology.net'
-alias avalon='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@avalon.sourcekit.com'
-alias send1='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@send1.sourcekit.com'
-alias send2='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@send2.sourcekit.com'
-alias send3='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@send3.sourcekit.com'
-alias send4='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@send4.sourcekit.com'
-alias mercury='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@mercury.sourcekit.com'
-alias vulcan='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@vulcan.sourcekit.com'
-alias camelot='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@camelot.sourcekit.com'
-alias shangrila='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@shangrila.sourcekit.com'
-alias midgard='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@midgard.sourcekit.com'
-alias web1='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@web1.sourcekit.com'
-alias web2='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@web2.sourcekit.com'
-alias web3='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@web3.sourcekit.com'
-alias web4='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@web4.sourcekit.com'
-alias web5='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@web5.sourcekit.com'
-alias web6='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@web6.sourcekit.com'
-alias web7='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@web7.sourcekit.com'
-alias web8='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@web8.sourcekit.com'
-alias web9='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@web9.sourcekit.com'
-alias web10='mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident brian@web10.sourcekit.com'
+alias staging='ssh brian@staging1.testology.net'
+alias dev='ssh brian@dev.testology.net'
+alias live='ssh brian@live.testology.net'
+alias white='ssh brian@white.testology.net'
+alias red='ssh brian@red.testology.net'
+alias rose='ssh brian@rose.testology.net'
+alias pink='ssh brian@pink.testology.net'
+alias orange='ssh brian@orange.testology.net'
+alias tangerine='ssh brian@tangerine.testology.net'
+alias yellow='ssh brian@yellow.testology.net'
+alias green='ssh brian@green.testology.net'
+alias indigo='ssh brian@indigo.testology.net'
+alias navy='ssh brian@navy.testology.net'
+alias purple='ssh brian@purple.testology.net'
+alias aquamarine='ssh brian@aquamarine.testology.net'
+alias brown='ssh brian@brown.testology.net'
+alias maroon='ssh brian@maroon.testology.net'
+alias barn='ssh brian@barn.testology.net'
+alias avalon='ssh brian@avalon.sourcekit.com'
+alias send1='ssh brian@send1.sourcekit.com'
+alias send2='ssh brian@send2.sourcekit.com'
+alias send3='ssh brian@send3.sourcekit.com'
+alias send4='ssh brian@send4.sourcekit.com'
+alias mercury='ssh brian@mercury.sourcekit.com'
+alias vulcan='ssh brian@vulcan.sourcekit.com'
+alias camelot='ssh brian@camelot.sourcekit.com'
+alias shangrila='ssh brian@shangrila.sourcekit.com'
+alias midgard='ssh brian@midgard.sourcekit.com'
+alias web1='ssh brian@web1.sourcekit.com'
+alias web2='ssh brian@web2.sourcekit.com'
+alias web3='ssh brian@web3.sourcekit.com'
+alias web4='ssh brian@web4.sourcekit.com'
+alias web5='ssh brian@web5.sourcekit.com'
+alias web6='ssh brian@web6.sourcekit.com'
+alias web7='ssh brian@web7.sourcekit.com'
+alias web8='ssh brian@web8.sourcekit.com'
+alias web9='ssh brian@web9.sourcekit.com'
+alias web10='ssh brian@web10.sourcekit.com'
 alias wally='ssh-ident wally@wally.sourcekit.com -p 2222'
 echo 7
 
@@ -308,6 +308,10 @@ v() {vim($@)}
 ssh() {
     tmux_which=`which tmux`
     has_tmux=$?
+
+    mosh_which=`which tmux`
+    has_mosh=$?
+
     if [ $has_tmux -eq 0 ]; then
         host=`echo $@ | sed 's/.* \([[:alnum:].]\{1,\}@[[:alnum:].]\{1,\}\).*/\1/g' | sed 's/.*@\([^.]*\).*/\1/'`
         if [ ! -n $host ] 
@@ -318,7 +322,12 @@ ssh() {
         tmux rename-window $host
     fi
 
-    `which -a ssh | tail -n 1` $@
+    if [ $has_mosh -eq 0 ]; then
+        var=`echo $@ | sed 's/-.\{1,\} //g'`  # mosh mistakes flags for its own. Can't find a way around that.
+        mosh spiffytech@direct.spiffybox.spiffyte.ch ssh-ident $var
+    else
+        `which -a ssh | tail -n 1` $@
+    fi
 
     if [ $has_tmux -eq 0 ]; then
         tmux set automatic-rename on > /dev/null
