@@ -43,7 +43,7 @@ step(
         var fetch = imap.fetch(results, {
             request: {
                 headers: ["from", "to", "subject", "date"],
-                body: true
+                body: true,
             },
             markSeen: true
         });

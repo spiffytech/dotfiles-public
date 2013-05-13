@@ -25,6 +25,7 @@ setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zsh
 setopt correct  # Offer to correct mistyped commands
 setopt auto_list  # Automatically list choices on an ambiguous completion
 setopt AUTO_CD # If you type a dir whose name isn't a command, automatically cd into the dir
+setopt cdspell  # Correct spelling mistakes when changing directories
 zstyle ':completion:*:functions' ignored-patterns '_*'  # Ignore completion functions for commands you don't have
 zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
 autoload -U compinit
@@ -98,7 +99,7 @@ fi
 alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use my personal .zshrc and zsh scripts
 alias grep='grep --color="auto"'
 #alias rm='rm -I'
-alias ssh='ssh -Y'  # Automatic X forwarding
+#alias ssh='ssh -Y'  # Automatic X forwarding  # Disabled because ssh-ident on sbox doesn't support it
 alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
 alias vi=vim
@@ -115,6 +116,7 @@ alias -g .....='../../../..'
 alias -g L=" | less"
 alias -g T=" | tail"
 alias -g VG=" | grep -v"
+alias -g t2h=" | ansi2html.sh --bg=dark --palette=solarized"
 alias history='history 1'  # By default, `history` only shows a handful of recent commands. This shows all of them.
 # File extension openers
 alias -s tex=vim
@@ -132,46 +134,50 @@ alias -s 7z=dtrx
 alias ncsu='ssh -YC bpcottin@remote-linux.eos.ncsu.edu'
 alias trilug='ssh -YC spiffytech@pilot.trilug.org'
 alias xa='ssh -Y -p 1122 ncsuxa@xa-ncsu.com'
-alias sbox='ssh -XC spiffytech@direct.spiffybox.spiffyte.ch'
+#alias sbox='ssh -XC spiffytech@direct.spiffybox.spiffyte.ch'
+alias sbox='ssh spiffytech@direct.spiffybox.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
-alias staging='ssh -Y brian@staging1.testology.net'
-alias dev='ssh -Y brian@dev.testology.net'
-alias live='ssh -Y brian@live.testology.net'
-alias white='ssh -Y brian@white.testology.net'
-alias red='ssh -Y brian@red.testology.net'
-alias rose='ssh -Y brian@rose.testology.net'
-alias pink='ssh -Y brian@pink.testology.net'
-alias orange='ssh -Y brian@orange.testology.net'
-alias yellow='ssh -Y brian@yellow.testology.net'
-alias green='ssh -Y brian@green.testology.net'
-alias indigo='ssh -Y brian@indigo.testology.net'
-alias navy='ssh -Y brian@navy.testology.net'
-alias aquamarine='ssh -Y brian@aquamarine.testology.net'
-alias brown='ssh -Y brian@brown.testology.net'
-alias maroon='ssh -Y brian@maroon.testology.net'
-alias avalon='ssh -Y brian@avalon.sourcekit.com'
-alias send1='ssh -Y brian@send1.sourcekit.com'
-alias send2='ssh -Y brian@send2.sourcekit.com'
-alias send3='ssh -Y brian@send3.sourcekit.com'
-alias send4='ssh -Y brian@send4.sourcekit.com'
-alias mercury='ssh -Y brian@mercury.sourcekit.com'
-alias vulcan='ssh -Y brian@vulcan.sourcekit.com'
-alias camelot='ssh -Y brian@camelot.sourcekit.com'
-alias shangrila='ssh -Y brian@shangrila.sourcekit.com'
-alias midgard='ssh -Y brian@midgard.sourcekit.com'
-alias web1='ssh -Y brian@web1.sourcekit.com'
-alias web2='ssh -Y brian@web2.sourcekit.com'
-alias web3='ssh -Y brian@web3.sourcekit.com'
-alias web4='ssh -Y brian@web4.sourcekit.com'
-alias web5='ssh -Y brian@web5.sourcekit.com'
-alias web6='ssh -Y brian@web6.sourcekit.com'
-alias web7='ssh -Y brian@web7.sourcekit.com'
-alias web8='ssh -Y brian@web8.sourcekit.com'
-alias web9='ssh -Y brian@web9.sourcekit.com'
-alias web10='ssh -Y brian@web10.sourcekit.com'
-alias wally='ssh wally@wally.sourcekit.com -p 2222'
+alias staging='ssh brian@staging1.testology.net'
+alias dev='ssh brian@dev.testology.net'
+alias live='ssh brian@live.testology.net'
+alias white='ssh brian@white.testology.net'
+alias red='ssh brian@red.testology.net'
+alias rose='ssh brian@rose.testology.net'
+alias pink='ssh brian@pink.testology.net'
+alias orange='ssh brian@orange.testology.net'
+alias tangerine='ssh brian@tangerine.testology.net'
+alias yellow='ssh brian@yellow.testology.net'
+alias green='ssh brian@green.testology.net'
+alias indigo='ssh brian@indigo.testology.net'
+alias navy='ssh brian@navy.testology.net'
+alias purple='ssh brian@purple.testology.net'
+alias aquamarine='ssh brian@aquamarine.testology.net'
+alias brown='ssh brian@brown.testology.net'
+alias maroon='ssh brian@maroon.testology.net'
+alias barn='ssh brian@barn.testology.net'
+alias avalon='ssh brian@avalon.sourcekit.com'
+alias send1='ssh brian@send1.sourcekit.com'
+alias send2='ssh brian@send2.sourcekit.com'
+alias send3='ssh brian@send3.sourcekit.com'
+alias send4='ssh brian@send4.sourcekit.com'
+alias mercury='ssh brian@mercury.sourcekit.com'
+alias vulcan='ssh brian@vulcan.sourcekit.com'
+alias camelot='ssh brian@camelot.sourcekit.com'
+alias shangrila='ssh brian@shangrila.sourcekit.com'
+alias midgard='ssh brian@midgard.sourcekit.com'
+alias web1='ssh brian@web1.sourcekit.com'
+alias web2='ssh brian@web2.sourcekit.com'
+alias web3='ssh brian@web3.sourcekit.com'
+alias web4='ssh brian@web4.sourcekit.com'
+alias web5='ssh brian@web5.sourcekit.com'
+alias web6='ssh brian@web6.sourcekit.com'
+alias web7='ssh brian@web7.sourcekit.com'
+alias web8='ssh brian@web8.sourcekit.com'
+alias web9='ssh brian@web9.sourcekit.com'
+alias web10='ssh brian@web10.sourcekit.com'
+alias wally='ssh-ident wally@wally.sourcekit.com -p 2222'
 echo 7
 
 function uslist {
@@ -309,6 +315,10 @@ v() {vim($@)}
 ssh() {
     tmux_which=`which tmux`
     has_tmux=$?
+
+    mosh_which=`which mosh`
+    has_mosh=$?
+
     if [ $has_tmux -eq 0 ]; then
         host=`echo $@ | sed 's/.* \([[:alnum:].]\{1,\}@[[:alnum:].]\{1,\}\).*/\1/g' | sed 's/.*@\([^.]*\).*/\1/'`
         if [ ! -n $host ] 
@@ -319,7 +329,11 @@ ssh() {
         tmux rename-window $host
     fi
 
-    `which -a ssh | tail -n 1` $@
+    if [ $has_mosh -eq 0 ]; then
+        mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident $@
+    else
+        `which -a ssh | tail -n 1` $@
+    fi
 
     if [ $has_tmux -eq 0 ]; then
         tmux set automatic-rename on > /dev/null
@@ -397,7 +411,7 @@ function sendall {
     tssh brian@send{1..4}.sourcekit.com $@
 }
 function codeservers {
-    tssh brian@web{1..2}.sourcekit.com brian@send{1..4}.sourcekit.com brian@{vulcan,mercury}.sourcekit.com $@
+    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@{vulcan,mercury}.sourcekit.com $@
 }
 function allservers {
     tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@send{1..4}.sourcekit.com brian@{vulcan,mercury}.sourcekit.com $@
