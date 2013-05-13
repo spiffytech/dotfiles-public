@@ -61,9 +61,15 @@ echo 5
 # ==============
 OS=`uname`
 
+has_sshi=`which ssh-ident`
+has_sshi=$?
+if [ $has_sshi -eq 0 ]; then
+    alias ssh='ssh-ident'
+fi
+
 # Paths and files
-export LEDGER=/home/brian/Documents/money/ledger.dat
-export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
+#export LEDGER=/home/brian/Documents/money/ledger.dat
+#export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:~/helpers:$PATH
 export PATH=$PATH:/usr/local/go/bin
