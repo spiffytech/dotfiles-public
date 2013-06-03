@@ -102,6 +102,7 @@ alias hgrep='history | grep -i'
 alias update_dbdo='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/UpdateDBDO.php'
 alias ir='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/InstanceRunner.php'
 alias unstick='node ~/bin/unstick.js'
+
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -132,20 +133,22 @@ alias sbox='ssh spiffytech@direct.spiffybox.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
+alias rose='ssh brian@rose.testology.net'
+alias orange='ssh brian@orange.testology.net'
+alias tangerine='ssh brian@tangerine.testology.net'
 alias staging='ssh brian@staging1.testology.net'
 alias dev='ssh brian@dev.testology.net'
 alias live='ssh brian@live.testology.net'
 alias white='ssh brian@white.testology.net'
 alias red='ssh brian@red.testology.net'
-alias rose='ssh brian@rose.testology.net'
 alias pink='ssh brian@pink.testology.net'
-alias orange='ssh brian@orange.testology.net'
-alias tangerine='ssh brian@tangerine.testology.net'
 alias yellow='ssh brian@yellow.testology.net'
 alias green='ssh brian@green.testology.net'
 alias indigo='ssh brian@indigo.testology.net'
 alias navy='ssh brian@navy.testology.net'
 alias purple='ssh brian@purple.testology.net'
+alias forest='ssh brian@forest.testology.net'
+alias hunter='ssh brian@hunter.testology.net'
 alias aquamarine='ssh brian@aquamarine.testology.net'
 alias brown='ssh brian@brown.testology.net'
 alias maroon='ssh brian@maroon.testology.net'
@@ -170,7 +173,7 @@ alias web7='ssh brian@web7.sourcekit.com'
 alias web8='ssh brian@web8.sourcekit.com'
 alias web9='ssh brian@web9.sourcekit.com'
 alias web10='ssh brian@web10.sourcekit.com'
-alias wally='ssh-ident wally@wally.sourcekit.com -p 2222'
+alias wally='/usr/bin/ssh wally@wally.sourcekit.com -p 2222'
 echo 7
 
 function uslist {
@@ -345,6 +348,11 @@ xlsconv() {
 }
 
 
+function debug {
+    /usr/bin/ssh $1 "fuser -vk 10003/tcp"
+    /usr/bin/ssh -R 10003:localhost:10003 $1
+}
+
 function fix_keyboard {
     # Fix special keys like home, end page-up, page-down
     autoload zkbd
@@ -403,11 +411,11 @@ function websome {
 function sendall {
     tssh brian@send{1..4}.sourcekit.com $@
 }
-function codeservers {
-    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@{vulcan,mercury}.sourcekit.com $@
+function codeall {
+    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@{vulcan,mercury,camelot,shangrila}.sourcekit.com $@
 }
 function allservers {
-    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@send{1..4}.sourcekit.com brian@{vulcan,mercury}.sourcekit.com $@
+    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@send{1..4}.sourcekit.com brian@{vulcan,mercury,camelot,shangrila}.sourcekit.com $@
 }
 
 
