@@ -118,7 +118,7 @@ set fileformats+=dos  " Should prevent Vim from adding random newlines to files.
 set splitbelow
 set splitright
 
-set gdefault  " Search and replace defaults to replacing all occurrances. Use /g to employ normal behavior.
+set gdefault  " Search and replace defaults to replacing all occurrances. Use /g (global) to employ normal behavior.
 set nobackup  " No files~ backup files
 set directory=~/.vim/tmp  " Put temp files here instead of the same dir as the originating file
 
