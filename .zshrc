@@ -109,7 +109,7 @@ alias -g .....='../../../..'
 alias -g L=" | less"
 alias -g T=" | tail"
 alias -g VG=" | grep -v"
-alias -g t2h=" | ansi2html.sh --bg=dark --palette=solarized"
+alias -g t2h=" | ansi2html.sh"
 alias history='history 1'  # By default, `history` only shows a handful of recent commands. This shows all of them.
 # File extension openers
 alias -s tex=vim
@@ -246,7 +246,7 @@ haste() {
     sed -e 's/.*\.//')\n/"
 }
 
-alias ack='ack --type-add tpl=.tpl --type-add tpl=.xtpl --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear'
+alias ack='ack --type-set tpl=.tpl --type-add tpl=.xtpl --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear'
 
 coffeewatch() {
     while true; do
@@ -295,7 +295,8 @@ function vim {
     fi
 
     if [ $has_tmux -eq 0 ]; then
-        tmux set-window-option automatic-rename on > /dev/null
+        #tmux set-window-option automatic-rename on > /dev/null
+        tmux set-window-option automatic-rename on
     fi
 }
 v() {vim($@)}
