@@ -173,7 +173,8 @@ alias web7='ssh brian@web7.sourcekit.com'
 alias web8='ssh brian@web8.sourcekit.com'
 alias web9='ssh brian@web9.sourcekit.com'
 alias web10='ssh brian@web10.sourcekit.com'
-alias wally='/usr/bin/ssh wally@wally.sourcekit.com -p 2222'
+#alias wally='/usr/bin/ssh wally@wally.sourcekit.com -p 2222'
+alias wally='/usr/bin/ssh wally@fakewally.spiffyte.ch -p 2222'
 echo 7
 
 function uslist {
@@ -349,7 +350,6 @@ xlsconv() {
 
 
 function debug {
-    /usr/bin/ssh $1 "fuser -vk 10003/tcp"
     /usr/bin/ssh -R 10003:localhost:10003 $1
 }
 
