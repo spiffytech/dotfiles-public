@@ -1,5 +1,3 @@
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
 call pathogen#runtime_append_all_bundles() 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
