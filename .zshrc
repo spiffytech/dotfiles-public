@@ -163,6 +163,7 @@ alias vulcan='ssh brian@vulcan.sourcekit.com'
 alias camelot='ssh brian@camelot.sourcekit.com'
 alias shangrila='ssh brian@shangrila.sourcekit.com'
 alias midgard='ssh brian@midgard.sourcekit.com'
+alias utopia='ssh brian@utopia.sourcekit.com'
 alias web1='ssh brian@web1.sourcekit.com'
 alias web2='ssh brian@web2.sourcekit.com'
 alias web3='ssh brian@web3.sourcekit.com'
@@ -432,7 +433,7 @@ echo 10
 #$ZDOTDIR/bin/screenfetch.sh
 #echo
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-node $ZDOTDIR/bin/loudbot.js
+//node $ZDOTDIR/bin/loudbot.js
 
 source $ZDOTDIR/.zsh/git-flow-completion.zsh
 echo 11
