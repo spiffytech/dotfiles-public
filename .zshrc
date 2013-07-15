@@ -69,6 +69,14 @@ PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:~/helpers:$PATH
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
+    export PATH=$PATH:$HOME/bin/compiled/mac/x86_64
+else
+    ARCH=`arch`
+    if [ $ARCH = 'i686' ]; then
+        export PATH=$PATH:$HOME/bin/compiled/inux/x86
+    else
+        export PATH=$PATH:$HOME/bin/compiled/inux/x86_64
+    fi
 fi
 PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin
 PATH=$PATH:/campaigns/bin:/campaigns/php/bin
@@ -403,9 +411,11 @@ function tssh {
     tmux set-window-option synchronize-panes on 
 }
 
-
 function weball {
-    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com $@
+    tssh brian@web{{1..2},{4..10}}.sourcekit.com $@
+}
+function apiall {
+    tssh brian@web{1,2,7,9,10}.sourcekit.com $@
 }
 function websome {
     tssh brian@web{7..10}.sourcekit.com $@
@@ -414,10 +424,10 @@ function sendall {
     tssh brian@send{1..4}.sourcekit.com $@
 }
 function codeall {
-    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@{vulcan,mercury,camelot,shangrila}.sourcekit.com $@
+    tssh brian@{web{{1..2},{4..10}},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
 }
 function allservers {
-    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@send{1..4}.sourcekit.com brian@{vulcan,mercury,camelot,shangrila}.sourcekit.com $@
+    tssh brian@{web{{1..2},{4..10}},send{1..4},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
 }
 
 
