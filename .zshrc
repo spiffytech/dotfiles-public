@@ -73,9 +73,9 @@ if [ $OS = 'Darwin' ]; then
 else
     ARCH=`arch`
     if [ $ARCH = 'i686' ]; then
-        export PATH=$PATH:$HOME/bin/compiled/inux/x86
+        export PATH=$PATH:$HOME/bin/compiled/linux/x86
     else
-        export PATH=$PATH:$HOME/bin/compiled/inux/x86_64
+        export PATH=$PATH:$HOME/bin/compiled/linux/x86_64
     fi
 fi
 PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin
