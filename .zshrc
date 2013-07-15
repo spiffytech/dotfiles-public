@@ -76,6 +76,14 @@ export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactol
 export PATH=$PATH:/usr/local/go/bin
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
+    export PATH=$PATH:$HOME/bin/compiled/mac/x86_64
+else
+    ARCH=`arch`
+    if [ $ARCH = 'i686' ]; then
+        export PATH=$PATH:$HOME/bin/compiled/linux/x86
+    else
+        export PATH=$PATH:$HOME/bin/compiled/linux/x86_64
+    fi
 fi
 PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin
 PATH=$PATH:/campaigns/bin:/campaigns/php/bin
@@ -109,6 +117,7 @@ alias hgrep='history | grep -i'
 alias update_dbdo='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/UpdateDBDO.php'
 alias ir='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/InstanceRunner.php'
 alias unstick='node ~/bin/unstick.js'
+
 # Location aliases
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -116,7 +125,7 @@ alias -g .....='../../../..'
 alias -g L=" | less"
 alias -g T=" | tail"
 alias -g VG=" | grep -v"
-alias -g t2h=" | ansi2html.sh --bg=dark --palette=solarized"
+alias -g t2h=" | ansi2html.sh"
 alias history='history 1'  # By default, `history` only shows a handful of recent commands. This shows all of them.
 # File extension openers
 alias -s tex=vim
@@ -139,20 +148,22 @@ alias sbox='ssh spiffytech@direct.spiffybox.spiffyte.ch'
 alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
+alias rose='ssh brian@rose.testology.net'
+alias orange='ssh brian@orange.testology.net'
+alias tangerine='ssh brian@tangerine.testology.net'
 alias staging='ssh brian@staging1.testology.net'
 alias dev='ssh brian@dev.testology.net'
 alias live='ssh brian@live.testology.net'
 alias white='ssh brian@white.testology.net'
 alias red='ssh brian@red.testology.net'
-alias rose='ssh brian@rose.testology.net'
 alias pink='ssh brian@pink.testology.net'
-alias orange='ssh brian@orange.testology.net'
-alias tangerine='ssh brian@tangerine.testology.net'
 alias yellow='ssh brian@yellow.testology.net'
 alias green='ssh brian@green.testology.net'
 alias indigo='ssh brian@indigo.testology.net'
 alias navy='ssh brian@navy.testology.net'
 alias purple='ssh brian@purple.testology.net'
+alias forest='ssh brian@forest.testology.net'
+alias hunter='ssh brian@hunter.testology.net'
 alias aquamarine='ssh brian@aquamarine.testology.net'
 alias brown='ssh brian@brown.testology.net'
 alias maroon='ssh brian@maroon.testology.net'
@@ -167,6 +178,7 @@ alias vulcan='ssh brian@vulcan.sourcekit.com'
 alias camelot='ssh brian@camelot.sourcekit.com'
 alias shangrila='ssh brian@shangrila.sourcekit.com'
 alias midgard='ssh brian@midgard.sourcekit.com'
+alias utopia='ssh brian@utopia.sourcekit.com'
 alias web1='ssh brian@web1.sourcekit.com'
 alias web2='ssh brian@web2.sourcekit.com'
 alias web3='ssh brian@web3.sourcekit.com'
@@ -177,7 +189,8 @@ alias web7='ssh brian@web7.sourcekit.com'
 alias web8='ssh brian@web8.sourcekit.com'
 alias web9='ssh brian@web9.sourcekit.com'
 alias web10='ssh brian@web10.sourcekit.com'
-alias wally='ssh-ident wally@wally.sourcekit.com -p 2222'
+#alias wally='/usr/bin/ssh wally@wally.sourcekit.com -p 2222'
+alias wally='/usr/bin/ssh wally@fakewally.spiffyte.ch -p 2222'
 echo 7
 
 function uslist {
@@ -256,7 +269,7 @@ haste() {
     sed -e 's/.*\.//')\n/"
 }
 
-alias ack='ack --type-add tpl=.tpl --type-add tpl=.xtpl --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear'
+alias ack='ack --type-set tpl=.tpl --type-add tpl=.xtpl --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear'
 
 coffeewatch() {
     while true; do
@@ -305,7 +318,8 @@ function vim {
     fi
 
     if [ $has_tmux -eq 0 ]; then
-        tmux set-window-option automatic-rename on > /dev/null
+        #tmux set-window-option automatic-rename on > /dev/null
+        tmux set-window-option automatic-rename on
     fi
 }
 v() {vim($@)}
@@ -351,6 +365,10 @@ xlsconv() {
     sudo $lo --headless --convert-to xls $@
 }
 
+
+function debug {
+    /usr/bin/ssh -R 10003:localhost:10003 $1
+}
 
 function fix_keyboard {
     # Fix special keys like home, end page-up, page-down
@@ -400,9 +418,11 @@ function tssh {
     tmux set-window-option synchronize-panes on 
 }
 
-
 function weball {
-    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com $@
+    tssh brian@web{{1..2},{4..10}}.sourcekit.com $@
+}
+function apiall {
+    tssh brian@web{1,2,7,9,10}.sourcekit.com $@
 }
 function websome {
     tssh brian@web{7..10}.sourcekit.com $@
@@ -410,11 +430,11 @@ function websome {
 function sendall {
     tssh brian@send{1..4}.sourcekit.com $@
 }
-function codeservers {
-    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@{vulcan,mercury}.sourcekit.com $@
+function codeall {
+    tssh brian@{web{{1..2},{4..10}},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
 }
 function allservers {
-    tssh brian@web{1..2}.sourcekit.com brian@web{4..10}.sourcekit.com brian@send{1..4}.sourcekit.com brian@{vulcan,mercury}.sourcekit.com $@
+    tssh brian@{web{{1..2},{4..10}},send{1..4},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
 }
 
 
@@ -431,7 +451,7 @@ echo 10
 #$ZDOTDIR/bin/screenfetch.sh
 #echo
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-node $ZDOTDIR/bin/loudbot.js
+//node $ZDOTDIR/bin/loudbot.js
 
 source $ZDOTDIR/.zsh/git-flow-completion.zsh
 echo 11
