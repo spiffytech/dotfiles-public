@@ -156,6 +156,7 @@ alias indigo='ssh brian@indigo.testology.net'
 alias navy='ssh brian@navy.testology.net'
 alias purple='ssh brian@purple.testology.net'
 alias forest='ssh brian@forest.testology.net'
+alias mint='ssh brian@mint.testology.net'
 alias hunter='ssh brian@hunter.testology.net'
 alias aquamarine='ssh brian@aquamarine.testology.net'
 alias brown='ssh brian@brown.testology.net'
@@ -182,6 +183,10 @@ alias web7='ssh brian@web7.sourcekit.com'
 alias web8='ssh brian@web8.sourcekit.com'
 alias web9='ssh brian@web9.sourcekit.com'
 alias web10='ssh brian@web10.sourcekit.com'
+alias db10-1='ssh brian@db10-1.sourcekit.com'
+alias db10-2='ssh brian@db10-2.sourcekit.com'
+alias db13='ssh brian@db13.sourcekit.com'
+alias db14='ssh brian@db14.sourcekit.com'
 #alias wally='/usr/bin/ssh wally@wally.sourcekit.com -p 2222'
 alias wally='/usr/bin/ssh wally@fakewally.spiffyte.ch -p 2222'
 echo 7
@@ -412,7 +417,7 @@ function tssh {
 }
 
 function weball {
-    tssh brian@web{{1..2},{4..10}}.sourcekit.com $@
+    tssh brian@web{{1..2},4,{6..10}}.sourcekit.com $@
 }
 function apiall {
     tssh brian@web{1,2,7,9,10}.sourcekit.com $@
@@ -421,13 +426,13 @@ function websome {
     tssh brian@web{7..10}.sourcekit.com $@
 }
 function sendall {
-    tssh brian@send{1..4}.sourcekit.com $@
+    tssh brian@send{3..4}.sourcekit.com $@
 }
 function codeall {
-    tssh brian@{web{{1..2},{4..10}},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
+    tssh brian@{web{{1..2},4,{6..10}},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
 }
 function allservers {
-    tssh brian@{web{{1..2},{4..10}},send{1..4},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
+    tssh brian@{web{{1..2},4,{6..10}},send{1..4},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
 }
 
 
@@ -444,7 +449,7 @@ echo 10
 #$ZDOTDIR/bin/screenfetch.sh
 #echo
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-//node $ZDOTDIR/bin/loudbot.js
+#node $ZDOTDIR/bin/loudbot.js
 
 source $ZDOTDIR/.zsh/git-flow-completion.zsh
 echo 11
