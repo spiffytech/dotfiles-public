@@ -62,20 +62,27 @@ echo 5
 # ==============
 OS=`uname`
 
+has_sshi=`which ssh-ident`
+has_sshi=$?
+if [ $has_sshi -eq 0 ]; then
+    alias ssh='ssh-ident'
+fi
+
 # Paths and files
-export LEDGER=/home/brian/Documents/money/ledger.dat
-export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
+#export LEDGER=/home/brian/Documents/money/ledger.dat
+#export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
 PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
 export PATH=$ZDOTDIR/Documents/contactology-app/bin:$ZDOTDIR/Documents/contactology-app/php/bin:~/helpers:$PATH
+export PATH=$PATH:/usr/local/go/bin
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
     export PATH=$PATH:$HOME/bin/compiled/mac/x86_64
 else
     ARCH=`arch`
     if [ $ARCH = 'i686' ]; then
-        export PATH=$PATH:$HOME/bin/compiled/inux/x86
+        export PATH=$PATH:$HOME/bin/compiled/linux/x86
     else
-        export PATH=$PATH:$HOME/bin/compiled/inux/x86_64
+        export PATH=$PATH:$HOME/bin/compiled/linux/x86_64
     fi
 fi
 PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin
