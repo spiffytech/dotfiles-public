@@ -190,6 +190,8 @@ alias web7='ssh brian@web7.sourcekit.com'
 alias web8='ssh brian@web8.sourcekit.com'
 alias web9='ssh brian@web9.sourcekit.com'
 alias web10='ssh brian@web10.sourcekit.com'
+alias db3='ssh brian@db3.sourcekit.com'
+alias db4='ssh brian@db4.sourcekit.com'
 alias db10-1='ssh brian@db10-1.sourcekit.com'
 alias db10-2='ssh brian@db10-2.sourcekit.com'
 alias db13='ssh brian@db13.sourcekit.com'
@@ -274,7 +276,13 @@ haste() {
     sed -e 's/.*\.//')\n/"
 }
 
-alias ack='ack --type-set tpl=.tpl --type-add tpl=.xtpl --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear'
+
+unstick-trigger() {
+    instance_run_command.sh $1 "update triggers set lock_id='' where lock_id='$2';"
+}
+
+
+alias ack='ack --type-set tpl=.tpl --type-add tpl=.xtpl --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear --ignore-dir=languages'
 
 coffeewatch() {
     while true; do
