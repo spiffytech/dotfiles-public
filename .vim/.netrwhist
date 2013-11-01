@@ -1,14 +1,7 @@
 let g:netrw_dirhistmax  =10
-<<<<<<< HEAD
-let g:netrw_dirhist_cnt =0
-=======
-let g:netrw_dirhist_cnt =8
-let g:netrw_dirhist_1='/Users/spiffytech/Documents/programs/jit/sample_data/CombinedXMLs (for comparison)'
-let g:netrw_dirhist_2='/home/spiffytech/.offlineimap'
-let g:netrw_dirhist_3='/campaigns/src/www.api'
-let g:netrw_dirhist_4='/campaigns/src/www.api/2'
-let g:netrw_dirhist_5='/campaigns/src/www.api/2/REST'
-let g:netrw_dirhist_6='/home/brian'
-let g:netrw_dirhist_7='/campaigns/src/lib'
-let g:netrw_dirhist_8='/campaigns/src/lib/Api/2/Service'
->>>>>>> 795b7bc183d2087cf78cd7476b07675122104ad3
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/home/spiffytech/devops/chef/solo/vagrant/devbox_no_nfs'
+let g:netrw_dirhist_2='/home/spiffytech/devops/chef/solo/vagrant/devbox_no_nfs/.vagrant'
+let g:netrw_dirhist_3='/home/spiffytech/devops/chef/solo/vagrant/devbox_no_nfs/.vagrant/machines'
+let g:netrw_dirhist_4='/home/spiffytech/devops/chef/solo/vagrant/devbox_no_nfs/.vagrant/machines/default'
+let g:netrw_dirhist_5='/home/spiffytech/devops/chef/solo/vagrant/devbox_no_nfs/.vagrant/machines/default/virtualbox'
