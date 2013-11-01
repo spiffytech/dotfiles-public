@@ -122,6 +122,8 @@ set gdefault  " Search and replace defaults to replacing all occurrances. Use /g
 set nobackup  " No files~ backup files
 set directory=~/.vim/tmp  " Put temp files here instead of the same dir as the originating file
 
+set autochdir  " Automatically change working directories to the directory of the current file
+
 " Jumping centers the screen
 nnoremap n nzz
 
