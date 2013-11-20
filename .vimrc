@@ -141,3 +141,6 @@ map k gk
 " Convert all files you save to unix, regardless of what their original format was
 set fileformats=unix,dos,mac
 autocmd BufWritePre * set ff=unix
+
+" Open nerdtree
+map <C-n> :NERDTreeToggle<CR>
