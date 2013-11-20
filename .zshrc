@@ -26,6 +26,7 @@ setopt correct  # Offer to correct mistyped commands
 setopt auto_list  # Automatically list choices on an ambiguous completion
 setopt AUTO_CD # If you type a dir whose name isn't a command, automatically cd into the dir
 setopt cdspell  # Correct spelling mistakes when changing directories
+setopt EXTENDED_HISTORY  # Save each command’s beginning timestamp (in seconds since the epoch) and the duration (in seconds) to the history file
 zstyle ':completion:*:functions' ignored-patterns '_*'  # Ignore completion functions for commands you don't have
 zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
 autoload -U compinit
@@ -61,12 +62,6 @@ echo 5
 # Personal stuff
 # ==============
 OS=`uname`
-
-has_sshi=`which ssh-ident`
-has_sshi=$?
-if [ $has_sshi -eq 0 ]; then
-    alias ssh='ssh-ident'
-fi
 
 # Paths and files
 #export LEDGER=/home/brian/Documents/money/ledger.dat
@@ -139,14 +134,18 @@ alias -s rar=dtrx
 alias -s zip=dtrx
 alias -s 7z=dtrx
 # Server aliases
-alias ncsu='ssh -YC bpcottin@remote-linux.eos.ncsu.edu'
-alias trilug='ssh -YC spiffytech@pilot.trilug.org'
-alias xa='ssh -Y -p 1122 ncsuxa@xa-ncsu.com'
-#alias sbox='ssh -XC spiffytech@direct.spiffybox.spiffyte.ch'
-alias sbox='ssh spiffytech@direct.spiffybox.spiffyte.ch'
-alias short='ssh -XC spiffytech@short.csc.ncsu.edu'
+alias ncsu='mssh -YC bpcottin@remote-linux.eos.ncsu.edu'
+alias trilug='mssh -YC spiffytech@pilot.trilug.org'
+alias xa='mssh -Y -p 1122 ncsuxa@xa-ncsu.com'
+#alias sbox='mssh -XC spiffytech@direct.spiffybox.spiffyte.ch'
+alias sbox='mssh spiffytech@direct.spiffybox.spiffyte.ch'
+alias short='mssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
+alias mngw='mssh mngw'
+alias chef11='mssh chef11'
+alias dom0='mssh dom0'
+alias app1='mssh app1'
 echo 7
 
 function uslist {
@@ -257,7 +256,7 @@ coffeewatch() {
 
 # Sets the tmux window title when you open a file in Vim
 function vim {
-    has_tmux=`which tmux`
+    has_tmux=`hash tmux 2>/dev/null`
     has_tmux=$?
     if [ $has_tmux -eq 0 ]; then
         filename=`echo ${@:-1} | awk -F'/' '{print $NF}' | cut -d '+' -f 1`  # We don't want the whole path to the file- just the filename. Also, remove Vim line number from filename
@@ -265,7 +264,7 @@ function vim {
         tmux rename-window $filename
     fi
 
-    has_vimx=`which vimx`
+    has_vimx=`hash vimx 2>/dev/null`
     has_vimx=$?
     if [ $has_vimx -eq 0 ]; then
         vimx $@
@@ -287,15 +286,24 @@ function vim {
 v() {vim($@)}
 
 
+has_sshi=`hash ssh-ident 2>/dev/null`
+has_sshi=$?
+if [ $has_sshi -eq 0 ]; then
+    alias ssh='ssh-ident'
+else
+    alias rssh='ssh'
+fi
+
 # Sets the tmux window title when you SSH somewhere
-ssh() {
-    tmux_which=`which tmux`
+mssh() {
+    `hash tmux 2>/dev/null`
     has_tmux=$?
 
-    mosh_which=`which mosh`
+    `hash mosh 2>/dev/null`
     has_mosh=$?
 
     if [ $has_tmux -eq 0 ]; then
+        # Replace tmux window name with host you're connecting to
         host=`echo $@ | sed 's/.* \([[:alnum:].]\{1,\}@[[:alnum:].]\{1,\}\).*/\1/g' | sed 's/.*@\([^.]*\).*/\1/'`
         if [ ! -n $host ] 
         then
@@ -306,9 +314,10 @@ ssh() {
     fi
 
     if [ $has_mosh -eq 0 ]; then
-        mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident $@
+        mosh --ssh="ssh-ident" spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident $@
     else
-        `which -a ssh | tail -n 1` $@
+        #`which -a ssh | tail -n 1` $@
+        ssh $@
     fi
 
     if [ $has_tmux -eq 0 ]; then
@@ -402,7 +411,7 @@ function allservers {
 
 #$ZDOTDIR/bin/screenfetch.sh
 
-has_keychain=`which keychain`
+has_keychain=`hash keychain 2>/dev/null`
 has_keychain=$?
 if [ $has_keychain -eq 0 ]; then
     eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
