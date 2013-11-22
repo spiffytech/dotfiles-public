@@ -285,15 +285,9 @@ function vim {
 }
 v() {vim($@)}
 
+alias rsync='/usr/bin/rsync -e ssh-ident'
 
-has_sshi=`hash ssh-ident 2>/dev/null`
-has_sshi=$?
-if [ $has_sshi -eq 0 ]; then
-    alias ssh='ssh-ident'
-else
-    alias rssh='ssh'
-fi
-
+alias ssh='ssh-ident'
 # Sets the tmux window title when you SSH somewhere
 mssh() {
     `hash tmux 2>/dev/null`
@@ -303,12 +297,14 @@ mssh() {
     has_mosh=$?
 
     if [ $has_tmux -eq 0 ]; then
-        # Replace tmux window name with host you're connecting to
-        host=`echo $@ | sed 's/.* \([[:alnum:].]\{1,\}@[[:alnum:].]\{1,\}\).*/\1/g' | sed 's/.*@\([^.]*\).*/\1/'`
-        if [ ! -n $host ] 
-        then
-            host="ssh"
-        fi
+        ## Replace tmux window name with host you're connecting to
+        # Below trick should replace this, since mssh doesn't take any parameters besides a host
+        #host=`echo $@ | sed 's/.* \([[:alnum:].]\{1,\}@[[:alnum:].]\{1,\}\).*/\1/g' | sed 's/.*@\([^.]*\).*/\1/'`
+        #if [ ! -n $host ] 
+        #then
+        #    host="ssh"
+        #fi
+        $host = $2  # mssh doesn't take any parameters besides a host, so this should work
 
         tmux rename-window $host
     fi
