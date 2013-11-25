@@ -304,7 +304,7 @@ mssh() {
         #then
         #    host="ssh"
         #fi
-        $host = $2  # mssh doesn't take any parameters besides a host, so this should work
+        host=$1  # mssh doesn't take any parameters besides a host, so this should work
 
         tmux rename-window $host
     fi
