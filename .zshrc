@@ -142,7 +142,7 @@ alias sbox='mssh spiffytech@direct.spiffybox.spiffyte.ch'
 alias short='mssh -XC spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
-alias mngw='mssh mngw'
+alias mngw='mssh mn_gw'
 alias chef11='mssh chef11'
 alias dom0='mssh dom0'
 alias app1='mssh app1'
