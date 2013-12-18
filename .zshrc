@@ -285,9 +285,14 @@ function vim {
 }
 v() {vim($@)}
 
-alias rsync='/usr/bin/rsync -e ssh-ident'
-
-alias ssh='ssh-ident'
+has_keychain=`hash keychain 2>/dev/null`
+has_keychain=$?
+if [ $has_keychain -eq 0 ]; then
+    eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
+else
+    alias ssh='ssh-ident'
+    alias rsync='/usr/bin/rsync -e ssh-ident'
+fi
 # Sets the tmux window title when you SSH somewhere
 mssh() {
     `hash tmux 2>/dev/null`
@@ -406,13 +411,6 @@ function allservers {
 
 
 #$ZDOTDIR/bin/screenfetch.sh
-
-has_keychain=`hash keychain 2>/dev/null`
-has_keychain=$?
-if [ $has_keychain -eq 0 ]; then
-    eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
-fi
-
 
 echo 10
 #$ZDOTDIR/bin/screenfetch.sh

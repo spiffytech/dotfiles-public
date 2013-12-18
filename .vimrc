@@ -144,3 +144,5 @@ autocmd BufWritePre * set ff=unix
 
 " Open nerdtree
 map <C-n> :NERDTreeToggle<CR>
+" Sudo write file with the command ":w!!"
+cmap w!! w !sudo tee > /dev/null %
