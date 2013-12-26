@@ -1,0 +1,91 @@
+#!/usr/bin/python
+
+from __future__ import division
+import argparse
+import subprocess
+import sys
+
+interval = 5
+
+parser = argparse.ArgumentParser(description="Increase/decrease PulseAudio volume")
+parser.add_argument("command")
+args = parser.parse_args()
+
+def get_definitions():
+    lines = subprocess.check_output("/usr/bin/pacmd list-sinks", shell=True)
+    definitions = []
+    definition = None
+    for line in lines.split("\n"):
+        line = line.strip()
+
+        if line.count("index: ") > 0:
+            definition = {}
+
+        if line.startswith("active port"):  # End of device sentinel
+            definitions.append(definition)
+            definition = None
+
+        if definition is not None:
+            if line.count(":") > 0:
+                parts = line.partition(":")
+            else:
+                parts = line.partition(" = ")
+
+            if parts[0].count("index") > 0:
+                key = "index"
+            else:
+                key = parts[0]
+
+            definition[key] = parts[2].strip()
+
+    return definitions
+
+class Output(object):
+    def __init__(self, definition):
+        self.index = int(definition["index"])
+        self.name = definition["device.description"]
+        self.volume = int(definition["volume"].split(" ")[-1].strip().replace("%", ""))
+        self.max_volume = int(definition["volume steps"]) -1
+        self.muted = definition["muted"] == "yes"
+
+
+    def __str__(self):
+        return "%d - %s: %d %s" % (self.index, self.name, self.volume, " (muted)" if self.muted else "")
+
+
+    def current_vol(self):
+        return self.volume
+
+
+    def increase_vol(self):
+        self._set_vol(min([self.volume + interval, 100]))
+
+
+    def decrease_vol(self):
+        self._set_vol(max([self.volume - interval, 0]))
+
+
+    def toggle_mute(self):
+        muted = 0 if self.muted else 1
+        subprocess.check_output("/usr/bin/pacmd set-sink-mute %d %d" % (self.index, muted), shell=True)
+
+
+    def _set_vol(self, vol):
+        self.volume = vol
+        new_vol = self.volume * round((self.max_volume / 100))
+        lines = subprocess.check_output("/usr/bin/pacmd set-sink-volume %d %d" % (self.index, new_vol), shell=True)
+        
+
+def get_vol():
+    return subprocess.check_output("pacmd list-sinks | grep device.description")
+
+defs = get_definitions()
+for defn in defs:
+    o = Output(defn)
+    if args.command == "+":
+        o.increase_vol()
+    elif args.command == "-":
+        o.decrease_vol()
+    elif args.command == "!":
+        o.toggle_mute()
+    print o
