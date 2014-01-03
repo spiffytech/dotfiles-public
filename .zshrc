@@ -315,7 +315,7 @@ mssh() {
     fi
 
     if [ $has_mosh -eq 0 ]; then
-        mosh --ssh="ssh-ident" spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident $@
+        mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident $@
     else
         #`which -a ssh | tail -n 1` $@
         ssh $@

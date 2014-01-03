@@ -76,6 +76,9 @@ None XF86AudioMute :execCommand pavol !
 None XF86AudioPlay :execCommand echo -n 'p' > ~/.config/pianobar/ctl
 None XF86AudioNext :execCommand echo -n 'n' > ~/.config/pianobar/ctl
 
+None XF86MonBrightnessUp :execCommand xbacklight -inc 10 -time 0 -steps 1
+None XF86MonBrightnessDown :execCommand xbacklight -dec 10 -time 0 -steps 1
+
 None Scroll_Lock :execCommand xscreensaver-command --lock
 
 Mod4 Shift Left :SendToPrevHead
