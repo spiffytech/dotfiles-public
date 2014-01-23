@@ -288,7 +288,7 @@ v() {vim($@)}
 has_keychain=`hash keychain 2>/dev/null`
 has_keychain=$?
 if [ $has_keychain -eq 0 ]; then
-    eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
+    eval $(keychain --eval --agents ssh -Q --quiet ~/.ssh/id*~*pub)
 else
     alias ssh='ssh-ident'
     alias rsync='/usr/bin/rsync -e ssh-ident'
