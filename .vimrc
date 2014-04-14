@@ -61,7 +61,7 @@ filetype plugin on
 let g:pydiction_location = '~/.vim/after/pydiction/complete-dict'
 let g:pydiction_menu_height=15
 
-set linebreak  " Makes vim wrap lines on word boundaries, not in the middle of a word. 
+set linebreak  " Makes vim wrap lines on word boundaries, not in the middle of a word. Note that the 'list' setting disables this - run ':se nolist' to fix that.
 
 " C# folding : http://vim.wikia.com/wiki/Syntax-based_folding, see comment by
 "au FileType cs set foldmethod=marker
