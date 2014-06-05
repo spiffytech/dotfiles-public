@@ -139,7 +139,7 @@ alias trilug='mssh -YC spiffytech@pilot.trilug.org'
 alias xa='mssh -Y -p 1122 ncsuxa@xa-ncsu.com'
 #alias sbox='mssh -XC spiffytech@direct.spiffybox.spiffyte.ch'
 alias sbox='mssh spiffytech@direct.spiffybox.spiffyte.ch'
-alias short='mssh -XC spiffytech@short.csc.ncsu.edu'
+alias short='mssh spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
 alias mngw='mssh mn_gw'
@@ -283,7 +283,7 @@ function vim {
         tmux set-window-option automatic-rename on
     fi
 }
-v() {vim($@)}
+v() {vim $@}
 
 has_keychain=`hash keychain 2>/dev/null`
 has_keychain=$?
