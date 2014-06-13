@@ -39,13 +39,8 @@ zstyle ':completion:*:manuals.*'  insert-sections   true
 zstyle ':completion:*:man:*'      menu yes select
 echo 4
 
-#bindkey '^' reverse-menu-complete  # Shift-tab
-#bindkey "^${key[Left]}" emacs-backward-word
-#bindkey '^^[[5C' emacs-forward-word
-
-
 # Misc
-unsetopt beep  # Don't beep
+unsetopt beep && xset b off  # Don't beep
 unsetopt hup  # Don't kill background jobs when the shell exits
 REPORTTIME=10  # Report the time taken by a command that runs longer than n seconds
 TIMEFMT="%U user %S system %P cpu %*Es total"  # Format for the time report
@@ -420,3 +415,9 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 source $ZDOTDIR/.zsh/git-flow-completion.zsh
 echo 11
+
+# These have to come down here for some reason. I presume they get overwritten if you set them higher up.
+bindkey '5C' emacs-forward-word
+bindkey '5D' emacs-backward-word
+
+export DV=~/devops/chef/solo/cookbooks/
