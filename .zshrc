@@ -39,13 +39,8 @@ zstyle ':completion:*:manuals.*'  insert-sections   true
 zstyle ':completion:*:man:*'      menu yes select
 echo 4
 
-#bindkey '^' reverse-menu-complete  # Shift-tab
-#bindkey "^${key[Left]}" emacs-backward-word
-#bindkey '^^[[5C' emacs-forward-word
-
-
 # Misc
-unsetopt beep  # Don't beep
+unsetopt beep && xset b off  # Don't beep
 unsetopt hup  # Don't kill background jobs when the shell exits
 REPORTTIME=10  # Report the time taken by a command that runs longer than n seconds
 TIMEFMT="%U user %S system %P cpu %*Es total"  # Format for the time report
@@ -139,7 +134,7 @@ alias trilug='mssh -YC spiffytech@pilot.trilug.org'
 alias xa='mssh -Y -p 1122 ncsuxa@xa-ncsu.com'
 #alias sbox='mssh -XC spiffytech@direct.spiffybox.spiffyte.ch'
 alias sbox='mssh spiffytech@sbox.spiffyte.ch'
-alias short='mssh -XC spiffytech@short.csc.ncsu.edu'
+alias short='mssh spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
 alias mngw='mssh mn_gw'
@@ -220,10 +215,12 @@ spm() {
 }
 
 
+export HASTE_SERVER=http://haste.spiffyte.ch
 haste() { 
-    curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
-    sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
-    sed -e 's/.*\.//')\n/"
+    #curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
+    #sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
+    #sed -e 's/.*\.//')\n/"
+    a=$(cat); curl -X POST -s -d "$a" $HASTE_SERVER/documents | awk -F '"' '{print "http://haste.spiffyte.ch/"$4}';
 }
 
 
@@ -285,12 +282,12 @@ function vim {
         tmux set-window-option automatic-rename on
     fi
 }
-v() {vim($@)}
+v() {vim $@}
 
 has_keychain=`hash keychain 2>/dev/null`
 has_keychain=$?
 if [ $has_keychain -eq 0 ]; then
-    eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
+    eval $(keychain --eval --agents ssh -Q --quiet ~/.ssh/id*~*pub)
 else
     alias ssh='ssh-ident'
     alias rsync='/usr/bin/rsync -e ssh-ident'
@@ -422,3 +419,9 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 source $ZDOTDIR/.zsh/git-flow-completion.zsh
 echo 11
+
+# These have to come down here for some reason. I presume they get overwritten if you set them higher up.
+bindkey '5C' emacs-forward-word
+bindkey '5D' emacs-backward-word
+
+export DV=~/devops/chef/solo/cookbooks/

@@ -8,7 +8,7 @@ import sys
 interval = 5
 
 parser = argparse.ArgumentParser(description="Increase/decrease PulseAudio volume")
-parser.add_argument("command")
+parser.add_argument("command", nargs="?")
 args = parser.parse_args()
 
 def get_definitions():
@@ -50,7 +50,7 @@ class Output(object):
 
 
     def __str__(self):
-        return "%d - %s: %d %s" % (self.index, self.name, self.volume, " (muted)" if self.muted else "")
+        return "#%(num)d v%(vol)d%(muted)s: %(desc)s" % {"num": self.index, "desc": self.name, "vol": self.volume, "muted": "(m)" if self.muted else ""}
 
 
     def current_vol(self):

@@ -29,6 +29,7 @@ set nocompatible  " Disables strict Vi compatibility
 set backspace=2  " Regular backspace key
 set ignorecase  " Ignore text case when searching
 set smartcase  " /cat matches  "cat",  "CAT",  "CaT". /Cat only matches  "Cat".
+set linebreak  " Makes vim wrap lines on word boundaries, not in the middle of a word. 
 "set paste  " Properly paste text. Overrides autoindent
 set background=dark  " Change syntax color to better contrast with black background
 set noincsearch  " Disable find-as-you-type searching
@@ -55,6 +56,9 @@ filetype plugin on
 
 "Automatic text substitutions
 ab pymain if __name__ ==  "__main__": main()
+" Correct npt -> ntp
+ab npt ntp
+ab NPT NTP
 
 " pydiction
 filetype plugin on
@@ -114,6 +118,23 @@ function Kees_settabs()
     endif
 endfunction
 autocmd BufReadPost * call Kees_settabs()
+
+" Goofy joke to remove random lines in a file to jump-start your day. Doesn't
+" actually work - pattern displayed for line removal is not apparent
+function Rmrand()
+    " :call Rmrand()
+    let line=getline(".") 
+    while (strlen(line)!=0) 
+        let rand = system('echo "$RANDOM % 3" | bc')
+        let rand = rand + 0
+        if (rand == 0) 
+            :d
+        else
+            j
+        endif
+        let line=getline(".") 
+    endwhile
+endfunction
 
 set fileformats+=dos  " Should prevent Vim from adding random newlines to files. http://stackoverflow.com/questions/1050640/vim-disable-automatic-newline-at-end-of-file
 
