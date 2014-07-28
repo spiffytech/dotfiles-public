@@ -73,6 +73,9 @@ set linebreak  " Makes vim wrap lines on word boundaries, not in the middle of a
 "au FileType cs set foldtext=substitute(getline(v:foldstart),'{.*','{...}',)
 "au FileType cs set foldlevelstart=2
 
+"au BufRead,BufNewFile *.fs set filetype=fs
+"au BufRead,BufNewFile *.fsx set filetype=fsx
+
 " Give PHP template files appropriate highlighting
 au BufNewFile,BufRead *.tpl set filetype=php
 " Go syntax highlighting

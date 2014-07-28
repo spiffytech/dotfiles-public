@@ -133,7 +133,7 @@ alias ncsu='mssh -YC bpcottin@remote-linux.eos.ncsu.edu'
 alias trilug='mssh -YC spiffytech@pilot.trilug.org'
 alias xa='mssh -Y -p 1122 ncsuxa@xa-ncsu.com'
 #alias sbox='mssh -XC spiffytech@direct.spiffybox.spiffyte.ch'
-alias sbox='mssh spiffytech@direct.spiffybox.spiffyte.ch'
+alias sbox='mssh spiffytech@sbox.spiffyte.ch'
 alias short='mssh spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
 # Work aliases
@@ -142,6 +142,8 @@ alias chef11='mssh chef11'
 alias dom0='mssh dom0'
 alias app1='mssh app1'
 echo 7
+
+NW='/home/spiffytech/Documents/programs/npcworld_fsharp/'
 
 function uslist {
     ls | grep -P "^$1" | sort -t '.' -k 2,2 -n
