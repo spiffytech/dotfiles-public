@@ -312,7 +312,7 @@ mssh() {
     fi
 
     if [ $has_mosh -eq 0 ]; then
-        mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident $@
+        mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident -o StrictHostKeyChecking=no $@
     else
         #`which -a ssh | tail -n 1` $@
         ssh $@
@@ -323,21 +323,6 @@ mssh() {
     fi
 }
 
-
-xlsconv() {
-    # Converts the given csv file to xls
-    if [ $OS = 'Darwin' ]; then
-        lo="/Applications/LibreOffice.app/Contents/MacOS/soffice"
-    else
-        lo="libreoffice"
-    fi
-    sudo $lo --headless --convert-to xls $@
-}
-
-
-function debug {
-    /usr/bin/ssh -R 10003:localhost:10003 $1
-}
 
 function fix_keyboard {
     # Fix special keys like home, end page-up, page-down
