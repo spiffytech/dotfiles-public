@@ -27,6 +27,9 @@ parcellite &
 ~/bin/swap-escape.sh
 xset b off
 synclient MaxTapTime=0
+synclient TapButton1=0
+synclient TapButton2=0
+synclient TapButton3=0
 nm-applet &
 xscreensaver &
 # Dropbox nukes disk throughput on boot, start it later
