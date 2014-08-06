@@ -74,8 +74,7 @@ else
         export PATH=$PATH:$HOME/bin/compiled/linux/x86_64
     fi
 fi
-PATH=$PATH:~/bin/node-v0.8.15-linux-x64/bin
-PATH=$PATH:/campaigns/bin:/campaigns/php/bin
+PATH=$PATH:/sbin/:/usr/sbin
 echo 6
 
 
