@@ -81,8 +81,6 @@ au BufNewFile,BufRead *.tpl set filetype=php
 " Go syntax highlighting
 au BufRead,BufNewFile *.go set filetype=go
 
-map <Leader>wb <Plug>VimwikiGoBackLink  " Go to the previous Vom Wiki page you had open
-
 "filetype plugin indent on  " Enables pyflakes
 set cursorline  " Horizontal line where cursor is
 highlight CursorLine cterm=underline  " Solarized theme overrides the underline
@@ -96,28 +94,18 @@ if version >= 703
     set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default with a real encryption function
 endif
 
-"let g:syntastic_auto_loc_list=1  " Used for the Vim xdebug extension that
-"works like garbage
-
-" when BufRead or BufNewFile event is triggered, pop off the .svn-base extension and
-" manually restart filetype autocommands
-"  
-autocmd! BufRead    *.svn-base execute 'doautocmd filetypedetect BufRead ' . expand('%:r')
-autocmd! BufNewFile *.svn-base execute 'doautocmd filetypedetect BufNewFile ' . expand('%:r')
-"au BufWritePost *.coffee silent CoffeeMake!
-
 "setlocal foldmethod=manual  " Don't use the PHP syntax folding 
 "EnableFastPHPFolds  " Turn on PHP fast folds 
 
 " Detects whether the open file is mostly tabs or spaces and changes expandtab
 " accordingly. 
 " http://www.outflux.net/blog/archives/2007/03/09/detecting-space-vs-tab-indentation-type-in-vim/
-function Kees_settabs()
-    if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
-        set noet ts=4 sw=4 list!
-    endif
-endfunction
-autocmd BufReadPost * call Kees_settabs()
+"function Kees_settabs()
+"    if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
+"        set noet ts=4 sw=4 list!
+"    endif
+"endfunction
+"autocmd BufReadPost * call Kees_settabs()
 
 " Goofy joke to remove random lines in a file to jump-start your day. Doesn't
 " actually work - pattern displayed for line removal is not apparent
@@ -157,6 +145,9 @@ nnoremap n nzz
 " Make j/k work as expected with wrapped lines
 map j gj
 map k gk
+
+" Ruby files get tabs 2-spaces wide
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 
 "set rtp+=~/.vim/bundle/vundle/
 "call vundle#rc()

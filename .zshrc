@@ -144,14 +144,6 @@ echo 7
 
 NW='/home/spiffytech/Documents/programs/npcworld_fsharp/'
 
-function uslist {
-    ls | grep -P "^$1" | sort -t '.' -k 2,2 -n
-}
-
-function smtp_lookup {
-    clients_run_command.sh "select smtp_server from clients where client_id = '$1'"
-}
-
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
@@ -313,7 +305,9 @@ mssh() {
     fi
 
     if [ $has_mosh -eq 0 ]; then
-        mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident -o StrictHostKeyChecking=no $@
+        scp ~/.ssh/config spiffytech@direct.spiffybox.spiffyte.ch:/tmp/tmp_ssh_config
+        #mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident -o StrictHostKeyChecking=no -F /tmp/tmp_ssh_config $@
+        mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh -o StrictHostKeyChecking=no -F /tmp/tmp_ssh_config $@
     else
         #`which -a ssh | tail -n 1` $@
         ssh $@
@@ -408,4 +402,4 @@ echo 11
 bindkey '5C' emacs-forward-word
 bindkey '5D' emacs-backward-word
 
-export DV=~/devops/chef/solo/cookbooks/
+export DV=~/devops/chef/solo/
