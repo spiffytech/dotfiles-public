@@ -35,6 +35,7 @@ xscreensaver &
 # Dropbox nukes disk throughput on boot, start it later
 #sleep 300 && dropbox start
 ./btsync
+redshift -l 36:-78.9 -v -t 6500:3700 &
 
 # And last but not least we start fluxbox.
 # Because it is the last app you have to run it with ''exec'' before it.

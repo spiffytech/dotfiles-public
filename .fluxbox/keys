@@ -81,7 +81,10 @@ None XF86MonBrightnessDown :execCommand xbacklight -dec 10 -time 0 -steps 1
 
 None Scroll_Lock :execCommand xscreensaver-command --lock
 None Mod4 L :execCommand xscreensaver-command --lock
-Mod4 n :execCommand dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+#Mod4 n :execCommand xscreensaver-command --lock && dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+#Mod4 Shift N :execCommand xscreensaver-command --lock && dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Hibernate
+Mod4 n :execCommand xscreensaver-command --lock && sudo pm-suspend
+Mod4 Shift N :execCommand xscreensaver-command --lock && sudo pm-hibernate
 
 Mod4 Shift Left :SendToPrevHead
 Mod4 Shift Right :SendToNextHead
