@@ -24,7 +24,7 @@ set expandtab  " Add/delete $shiftwidth-worth spaces with Tab/Bksp
 set smarttab  " Add/delete $shiftwidth-worth spaces with Tab/Bksp
 set laststatus=2  " Show status line as second-to-last line in window
 "set statusline=%F%m%r%h%w\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]  " Status line at bottom of display
-set statusline=%F%m%r%h%w\ [POS=%04l,%04v][%p%%]\ [LEN=%L]  " Status line at bottom of display
+set statusline=[POS=%04l,%04v][%p%%]\ [LEN=%L]\ %F%m%r%h%w  " Status line at bottom of display
 set nocompatible  " Disables strict Vi compatibility
 set backspace=2  " Regular backspace key
 set ignorecase  " Ignore text case when searching
