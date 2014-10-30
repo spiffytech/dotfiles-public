@@ -59,4 +59,49 @@
 (unless (package-installed-p 'linum-relative)
   (package-install 'linum-relative))
 (require 'linum-relative)
-(linum-mode)
+(global-linum-mode 1)
+
+(require 'ido)
+(ido-mode t)
+
+(unless (package-installed-p 'dirtree)
+  (package-install 'dirtree))
+(require 'dirtree)
+
+(unless (package-installed-p 'dired+)
+  (package-install 'dired+))
+(require 'dired+)
+
+(unless (package-installed-p 'nyan-mode)
+  (package-install 'nyan-mode))
+
+(global-visual-line-mode t)
+
+(setq frame-title-format
+    (list (format "%s %%S: %%j " (system-name))
+        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
+(show-paren-mode 1)
+
+; Disable highlight-copies-to-clipboard
+; Also fixes Evil destroying your clipboard
+(setq x-select-enable-clipboard nil)
+(setq x-select-enable-primary t)
+(setq mouse-drag-copy-region nil)
+
+;; flycheck
+(unless (package-installed-p 'flycheck)
+  (package-install 'flycheck))
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;(after 'flycheck
+;  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+;  (setq flycheck-checkers (delq 'emacs-lisp-checkdoc flycheck-checkers))
+;  (setq flycheck-checkers (delq 'html-tidy flycheck-checkers))
+;  (setq flycheck-standard-error-navigation nil))
+;(global-flycheck-mode t)
+;;; flycheck errors on a tooltip (doesnt work on console)
+;(when (display-graphic-p (selected-frame))
+;  (eval-after-load 'flycheck
+;    '(custom-set-variables
+;      '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
