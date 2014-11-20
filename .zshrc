@@ -403,3 +403,5 @@ bindkey '5C' emacs-forward-word
 bindkey '5D' emacs-backward-word
 
 export DV=~/devops/chef/solo/
+
+alias foodcritic="foodcritic -t '~FC001'"

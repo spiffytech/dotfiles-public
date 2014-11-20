@@ -11,6 +11,9 @@
  ;; If there is more than one, they won't work right.
  )
 
+(setq shell-file-name "zsh")
+(setq shell-command-switch "-ic")
+
 ;;; Initialize MELPA
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
@@ -26,17 +29,27 @@
   (package-install 'evil))
 (require 'evil)
 (evil-mode 1)
+(setq evil-ex-substitute-global t)  ; Like Vim's gdefault
 
 (unless (package-installed-p 'solarized-theme)
   (package-install 'solarized-theme))
 (require 'solarized-theme)
 (load-theme 'solarized-dark)
 
-(unless (package-installed-p 'elscreen)
-  (package-install 'elscreen))
-;(require 'ElScreen)
-(load "elscreen" "ElScreen" t)
-(elscreen-start)
+;(unless (package-installed-p 'elscreen)
+;  (package-install 'elscreen))
+;;(require 'ElScreen)
+;(load "elscreen" "ElScreen" t)
+;(elscreen-start)
+
+(unless (package-installed-p 'escreen)
+  (package-install 'escreen))
+(require 'escreen)
+(escreen-install)
+
+(unless (package-installed-p 'column-marker)
+  (package-install 'column-marker))
+(require 'column-marker)
 
 ;(unless (package-installed-p 'helm-config)
 ;  (package-install 'helm-config))
@@ -105,3 +118,9 @@
 ;  (eval-after-load 'flycheck
 ;    '(custom-set-variables
 ;      '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
+
+; Place temp / backup files in /tmp, not in the working file tree
+(setq backup-directory-alist
+      `((".*" . , temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" , temporary-file-directory t)))
