@@ -11,6 +11,8 @@
  ;; If there is more than one, they won't work right.
  )
 
+(setq confirm-kill-emacs 'yes-or-no-p)
+
 (setq shell-file-name "zsh")
 (setq shell-command-switch "-ic")
 
