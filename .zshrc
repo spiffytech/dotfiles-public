@@ -4,6 +4,14 @@ fi
 
 export CLICOLOR=1;
 
+## Load Antigen package manager
+#source "$HOME/.antigen.zsh"
+#antigen-use oh-my-zsh
+#antigen-bundle arialdomartini/oh-my-git
+##antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
+#antigen theme arialdomartini/oh-my-git-themes arialdo-granzestyle
+#antigen-apply
+#plugins=(oh-my-git)
 
 # zsh options
 # ===========
