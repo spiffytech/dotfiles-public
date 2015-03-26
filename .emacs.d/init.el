@@ -138,3 +138,14 @@
       `((".*" . , temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" , temporary-file-directory t)))
+
+; Bind Shift-<arrow> to navigating windows
+(windmove-default-keybindings)
+; Disable tabs, use spaces
+(setq-default indent-tabs-mode nil)
+
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
