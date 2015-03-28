@@ -216,10 +216,10 @@ spm() {
 
 export HASTE_SERVER=http://haste.spiffyte.ch
 haste() { 
-    #curl -sd "$(cat $1)" http://paste.sourcekit.com:7777/documents | 
-    #sed -e 's/{"key":"/http:\/\/paste.sourcekit.com:7777\//' -e "s/\"}/\.$(echo $1 | 
-    #sed -e 's/.*\.//')\n/"
-    a=$(cat); curl -X POST -s -d "$a" $HASTE_SERVER/documents | awk -F '"' '{print "http://haste.spiffyte.ch/"$4}';
+    tmpFile=`mktemp`
+    cat > $tmpFile
+    curl -X POST -s -d "@$tmpFile" $HASTE_SERVER/documents | awk -F '"' '{print "http://haste.spiffyte.ch/"$4}'
+    rm $tmpFile
 }
 
 
