@@ -12,6 +12,8 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :slant normal :weight normal :height 79 :width normal)))))
 
+(setq confirm-kill-emacs 'yes-or-no-p)
+
 (setq shell-file-name "zsh")
 (setq shell-command-switch "-ic")
 
@@ -89,6 +91,18 @@
 (unless (package-installed-p 'nyan-mode)
   (package-install 'nyan-mode))
 
+(unless (package-installed-p 'web-mode)
+  (package-install 'web-mode))
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
 (global-visual-line-mode t)
 
 (setq frame-title-format
@@ -130,3 +144,14 @@
       `((".*" . , temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" , temporary-file-directory t)))
+
+; Bind Shift-<arrow> to navigating windows
+(windmove-default-keybindings)
+; Disable tabs, use spaces
+(setq-default indent-tabs-mode nil)
+
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
