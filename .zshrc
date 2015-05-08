@@ -218,7 +218,7 @@ export HASTE_SERVER=http://haste.spiffyte.ch
 haste() { 
     tmpFile=`mktemp`
     cat > $tmpFile
-    curl -X POST -s -d "@$tmpFile" $HASTE_SERVER/documents | awk -F '"' '{print "http://haste.spiffyte.ch/"$4}'
+    curl -X POST -s --data-binary "@$tmpFile" $HASTE_SERVER/documents | awk -F '"' '{print "http://haste.spiffyte.ch/"$4}'
     rm $tmpFile
 }
 
