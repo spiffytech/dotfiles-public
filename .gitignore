@@ -3,3 +3,4 @@
 .fluxbox/lastwallpaper
 .emacs.d/ac-comphist.dat
 .emacs.d/elpa/*
+bin/attic.sh
