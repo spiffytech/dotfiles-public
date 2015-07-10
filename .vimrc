@@ -1,4 +1,5 @@
-call pathogen#runtime_append_all_bundles() 
+"call pathogen#runtime_append_all_bundles() 
+execute pathogen#infect()
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe  "normal g'\"" | endif
@@ -161,3 +162,22 @@ autocmd BufWritePre * set ff=unix
 map <C-n> :NERDTreeToggle<CR>
 " Sudo write file with the command ":w!!"
 cmap w!! w !sudo tee > /dev/null %
+
+" Syntastic recommended settings
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'fsharp/fsharpbinding', {
+      \ 'for': 'fsharp',
+      \ 'rtp': 'vim',
+      \ 'do': 'make -C vim fsautocomplete',
+      \}
+
+let g:fsharp_xbuild_path = "/usr/bin/xbuild"

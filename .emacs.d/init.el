@@ -54,6 +54,10 @@
   (package-install 'column-marker))
 (require 'column-marker)
 
+(unless (package-installed-p 'php-mode)
+  (package-install 'php-mode))
+(require 'php-mode)
+
 ;(unless (package-installed-p 'helm-config)
 ;  (package-install 'helm-config))
 ;(unless (package-installed-p 'helm-misc)
