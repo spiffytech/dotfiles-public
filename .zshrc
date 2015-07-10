@@ -69,7 +69,7 @@ OS=`uname`
 # Paths and files
 #export LEDGER=/home/brian/Documents/money/ledger.dat
 #export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
-PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin
+PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin:~/Downloads/terraform_0.6.0_linux_amd64
 export PATH=$PATH:/usr/local/go/bin
 if [ $OS = 'Darwin' ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
@@ -109,7 +109,7 @@ alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r do
 alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
-alias hgrep='history | grep -i'
+alias hgrep='history | grep -iP'
 alias update_dbdo='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/UpdateDBDO.php'
 alias ir='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/InstanceRunner.php'
 alias unstick='node ~/bin/unstick.js'
