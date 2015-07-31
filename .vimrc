@@ -186,6 +186,15 @@ Plug 'fsharp/fsharpbinding', {
       \ 'rtp': 'vim',
       \ 'do': 'make -C vim fsautocomplete',
       \}
+
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
+
+Plug 'scrooloose/syntastic'
+
+Plug 'altercation/vim-colors-solarized', { 'do': 'cp ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
+
+Plug 'tpope/vim-surround'
+
 call plug#end()
 
 let g:fsharp_xbuild_path = "/usr/bin/xbuild"
