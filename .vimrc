@@ -172,6 +172,13 @@ cmap w!! w !sudo tee > /dev/null %
 "let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 0
 
+" Automatically install vim-plug if missing
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'fsharp/fsharpbinding', {
@@ -179,5 +186,6 @@ Plug 'fsharp/fsharpbinding', {
       \ 'rtp': 'vim',
       \ 'do': 'make -C vim fsautocomplete',
       \}
+call plug#end()
 
 let g:fsharp_xbuild_path = "/usr/bin/xbuild"
