@@ -286,7 +286,7 @@ v() {vim $@}
 has_keychain=`hash keychain 2>/dev/null`
 has_keychain=$?
 if [ $has_keychain -eq 0 ]; then
-    eval $(keychain --eval --agents ssh -Q --quiet ~/.ssh/id*~*pub)
+    eval $(keychain --eval --agents ssh -Q --quiet ~/.ssh/id*~*pub ~/.ssh/*.pem)
 else
     alias ssh='ssh-ident'
     alias rsync='/usr/bin/rsync -e ssh-ident'
@@ -413,3 +413,5 @@ bindkey '5D' emacs-backward-word
 export DV=~/devops/chef/solo/
 
 alias foodcritic="foodcritic -t '~FC001'"
+
+source ~/.yd.sh
