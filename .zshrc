@@ -50,6 +50,7 @@ echo 4
 # Misc
 unsetopt beep && xset b off  # Don't beep
 unsetopt hup  # Don't kill background jobs when the shell exits
+# Only does user + system time, not wall time, sadly. http://superuser.com/questions/656820/is-there-a-way-to-print-out-execution-time-wall-time-in-zsh-when-it-exceeds-ce
 REPORTTIME=10  # Report the time taken by a command that runs longer than n seconds
 TIMEFMT="%U user %S system %P cpu %*Es total"  # Format for the time report
 
