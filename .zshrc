@@ -21,6 +21,7 @@ export HISTFILE=$ZDOTDIR/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
 setopt appendhistory  # Append to history
+setopt histignorespace  # Don't store commands beginning with a space in the history file
 setopt inc_append_history  # Append immediately
 setopt hist_expire_dups_first # expire duplicates in history first
 setopt hist_ignore_dups # don't add dupes to history
