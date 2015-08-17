@@ -1,17 +1,17 @@
 #!/bin/zsh
-REPOSITORY=home_backups:spiffywork-osm.attic
+
+set -o errexit
+
+REPOSITORY=home_backups:spiffytop.attic
 
 # Backup all of /home and /var/www except a few
 # excluded directories
 attic create --stats                        \
     $REPOSITORY::`date +%Y-%m-%d_%H:%M:%S`  \
-    Documents                               \
     .ssh/config                             \
-    devops*                                 \
-    samba_cache                             \
-    a_thing                                 \
-    Pictures                                \
     bin/attic.sh                            \
+    Documents                               \
+    Pictures                                \
 
 # Use the `prune` subcommand to maintain 7 daily, 4 weekly
 # and 6 monthly archives.

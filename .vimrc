@@ -195,6 +195,8 @@ Plug 'altercation/vim-colors-solarized', { 'do': 'cp ~/.vim/plugged/vim-colors-s
 
 Plug 'tpope/vim-surround'
 
+Plug 'ervandew/supertab'
+
 call plug#end()
 
 let g:fsharp_xbuild_path = "/usr/bin/xbuild"
