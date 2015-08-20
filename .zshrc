@@ -417,4 +417,6 @@ export DV=~/devops/chef/solo/
 
 alias foodcritic="foodcritic -t '~FC001'"
 
-source ~/.yd.sh
+export YDFOLDER=~/Documents/youthdigital/ws/
+export YDKEYSDIR=~/.ssh/youthdigital
+source $YDFOLDER/misc/yd.sh
