@@ -397,6 +397,9 @@ function allservers {
     tssh brian@{web{{1..2},4,{6..10}},send{1..4},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
 }
 
+if [ -r $HOME/.dircolors ]; then
+    eval `dircolors -b $HOME/.dircolors`
+fi
 
 #$ZDOTDIR/bin/screenfetch.sh
 
