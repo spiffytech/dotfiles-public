@@ -1,4 +1,5 @@
 .vim/tmp/*
+.vim/plugged
 .fluxbox/fbrun_history
 .fluxbox/lastwallpaper
 .emacs.d/ac-comphist.dat
