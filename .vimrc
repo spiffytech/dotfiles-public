@@ -191,7 +191,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
 
 Plug 'scrooloose/syntastic'
 
-Plug 'altercation/vim-colors-solarized', { 'do': 'cp ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
+Plug 'altercation/vim-colors-solarized', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
 
 Plug 'tpope/vim-surround'
 

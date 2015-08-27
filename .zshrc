@@ -318,6 +318,10 @@ function tssh {
     tmux set-window-option synchronize-panes on 
 }
 
+if [ -r $HOME/.dircolors ]; then
+    eval `dircolors -b $HOME/.dircolors`
+fi
+
 #$ZDOTDIR/bin/screenfetch.sh
 
 echo 10
@@ -337,4 +341,6 @@ export DV=~/devops/chef/solo/
 
 alias foodcritic="foodcritic -t '~FC001'"
 
-source ~/.yd.sh
+export YDFOLDER=~/Documents/youthdigital/ws/
+export YDKEYSDIR=~/.ssh/youthdigital
+source $YDFOLDER/misc/yd.sh
