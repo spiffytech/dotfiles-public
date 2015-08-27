@@ -197,36 +197,12 @@ $ %{${fg[default]}%}'
 echo 9
 
 
-#Autoload zsh functions.
-#fpath=($ZDOTDIR/.zsh/functions $fpath)
-#autoload -U $ZDOTDIR/.zsh/functions/*(:t)
- 
-# Enable auto-execution of functions.
-#typeset -ga preexec_functions
-#typeset -ga precmd_functions
-#typeset -ga chpwd_functions
- 
-## Append git functions needed for prompt.
-#preexec_functions+='preexec_update_git_vars'
-#precmd_functions+='precmd_update_git_vars'
-#chpwd_functions+='chpwd_update_git_vars'
-
-spm() {
-    /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/GetSendsPerMinute.php -c $1 --campaignid $2
-}
-
-
 export HASTE_SERVER=http://haste.spiffyte.ch
 haste() { 
     tmpFile=`mktemp`
     cat > $tmpFile
     curl -X POST -s --data-binary "@$tmpFile" $HASTE_SERVER/documents | awk -F '"' '{print "http://haste.spiffyte.ch/"$4}'
     rm $tmpFile
-}
-
-
-unstick-trigger() {
-    instance_run_command.sh $1 "update triggers set lock_id='' where lock_id='$2';"
 }
 
 
@@ -330,42 +306,6 @@ mssh() {
 }
 
 
-function fix_keyboard {
-    # Fix special keys like home, end page-up, page-down
-    autoload zkbd
-    function zkbd_file() {
-        [[ -f $ZDOTDIR/.zkbd/${TERM}-${VENDOR}-${OSTYPE} ]] && printf '%s' $ZDOTDIR/".zkbd/${TERM}-${VENDOR}-${OSTYPE}" && return 0
-        [[ -f $ZDOTDIR/.zkbd/${TERM}-${DISPLAY}          ]] && printf '%s' $ZDOTDIR/".zkbd/${TERM}-${DISPLAY}"          && return 0
-        return 1
-    }
-
-    [[ ! -d $ZDOTDIR/.zkbd ]] && mkdir $ZDOTDIR/.zkbd
-    keyfile=$(zkbd_file)
-    ret=$?
-    if [[ ${ret} -ne 0 ]]; then
-        zkbd
-        keyfile=$(zkbd_file)
-        ret=$?
-    fi
-    if [[ ${ret} -eq 0 ]] ; then
-        source "${keyfile}"
-    else
-        printf 'Failed to setup keys using zkbd.\n'
-    fi
-    unfunction zkbd_file; unset keyfile ret
-
-    # Setup key accordingly
-    [[ -n "${key[Home]}"    ]]  && bindkey  "${key[Home]}"    beginning-of-line
-    [[ -n "${key[End]}"     ]]  && bindkey  "${key[End]}"     end-of-line
-    [[ -n "${key[Insert]}"  ]]  && bindkey  "${key[Insert]}"  overwrite-mode
-    [[ -n "${key[Delete]}"  ]]  && bindkey  "${key[Delete]}"  delete-char
-    [[ -n "${key[Up]}"      ]]  && bindkey  "${key[Up]}"      up-line-or-history
-    [[ -n "${key[Down]}"    ]]  && bindkey  "${key[Down]}"    down-line-or-history
-    [[ -n "${key[Left]}"    ]]  && bindkey  "${key[Left]}"    backward-char
-    [[ -n "${key[Right]}"   ]]  && bindkey  "${key[Right]}"   forward-char
-}
-
-
 function tssh {
     for server in $@
     do
@@ -377,26 +317,6 @@ function tssh {
     tmux kill-pane
     tmux set-window-option synchronize-panes on 
 }
-
-function weball {
-    tssh brian@web{{1..2},4,{6..10}}.sourcekit.com $@
-}
-function apiall {
-    tssh brian@web{1,2,7,9,10}.sourcekit.com $@
-}
-function websome {
-    tssh brian@web{7..10}.sourcekit.com $@
-}
-function sendall {
-    tssh brian@send{3..4}.sourcekit.com $@
-}
-function codeall {
-    tssh brian@{web{{1..2},4,{6..10}},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
-}
-function allservers {
-    tssh brian@{web{{1..2},4,{6..10}},send{1..4},{vulcan,mercury,camelot,shangrila}}.sourcekit.com $@
-}
-
 
 #$ZDOTDIR/bin/screenfetch.sh
 
