@@ -344,3 +344,5 @@ alias foodcritic="foodcritic -t '~FC001'"
 export YDFOLDER=~/Documents/youthdigital/ws/
 export YDKEYSDIR=~/.ssh/youthdigital
 source $YDFOLDER/misc/yd.sh
+
+autoload zargs  # zsh alternative to xargs that accepts zsh globs instead of relying on 'find'
