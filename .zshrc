@@ -34,7 +34,6 @@ setopt EXTENDED_GLOB  # Needed to permit case-insensitive globbing. see `man zsh
 setopt correct  # Offer to correct mistyped commands
 setopt auto_list  # Automatically list choices on an ambiguous completion
 setopt AUTO_CD # If you type a dir whose name isn't a command, automatically cd into the dir
-setopt cdspell  # Correct spelling mistakes when changing directories
 setopt EXTENDED_HISTORY  # Save each command’s beginning timestamp (in seconds since the epoch) and the duration (in seconds) to the history file
 zstyle ':completion:*:functions' ignored-patterns '_*'  # Ignore completion functions for commands you don't have
 zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
@@ -48,8 +47,13 @@ zstyle ':completion:*:manuals.*'  insert-sections   true
 zstyle ':completion:*:man:*'      menu yes select
 echo 4
 
+# OS detection
+OS=`uname`
+
 # Misc
-unsetopt beep && xset b off  # Don't beep
+if [[ $OS != 'Darwin' ]]; then
+    unsetopt beep && xset b off  # Don't beep
+fi
 unsetopt hup  # Don't kill background jobs when the shell exits
 # Only does user + system time, not wall time, sadly. http://superuser.com/questions/656820/is-there-a-way-to-print-out-execution-time-wall-time-in-zsh-when-it-exceeds-ce
 REPORTTIME=10  # Report the time taken by a command that runs longer than n seconds
@@ -110,11 +114,7 @@ alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
 alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
-alias dp='python2.6 ~/Downloads/dreampie-1.1.1/dreampie'
 alias hgrep='history | grep -iP'
-alias update_dbdo='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/dev_utilities/UpdateDBDO.php'
-alias ir='sudo /campaigns/php/bin/php /campaigns/src/ServerApps/InstanceRunner.php'
-alias unstick='node ~/bin/unstick.js'
 
 # Location aliases
 alias -g ...='../..'
@@ -145,11 +145,6 @@ alias xa='mssh -Y -p 1122 ncsuxa@xa-ncsu.com'
 alias sbox='mssh spiffytech@sbox.spiffyte.ch'
 alias short='mssh spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
-# Work aliases
-alias mngw='mssh mn_gw'
-alias chef11='mssh chef11'
-alias dom0='mssh dom0'
-alias app1='mssh app1'
 echo 7
 
 NW='/home/spiffytech/Documents/programs/npcworld_fsharp/'
@@ -330,7 +325,6 @@ echo 10
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #node $ZDOTDIR/bin/loudbot.js
 
-source $ZDOTDIR/.zsh/git-flow-completion.zsh
 echo 11
 
 # These have to come down here for some reason. I presume they get overwritten if you set them higher up.
