@@ -1,4 +1,5 @@
 .vim/tmp/*
+.vim/.netrwhist
 .vim/plugged
 .vim/colors
 .fluxbox/fbrun_history
