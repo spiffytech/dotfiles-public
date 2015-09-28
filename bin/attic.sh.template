@@ -2,6 +2,10 @@
 
 set -o errexit
 
+# Mutex
+exec 200<$0
+flock -n 200 || exit 1
+
 REPOSITORY=home_backups:spiffytop.attic
 
 # Backup all of /home and /var/www except a few

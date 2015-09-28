@@ -197,6 +197,11 @@ Plug 'tpope/vim-surround'
 
 Plug 'ervandew/supertab'
 
+Plug 'kien/rainbow_parentheses.vim'
+
 call plug#end()
+
+" Enable rainbow parentheses
+RainbowParenthesesToggle
 
 let g:fsharp_xbuild_path = "/usr/bin/xbuild"
