@@ -1,5 +1,6 @@
 #!/bin/bash
 
 [ -z $CONTAINER ] && CONTAINER=spiffytech/fsharp-mono-xsp
+[ -z $WORKDIR ] && WORKDIR=/source
 
-docker run --rm -i -t -v $(pwd):/source $DOCKEROPTS -e "MONO_OPTIONS=$MONO_OPTIONS" $CONTAINER $@
+docker run --rm -i -t -v $(pwd):$WORKDIR $DOCKEROPTS -e "MONO_OPTIONS=$MONO_OPTIONS" $CONTAINER $@
