@@ -16,7 +16,6 @@ export CLICOLOR=1;
 # zsh options
 # ===========
 # history stuff
-echo 1
 export HISTFILE=$ZDOTDIR/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
@@ -25,7 +24,6 @@ setopt histignorespace  # Don't store commands beginning with a space in the his
 setopt inc_append_history  # Append immediately
 setopt hist_expire_dups_first # expire duplicates in history first
 setopt hist_ignore_dups # don't add dupes to history
-echo 2
 
 
 # completion and expansion stuff
@@ -39,13 +37,11 @@ zstyle ':completion:*:functions' ignored-patterns '_*'  # Ignore completion func
 zstyle ':completion:*:(rm|kill|diff|vimdiff):*' ignore-line yes
 autoload -U compinit
 compinit
-echo 3
 
 # Tab-complete command parameters from man pages
 zstyle ':completion:*:manuals'    separate-sections true
 zstyle ':completion:*:manuals.*'  insert-sections   true
 zstyle ':completion:*:man:*'      menu yes select
-echo 4
 
 # OS detection
 OS=`uname`
@@ -65,7 +61,6 @@ autoload colors zsh/terminfo
 if [[ "$terminfo[colors]" -ge 8 ]]; then
   colors
 fi
-echo 5
 
 
 # Personal stuff
@@ -89,7 +84,6 @@ else
     fi
 fi
 PATH=$PATH:/sbin/:/usr/sbin
-echo 6
 
 
 # Aliases
@@ -145,7 +139,6 @@ alias xa='mssh -Y -p 1122 ncsuxa@xa-ncsu.com'
 alias sbox='mssh spiffytech@sbox.spiffyte.ch'
 alias short='mssh spiffytech@short.csc.ncsu.edu'
 alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
-echo 7
 
 NW='/home/spiffytech/Documents/programs/npcworld_fsharp/'
 
@@ -161,7 +154,6 @@ zstyle ':vcs_info:*' enable git svn  # See this for more info: man zshcontrib | 
 function precmd {
     vcs_info
 }
-echo 8
 
 prompt_default_color="%(?.%{${fg[yellow]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
 prompt_user=$prompt_default_color
@@ -189,7 +181,6 @@ PROMPT='
 %{$prompt_default_color%}%~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}_
 
 $ %{${fg[default]}%}'
-echo 9
 
 
 export HASTE_SERVER=http://haste.spiffyte.ch
@@ -259,7 +250,6 @@ v() {vim $@}
 has_keychain=`hash keychain 2>/dev/null`
 has_keychain=$?
 if [ $has_keychain -eq 0 ]; then
-    eval $(keychain --eval --agents ssh -Q --quiet ~/.ssh/id*~*pub ~/.ssh/*.pem)
     eval $(keychain --eval --agents ssh -Q --quiet ~/.ssh/id*~*pub)
 else
     alias ssh='ssh-ident'
@@ -319,13 +309,10 @@ fi
 
 #$ZDOTDIR/bin/screenfetch.sh
 
-echo 10
 #$ZDOTDIR/bin/screenfetch.sh
-#echo
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #node $ZDOTDIR/bin/loudbot.js
 
-echo 11
 
 # These have to come down here for some reason. I presume they get overwritten if you set them higher up.
 bindkey '5C' emacs-forward-word
@@ -340,3 +327,5 @@ export YDKEYSDIR=~/.ssh/youthdigital
 source $YDFOLDER/misc/yd.sh
 
 autoload zargs  # zsh alternative to xargs that accepts zsh globs instead of relying on 'find'
+
+export TERM=konsole-256color
