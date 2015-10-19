@@ -37,7 +37,11 @@
 (unless (package-installed-p 'solarized-theme)
   (package-install 'solarized-theme))
 (require 'solarized-theme)
-(load-theme 'solarized-dark)
+;(load-theme 'solarized-dark)
+
+(unless (package-installed-p 'monokai-theme)
+  (package-install 'monokai-theme))
+(load-theme 'monokai t)
 
 ;(unless (package-installed-p 'elscreen)
 ;  (package-install 'elscreen))
@@ -72,17 +76,23 @@
 ;(require 'helm-locate)
 (unless (package-installed-p 'helm)
   (package-install 'helm))
-(require 'helm)
+(require 'helm-config)
 
-(helm-mode 1)
+;(helm-mode 1)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(setq helm-M-x-fuzzy-match t)
+
+(unless (package-installed-p 'helm-ag)
+  (package-install 'helm-ag))
 
 (unless (package-installed-p 'linum-relative)
   (package-install 'linum-relative))
 (require 'linum-relative)
 (global-linum-mode 1)
 
-(require 'ido)
-(ido-mode t)
+;(require 'do)
+;(ido-mode t)
 
 (unless (package-installed-p 'dirtree)
   (package-install 'dirtree))
