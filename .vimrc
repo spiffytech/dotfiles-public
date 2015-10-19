@@ -199,9 +199,14 @@ Plug 'ervandew/supertab'
 
 Plug 'kien/rainbow_parentheses.vim'
 
+Plug 'sickill/vim-monokai'
+
 call plug#end()
 
+" colorscheme molokai
+" let g:rehash256 = 1
+
 " Enable rainbow parentheses
-RainbowParenthesesToggle
+" RainbowParenthesesToggle
 
 let g:fsharp_xbuild_path = "/usr/bin/xbuild"
