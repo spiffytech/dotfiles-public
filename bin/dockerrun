@@ -1,6 +1,17 @@
 #!/bin/bash
 
-[ -z $CONTAINER ] && CONTAINER=spiffytech/fsharp-mono-xsp
+# Search up the file tree for .drun.sh
+x=`pwd`;
+while [ "$x" != "/" ];
+do
+    if [[ -e "$x/.drun.sh" && -f "$x/.drun.sh" ]]; then
+        source "$x/.drun.sh"
+        break
+    fi
+    x=`dirname "$x"`
+done
+
+[ -z $CONTAINER ] && CONTAINER=debian #spiffytech/fsharp-mono-xsp
 [ -z $WORKDIR ] && WORKDIR=/source
 
-docker run --rm -i -t -v $(pwd):$WORKDIR $DOCKEROPTS -e "MONO_OPTIONS=$MONO_OPTIONS" $CONTAINER $@
+docker run --rm -i -t -v $(pwd):$WORKDIR -w $WORKDIR $DOCKEROPTS -e "MONO_OPTIONS=$MONO_OPTIONS" $CONTAINER $@
