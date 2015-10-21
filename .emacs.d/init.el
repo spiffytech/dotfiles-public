@@ -23,6 +23,21 @@
 (unless package-archive-contents (package-refresh-contents))
 (package-initialize)
 
+(unless (package-installed-p 'clojure-mode)
+  (package-install 'clojure-mode))
+
+(unless (package-installed-p 'clj-refactor)
+  (package-install 'clj-refactor))
+(require 'clj-refactor)
+(defun my-clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import
+    (cljr-add-keybindings-with-prefix "C-c C-m"))
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+
+(add-hook 'clojure-mode-hook #'subword-mode)
+(add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+
 ;;; Install fsharp-mode
 (unless (package-installed-p 'fsharp-mode)
   (package-install 'fsharp-mode))
