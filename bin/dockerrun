@@ -1,6 +1,24 @@
 #!/bin/bash
 
-[ -z $CONTAINER ] && CONTAINER=spiffytech/fsharp-mono-xsp
-[ -z $WORKDIR ] && WORKDIR=/source
+# Search up the file tree for .drun.sh
+x=`pwd`;
+while [ "$x" != "/" ];
+do
+    if [[ -e "$x/.drun.sh" && -f "$x/.drun.sh" ]]; then
+        # Changing directories lets us get a correct `pwd` inside the script
+        cd $x
+        source "$x/.drun.sh"
+        cd - > /dev/null
+        break
+    fi
+    x=`dirname "$x"`
+done
 
-docker run --rm -i -t -v $(pwd):$WORKDIR $DOCKEROPTS -e "MONO_OPTIONS=$MONO_OPTIONS" $CONTAINER $@
+[ -z $CONTAINER ] && CONTAINER=debian #spiffytech/fsharp-mono-xsp
+[ -z $MOUNTDIR ] && MOUNTDIR=/source
+[ -z $DOCROOT ] && DOCROOT=$(pwd)
+
+# This finds where you currently are inside the source tree
+WORKDIR=$MOUNTDIR/`python -c "import os.path; print os.path.relpath('$(pwd)', '$DOCROOT')"`
+
+docker run --rm -i -t -v $DOCROOT:$MOUNTDIR -w $WORKDIR $DOCKEROPTS -e "MONO_OPTIONS=$MONO_OPTIONS" $CONTAINER $@
