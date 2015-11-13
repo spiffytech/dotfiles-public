@@ -104,11 +104,6 @@
 (unless (package-installed-p 'helm-ag)
   (package-install 'helm-ag))
 
-(unless (package-installed-p 'linum-relative)
-  (package-install 'linum-relative))
-(require 'linum-relative)
-(global-linum-mode 1)
-
 ;(require 'do)
 ;(ido-mode t)
 
@@ -187,6 +182,12 @@
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
+
+(global-linum-mode 1)
+(unless (package-installed-p 'linum-relative)
+  (package-install 'linum-relative))
+(require 'linum-relative)
+(linum-relative-mode)
 
 (unless (package-installed-p 'tramp)
   (package-install 'tramp))
