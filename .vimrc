@@ -49,7 +49,7 @@ set wildmenu
 set scrolloff=5
 set sidescrolloff=5
 
-colorscheme solarized
+"colorscheme solarized
 
 "Enable omni-compl (Intellisense)
 filetype plugin on
