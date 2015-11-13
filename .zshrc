@@ -334,3 +334,7 @@ export YDKEYSDIR=~/.ssh/youthdigital
 autoload zargs  # zsh alternative to xargs that accepts zsh globs instead of relying on 'find'
 
 export TERM=konsole-256color
+
+function lintDirty {
+    for f in `git status --short | grep -P '.php$' | awk -F' ' '{print $2}'`; do dockerrun php -l $f; done
+}
