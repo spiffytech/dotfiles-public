@@ -48,7 +48,11 @@ OS=`uname`
 
 # Misc
 if [[ $OS != 'Darwin' ]]; then
-    unsetopt beep && xset b off  # Don't beep
+    `hash xset 2>/dev/null`
+    has_xset=$?
+    if [ $has_xset -eq 0 ]; then
+        unsetopt beep && xset b off  # Don't beep
+    fi
 fi
 unsetopt hup  # Don't kill background jobs when the shell exits
 # Only does user + system time, not wall time, sadly. http://superuser.com/questions/656820/is-there-a-way-to-print-out-execution-time-wall-time-in-zsh-when-it-exceeds-ce
