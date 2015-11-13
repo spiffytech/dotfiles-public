@@ -249,7 +249,6 @@ function vim {
         tmux set-window-option automatic-rename on
     fi
 }
-v() {vim $@}
 
 has_keychain=`hash keychain 2>/dev/null`
 has_keychain=$?
@@ -259,6 +258,7 @@ else
     alias ssh='ssh-ident'
     alias rsync='/usr/bin/rsync -e ssh-ident'
 fi
+
 # Sets the tmux window title when you SSH somewhere
 mssh() {
     `hash tmux 2>/dev/null`
@@ -280,12 +280,14 @@ mssh() {
         tmux rename-window $host
     fi
 
+    remote_ssh_config_dir=/tmp/tmp_ssh_config_`hostname`
+    proxy_host=sbox.spiffy.tech
+
     if [ $has_mosh -eq 0 ]; then
-        scp ~/.ssh/config spiffytech@direct.spiffybox.spiffyte.ch:/tmp/tmp_ssh_config
-        #mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh-ident -o StrictHostKeyChecking=no -F /tmp/tmp_ssh_config $@
-        mosh spiffytech@direct.spiffybox.spiffyte.ch -- ssh -o StrictHostKeyChecking=no -F /tmp/tmp_ssh_config $@
+        rsync -avhP ~/.ssh/ spiffytech@$proxy_host:$remote_ssh_config_dir/
+        mosh spiffytech@$proxy_host -- /bin/bash -c "cd $remote_ssh_config_dir && ssh -o StrictHostKeyChecking=no -F $remote_ssh_config_dir/config $@"
+        ssh $proxy_host rm -rf $remote_ssh_config_dir
     else
-        #`which -a ssh | tail -n 1` $@
         ssh $@
     fi
 
@@ -293,7 +295,6 @@ mssh() {
         tmux set automatic-rename on > /dev/null
     fi
 }
-
 
 function tssh {
     for server in $@
