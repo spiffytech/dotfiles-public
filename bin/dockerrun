@@ -20,6 +20,7 @@ do
     if [[ -e "$x/.drun.sh" && -f "$x/.drun.sh" ]]; then
         # Changing directories lets us get a correct `pwd` inside the script
         cd $x
+        PROJECTROOT=$(pwd)  # Assume .drun.sh is at our project root
         source "$x/.drun.sh"
         cd - > /dev/null
         break
@@ -29,11 +30,15 @@ done
 
 [ -z $CONTAINER ] && CONTAINER=debian #spiffytech/fsharp-mono-xsp
 [ -z $MOUNTDIR ] && MOUNTDIR=/source
-[ -z $DOCROOT ] && DOCROOT=$(pwd)
+[ -z $PROJECTROOT ] && PROJECTROOT=$(pwd)
 
-# This finds where you currently are inside the source tree
-WORKDIR=$MOUNTDIR/`python -c "import os.path; print os.path.relpath('$(pwd)', '$DOCROOT')"`
-[ "$WORKDIR" == "$MOUNTDIR/." ] && WORKDIR=$MOUNTDIR
+# If the project gets mounted into the container at /source
+# And our project root on the host is ~/Documents/programs/project
+# And our cwd is                      ~/Documents/programs/projects/a/b/c
+# This sets the Docker working directory to /source/a/b/c
+tmp=$(pwd)
+WORKDIR=`echo $MOUNTDIR${tmp#$PROJECTROOT}`
+unset tmp
 
 
 # Add volumes from .drun.sh
@@ -56,4 +61,4 @@ else
     ENVVAR_STR=""
 fi
 
-docker run --rm -i -t -v $DOCROOT:$MOUNTDIR $VOLUMES_STR $ENVVAR_STR -w $WORKDIR $DOCKEROPTS $CONTAINER $@
+docker run --rm -i -t -v $PROJECTROOT:$MOUNTDIR $VOLUMES_STR $ENVVAR_STR -w $WORKDIR $DOCKEROPTS $CONTAINER $@
