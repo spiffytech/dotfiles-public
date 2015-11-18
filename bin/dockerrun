@@ -1,5 +1,18 @@
 #!/bin/bash
 
+set -e
+
+## Unnecessary. Join with leading separatator: ${VOLUMES[@]/#/ -v } where ' -v ' is the separator
+#arrayJoin() {
+#    # http://stackoverflow.com/a/23673883/191438
+#    # $1 is return variable name
+#    # $2 is sep
+#    # $3... are the elements to join
+#    local retname=$1 sep=$2 ret=$3
+#    shift 3 || shift $(($#))
+#    printf -v "$retname" "%s" "$ret${@/#/$sep}"
+#}
+
 # Search up the file tree for .drun.sh
 x=`pwd`;
 while [ "$x" != "/" ];
@@ -20,5 +33,27 @@ done
 
 # This finds where you currently are inside the source tree
 WORKDIR=$MOUNTDIR/`python -c "import os.path; print os.path.relpath('$(pwd)', '$DOCROOT')"`
+[ "$WORKDIR" == "$MOUNTDIR/." ] && WORKDIR=$MOUNTDIR
 
-docker run --rm -i -t -v $DOCROOT:$MOUNTDIR -w $WORKDIR $DOCKEROPTS -e "MONO_OPTIONS=$MONO_OPTIONS" $CONTAINER $@
+
+# Add volumes from .drun.sh
+# .drun.sh **ONLY**. Can't pass arrays to other processes as first-class data
+# types in Bash
+if [[ ! -z $VOLUMES ]]; then
+    VOLUMES_STR=`printf "%s" "${VOLUMES[@]/#/ -v }"`  # arrayJoin omits leading $separator
+else
+    VOLUMES_STR=""
+fi
+
+# Add volumes from .drun.sh
+# .drun.sh **ONLY**. Can't pass arrays to other processes as first-class data
+# types in Bash
+if [[ ! -z $ENVVARS ]]; then
+    # Leading space in format string is /not/ a mistake. Without that, printf
+    # treats the '-e' as a printf flag, not a string literal.
+    ENVVAR_STR=`printf " %s" "${ENVVARS[@]/#/ -e }"`  # arrayJoin omits leading $separator
+else
+    ENVVAR_STR=""
+fi
+
+docker run --rm -i -t -v $DOCROOT:$MOUNTDIR $VOLUMES_STR $ENVVAR_STR -w $WORKDIR $DOCKEROPTS $CONTAINER $@
