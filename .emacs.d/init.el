@@ -192,4 +192,5 @@
 (unless (package-installed-p 'tramp)
   (package-install 'tramp))
 (require 'tramp)
-(set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))  ; Enable sudo support in tramp
+;(set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))  ; Enable sudo support in tramp
+(set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/scp%h:"))))  ; Enable sudo support in tramp
