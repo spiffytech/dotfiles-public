@@ -61,4 +61,4 @@ else
     ENVVAR_STR=""
 fi
 
-docker run --rm -i -t -u `id -u $USER`:`id -g $USER` -v $PROJECTROOT:$MOUNTDIR $VOLUMES_STR $ENVVAR_STR -w $WORKDIR $DOCKEROPTS $CONTAINER $@
+docker run --rm -i -t -u `id -u $USER`:`id -g $USER` -v $PROJECTROOT:$MOUNTDIR $VOLUMES_STR $ENVVAR_STR -w $WORKDIR $DOCKEROPTS $CONTAINER "$@"
