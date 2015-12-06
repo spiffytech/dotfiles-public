@@ -40,6 +40,21 @@ tmp=$(pwd)
 WORKDIR=`echo $MOUNTDIR${tmp#$PROJECTROOT}`
 unset tmp
 
+VOLUMES+=("$PROJECTROOT:$MOUNTDIR")  # mount pwd into container
+
+# Handle when SELinux is enforcing (must append :Z to all volume strings)
+hash sestatus && HAS_SELINUX=true || HAS_SELINUX=false
+if [[ HAS_SELINUX -eq "true" ]]; then
+    SELINUX_MODE=`sestatus | grep 'Current mode' | awk -F' ' '{print $3}'`
+    if [[ SELINUX_MODE -eq "enforcing" ]]; then
+        VOLSTMP=("${VOLUMES[@]}")
+        VOLUMES=()
+        for v in "${VOLSTMP[@]}"; do
+            VOLUMES+=("$v:Z")
+        done
+
+    fi
+fi
 
 # Add volumes from .drun.sh
 # .drun.sh **ONLY**. Can't pass arrays to other processes as first-class data
@@ -63,4 +78,4 @@ fi
 
 [ -t 1 ] && ISTTY="-it" || ISTTY=""
 
-docker run --rm $ISTTY $PORT -v $PROJECTROOT:$MOUNTDIR $VOLUMES_STR $ENVVAR_STR -w $WORKDIR $DOCKEROPTS $CONTAINER "$@"
+docker run --rm $ISTTY $PORT $VOLUMES_STR $ENVVAR_STR -w $WORKDIR $DOCKEROPTS $CONTAINER "$@"
