@@ -186,19 +186,12 @@ Plug 'fsharp/fsharpbinding', {
       \ 'rtp': 'vim',
       \ 'do': 'make -C vim fsautocomplete',
       \}
-
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
-
 Plug 'scrooloose/syntastic'
-
 Plug 'altercation/vim-colors-solarized', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
-
 Plug 'tpope/vim-surround'
-
 Plug 'ervandew/supertab'
-
 Plug 'kien/rainbow_parentheses.vim'
-
 Plug 'sickill/vim-monokai'
 
 call plug#end()
