@@ -43,10 +43,11 @@ unset tmp
 VOLUMES+=("$PROJECTROOT:$MOUNTDIR")  # mount pwd into container
 
 # Handle when SELinux is enforcing (must append :Z to all volume strings)
-hash sestatus && HAS_SELINUX=true || HAS_SELINUX=false
-if [[ HAS_SELINUX -eq "true" ]]; then
+# http://stackoverflow.com/a/31334443/191438
+command -v sestatus >/dev/null 2>&1 && HAS_SELINUX=true || HAS_SELINUX=false
+if [[ HAS_SELINUX == "true" ]]; then
     SELINUX_MODE=`sestatus | grep 'Current mode' | awk -F' ' '{print $3}'`
-    if [[ SELINUX_MODE -eq "enforcing" ]]; then
+    if [[ SELINUX_MODE == "enforcing" ]]; then
         VOLSTMP=("${VOLUMES[@]}")
         VOLUMES=()
         for v in "${VOLSTMP[@]}"; do
