@@ -6,4 +6,7 @@
 .fluxbox/lastwallpaper
 .emacs.d/ac-comphist.dat
 .emacs.d/elpa/*
+.emacs.d/auto-save-list/
+.emacs.d/recentf
+.emacs.d/session*
 bin/attic.sh
