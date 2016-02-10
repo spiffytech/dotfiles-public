@@ -1,34 +1,48 @@
 #!/bin/bash
 
+# Simplifies running CLI tools through Docker.
+#
+# Exposes your current working directory into docker at /source (configurable).
+#
+# Reads settings from a config file (.dockerrun). If a .dockerfile is found in
+# any directory from cwd up to / (same way as searching for .git folder), that
+# directory is mounted at /source in the container, and the container's cwd is
+# set to wherever beneath .dockerrun your local cwd is
+#
+# Commands look like `IMAGE=debian dockerrun bash`
+# `dockerrun pwd > /tmp/pwd.txt` writes to your /local/ /tmp/pwd.txt
+
 set -e
 
-## Unnecessary. Join with leading separatator: ${VOLUMES[@]/#/ -v } where ' -v ' is the separator
-#arrayJoin() {
-#    # http://stackoverflow.com/a/23673883/191438
-#    # $1 is return variable name
-#    # $2 is sep
-#    # $3... are the elements to join
-#    local retname=$1 sep=$2 ret=$3
-#    shift 3 || shift $(($#))
-#    printf -v "$retname" "%s" "$ret${@/#/$sep}"
-#}
+# Backwards compatibility with old (less intuitive) config filename
+CONFIG_FILE_OLD=.drun.sh
 
-# Search up the file tree for .drun.sh
-x=`pwd`;
-while [ "$x" != "/" ];
-do
-    if [[ -e "$x/.drun.sh" && -f "$x/.drun.sh" ]]; then
-        # Changing directories lets us get a correct `pwd` inside the script
-        cd $x
-        PROJECTROOT=$(pwd)  # Assume .drun.sh is at our project root
-        source "$x/.drun.sh"
-        cd - > /dev/null
-        break
-    fi
-    x=`dirname "$x"`
-done
+# Current filename to use
+CONFIG_FILE=.dockerrun
 
-[ -z $CONTAINER ] && CONTAINER=debian #spiffytech/fsharp-mono-xsp
+function read_config_files {
+    F=$1
+    # Search up the file tree for $CONFIG_FILE
+    x=`pwd`;
+    while [ "$x" != "/" ];
+    do
+        if [[ -e "$x/$F" && -f "$x/$F" ]]; then
+            # Changing directories lets us get a correct `pwd` inside the script
+            cd $x
+            PROJECTROOT=$(pwd)  # Assume $F is at our project root
+            source "$x/$F"
+            cd - > /dev/null
+            break
+        fi
+        x=`dirname "$x"`
+    done
+}
+
+read_config_files $CONFIG_FILE_OLD
+read_config_files $CONFIG_FILE
+
+[ -z $CONTAINER ] || IMAGE=$CONTAINER  # Backwards compatibility with old variable
+[ -z $IMAGE ] && IMAGE=debian
 [ -z $MOUNTDIR ] && MOUNTDIR=/source
 [ -z $PROJECTROOT ] && PROJECTROOT=$(pwd)
 
@@ -57,8 +71,8 @@ if [[ HAS_SELINUX == "true" ]]; then
     fi
 fi
 
-# Add volumes from .drun.sh
-# .drun.sh **ONLY**. Can't pass arrays to other processes as first-class data
+# Add volumes from $CONFIG_FILE
+# $CONFIG_FILE **ONLY**. Can't pass arrays to other processes as first-class data
 # types in Bash
 if [[ ! -z $VOLUMES ]]; then
     VOLUMES_STR=`printf "%s" "${VOLUMES[@]/#/ -v }"`  # arrayJoin omits leading $separator
@@ -66,8 +80,8 @@ else
     VOLUMES_STR=""
 fi
 
-# Add volumes from .drun.sh
-# .drun.sh **ONLY**. Can't pass arrays to other processes as first-class data
+# Add volumes from $CONFIG_FILE
+# $CONFIG_FILE **ONLY**. Can't pass arrays to other processes as first-class data
 # types in Bash
 if [[ ! -z $ENVVARS ]]; then
     # Leading space in format string is /not/ a mistake. Without that, printf
@@ -79,4 +93,4 @@ fi
 
 [ -t 1 ] && ISTTY="-it" || ISTTY=""
 
-docker run --rm $ISTTY $PORT $VOLUMES_STR $ENVVAR_STR -w $WORKDIR $DOCKEROPTS $CONTAINER "$@"
+docker run --rm $ISTTY $PORT $VOLUMES_STR $ENVVAR_STR -w $WORKDIR $DOCKEROPTS $IMAGE "$@"
