@@ -72,19 +72,11 @@ fi
 OS=`uname`
 
 # Paths and files
-#export LEDGER=/home/brian/Documents/money/ledger.dat
-#export LEDGER_PRICE_DB=/home/brian/Documents/money/stock_quotes.dat
-PATH=$PATH:/usr/local/bin:$ZDOTDIR/bin:~/Downloads/terraform_0.6.0_linux_amd64
-export PATH=$PATH:/usr/local/go/bin
 if [ $OS = 'Darwin' ]; then
-    export PATH=/opt/local/bin:/opt/local/sbin:$PATH  # MacPorts stuff
-    export PATH=$PATH:$HOME/bin/compiled/mac/x86_64
 else
     ARCH=`arch`
     if [ $ARCH = 'i686' ]; then
-        export PATH=$PATH:$HOME/bin/compiled/linux/x86
     else
-        export PATH=$PATH:$HOME/bin/compiled/linux/x86_64
     fi
 fi
 PATH=$PATH:/sbin/:/usr/sbin
@@ -313,9 +305,6 @@ if [ -r $HOME/.dircolors ]; then
 fi
 
 #$ZDOTDIR/bin/screenfetch.sh
-
-#$ZDOTDIR/bin/screenfetch.sh
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #node $ZDOTDIR/bin/loudbot.js
 
 
@@ -326,6 +315,8 @@ bindkey '5D' emacs-backward-word
 export DV=~/devops/chef/solo/
 
 alias foodcritic="foodcritic -t '~FC001'"
+
+alias npm-exec='PATH=$(npm bin):$PATH'
 
 export YDFOLDER=~/Documents/youthdigital/ws/
 export YDKEYSDIR=~/.ssh/youthdigital
@@ -339,3 +330,7 @@ export TERM=konsole-256color
 function lintDirty {
     for f in `git status --short | grep -P '.php$' | awk -F' ' '{print $2}'`; do dockerrun php -l $f; done
 }
+
+# Support latest version of git, if available
+gitpath=`ls -d ~/Documents/programs/cloned/git*(om[1])`
+export PATH=$gitpath:$gitpath/contrib/diff-highlight:$PATH
