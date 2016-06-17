@@ -193,6 +193,7 @@ Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'sickill/vim-monokai'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 
