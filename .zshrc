@@ -331,6 +331,7 @@ function lintDirty {
     for f in `git status --short | grep -P '.php$' | awk -F' ' '{print $2}'`; do dockerrun php -l $f; done
 }
 
+export PATH=~/bin:$PATH
 # Support latest version of git, if available
 gitpath=`ls -d ~/Documents/programs/cloned/git*(om[1])`
 export PATH=$gitpath:$gitpath/contrib/diff-highlight:$PATH
