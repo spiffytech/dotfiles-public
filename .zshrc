@@ -334,3 +334,4 @@ function lintDirty {
 # Support latest version of git, if available
 gitpath=`ls -d ~/Documents/programs/cloned/git*(om[1])`
 export PATH=$gitpath:$gitpath/contrib/diff-highlight:$PATH
+export PATH=~/bin:$PATH
