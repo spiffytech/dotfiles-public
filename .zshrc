@@ -325,13 +325,24 @@ export YDKEYSDIR=~/.ssh/youthdigital
 
 autoload zargs  # zsh alternative to xargs that accepts zsh globs instead of relying on 'find'
 
-export TERM=konsole-256color
+#export TERM=konsole-256color
 
 function lintDirty {
     for f in `git status --short | grep -P '.php$' | awk -F' ' '{print $2}'`; do dockerrun php -l $f; done
 }
 
+export PATH=~/bin:$PATH
 # Support latest version of git, if available
 gitpath=`ls -d ~/Documents/programs/cloned/git*(om[1])`
 export PATH=$gitpath:$gitpath/contrib/diff-highlight:$PATH
-export PATH=~/bin:$PATH
+
+### MUST BE FINAL
+# Add `npm bin` to path every time we change directories
+OLDPATH=$PATH
+LASTPATH=""
+precmd() {
+    if [[ $LASTPATH != `pwd` ]]; then
+        LASTPATH=`pwd`
+        export PATH=`npm bin`:$PATH
+    fi
+}
