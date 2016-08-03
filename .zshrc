@@ -146,10 +146,8 @@ bindkey -e  # Override the viins line editor setting the previous line sets with
 ##############
 
 autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git svn  # See this for more info: man zshcontrib | less -p GATHER
-function precmd {
-    vcs_info
-}
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' enable git svn  # See this for more info: man zshcontrib | less -p GATHERw
 
 prompt_default_color="%(?.%{${fg[yellow]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
 prompt_user=$prompt_default_color
@@ -166,6 +164,8 @@ fi
 
 
 # Set the prompt
+zstyle ':vcs_info:git*' formats "%r/%b %m%{$fg[red]%}%u%{$fg[green]%}%c%{$prompt_default_color%}"
+
 if [ `whoami` = "root" ]
 then
     user_color="red"
@@ -174,7 +174,7 @@ else
 fi
 PROMPT='
 
-%{$prompt_default_color%}%~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}_
+%{$prompt_default_color%}%~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}
 
 $ %{${fg[default]}%}'
 
@@ -341,6 +341,8 @@ export PATH=$gitpath:$gitpath/contrib/diff-highlight:$PATH
 OLDPATH=$PATH
 LASTPATH=""
 precmd() {
+    vcs_info
+
     if [[ $LASTPATH != `pwd` ]]; then
         LASTPATH=`pwd`
         npm_bin=`npm bin`
