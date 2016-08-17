@@ -146,7 +146,8 @@ bindkey -e  # Override the viins line editor setting the previous line sets with
 ##############
 
 autoload -Uz vcs_info
-zstyle ':vcs_info:*' check-for-changes true enable git svn  # See this for more info: man zshcontrib | less -p GATHERw
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' enable git svn  # See this for more info: man zshcontrib | less -p GATHERw
 
 prompt_default_color="%(?.%{${fg[yellow]}%}.%{${fg[red]}%})"  # Red or green based on the exit status of the last command
 prompt_user=$prompt_default_color
