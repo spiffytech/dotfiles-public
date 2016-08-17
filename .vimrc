@@ -49,8 +49,6 @@ set wildmenu
 set scrolloff=5
 set sidescrolloff=5
 
-colorscheme solarized
-
 "Enable omni-compl (Intellisense)
 filetype plugin on
 "set ofu=syntaxcomplete#Complete
@@ -188,7 +186,7 @@ Plug 'fsharp/fsharpbinding', {
       \}
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
 Plug 'scrooloose/syntastic'
-Plug 'altercation/vim-colors-solarized', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
+Plug 'altercation/solarized', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/solarized/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
 Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
 Plug 'kien/rainbow_parentheses.vim'
@@ -209,6 +207,7 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
+colorscheme solarized
 " colorscheme molokai
 " let g:rehash256 = 1
 
