@@ -49,7 +49,7 @@ set wildmenu
 set scrolloff=5
 set sidescrolloff=5
 
-"colorscheme solarized
+colorscheme solarized
 
 "Enable omni-compl (Intellisense)
 filetype plugin on
@@ -194,6 +194,8 @@ Plug 'ervandew/supertab'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'sickill/vim-monokai'
 Plug 'leafgarland/typescript-vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'Quramy/tsuquyomi'
 
 call plug#end()
 
