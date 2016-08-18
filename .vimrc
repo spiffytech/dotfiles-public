@@ -5,13 +5,6 @@ if has("autocmd")
     \| exe  "normal g'\"" | endif
 endif
 
-" Uncomment the following to have Vim load indentation rules according to the
-" detected filetype. Per default Debian Vim only load filetype specific
-" plugins.
-"if has("autocmd")
-"  filetype indent on
-"endif
-
 set showcmd	 " Show (partial) command in status line.
 set showmatch  " Show matching brackets.
 "set hidden  " Hide buffers when they are abandoned
@@ -54,7 +47,6 @@ filetype plugin on
 "set ofu=syntaxcomplete#Complete
 
 "Automatic text substitutions
-ab pymain if __name__ ==  "__main__": main()
 " Correct npt -> ntp
 ab npt ntp
 ab NPT NTP
@@ -96,35 +88,6 @@ endif
 "setlocal foldmethod=manual  " Don't use the PHP syntax folding 
 "EnableFastPHPFolds  " Turn on PHP fast folds 
 
-" Detects whether the open file is mostly tabs or spaces and changes expandtab
-" accordingly. 
-" http://www.outflux.net/blog/archives/2007/03/09/detecting-space-vs-tab-indentation-type-in-vim/
-"function Kees_settabs()
-"    if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
-"        set noet ts=4 sw=4 list!
-"    endif
-"endfunction
-"autocmd BufReadPost * call Kees_settabs()
-
-" Goofy joke to remove random lines in a file to jump-start your day. Doesn't
-" actually work - pattern displayed for line removal is not apparent
-function Rmrand()
-    " :call Rmrand()
-    let line=getline(".") 
-    while (strlen(line)!=0) 
-        let rand = system('echo "$RANDOM % 3" | bc')
-        let rand = rand + 0
-        if (rand == 0) 
-            :d
-        else
-            j
-        endif
-        let line=getline(".") 
-    endwhile
-endfunction
-
-set fileformats+=dos  " Should prevent Vim from adding random newlines to files. http://stackoverflow.com/questions/1050640/vim-disable-automatic-newline-at-end-of-file
-
 " Splits appear in sensible places- on the right, or below
 set splitbelow
 set splitright
@@ -145,13 +108,6 @@ nnoremap n nzz
 map j gj
 map k gk
 
-" Ruby files get tabs 2-spaces wide
-autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
-
-"set rtp+=~/.vim/bundle/vundle/
-"call vundle#rc()
-"Bundle 'Valloric/YouCompleteMe'
-
 " Convert all files you save to unix, regardless of what their original format was
 set fileformats=unix,dos,mac
 autocmd BufWritePre * set ff=unix
@@ -160,15 +116,6 @@ autocmd BufWritePre * set ff=unix
 map <C-n> :NERDTreeToggle<CR>
 " Sudo write file with the command ":w!!"
 cmap w!! w !sudo tee > /dev/null %
-
-" Syntastic recommended settings
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
 
 " Automatically install vim-plug if missing
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -190,7 +137,6 @@ Plug 'altercation/solarized', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/so
 Plug 'tomasr/molokai', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/molokai/colors/molokai.vim ~/.vim/colors' }
 Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
-Plug 'kien/rainbow_parentheses.vim'
 Plug 'sickill/vim-monokai'
 Plug 'leafgarland/typescript-vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
@@ -219,8 +165,5 @@ colorscheme molokai
 let g:rehash256 = 1  " Molokai/Solarized 256 color support
 
 let g:session_autosave_periodic = 1  " Vim session autosave frequency
-
-" Enable rainbow parentheses
-" RainbowParenthesesToggle
 
 let g:fsharp_xbuild_path = "/usr/bin/xbuild"
