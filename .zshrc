@@ -346,6 +346,10 @@ precmd() {
 
     if [[ $LASTPATH != `pwd` ]]; then
         LASTPATH=`pwd`
-        export PATH=`npm bin`:$PATH
+        npm_bin=`npm bin`
+        npm_exit=$?
+        if [[ $npm_exit -eq 0 ]]; then
+            export PATH=$npm_bin:$PATH
+        fi
     fi
 }
