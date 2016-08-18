@@ -187,6 +187,7 @@ Plug 'fsharp/fsharpbinding', {
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
 Plug 'scrooloose/syntastic'
 Plug 'altercation/solarized', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/solarized/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
+Plug 'tomasr/molokai', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/molokai/colors/molokai.vim ~/.vim/colors' }
 Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
 Plug 'kien/rainbow_parentheses.vim'
@@ -199,6 +200,7 @@ Plug 'editorconfig/editorconfig-vim'
 
 call plug#end()
 
+"" CtrlP settings
 " Use ag with CtrlP file-opening plugin
 if executable('ag')
   " Use Ag over Grep
@@ -208,9 +210,11 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
-colorscheme solarized
-" colorscheme molokai
-" let g:rehash256 = 1
+set t_Co=256  " 256 color support
+
+" colorscheme solarized
+colorscheme molokai
+let g:rehash256 = 1  " Molokai/Solarized 256 color support
 
 " Enable rainbow parentheses
 " RainbowParenthesesToggle
