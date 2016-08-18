@@ -197,6 +197,8 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'Quramy/tsuquyomi'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'vim-misc'  " dependency of vim-session
+Plug 'xolox/vim-session'
 
 call plug#end()
 
@@ -215,6 +217,8 @@ set t_Co=256  " 256 color support
 " colorscheme solarized
 colorscheme molokai
 let g:rehash256 = 1  " Molokai/Solarized 256 color support
+
+let g:session_autosave_periodic = 1  " Vim session autosave frequency
 
 " Enable rainbow parentheses
 " RainbowParenthesesToggle
