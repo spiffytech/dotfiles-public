@@ -161,15 +161,6 @@ map <C-n> :NERDTreeToggle<CR>
 " Sudo write file with the command ":w!!"
 cmap w!! w !sudo tee > /dev/null %
 
-" Syntastic recommended settings
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-
 " Automatically install vim-plug if missing
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -184,7 +175,7 @@ Plug 'fsharp/fsharpbinding', {
       \ 'rtp': 'vim',
       \ 'do': 'make -C vim fsautocomplete',
       \}
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
 Plug 'scrooloose/syntastic'
 Plug 'altercation/solarized', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/solarized/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
 Plug 'tpope/vim-surround'
@@ -198,6 +189,12 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
 
 call plug#end()
+
+" Syntastic support for Tsuquyomi TypeScript errors
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
+" Tsuquyomi tooltips
+autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
 
 " Use ag with CtrlP file-opening plugin
 if executable('ag')
@@ -216,3 +213,12 @@ colorscheme solarized
 " RainbowParenthesesToggle
 
 let g:fsharp_xbuild_path = "/usr/bin/xbuild"
+
+" Syntastic recommended settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
