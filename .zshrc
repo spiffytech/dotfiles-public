@@ -105,6 +105,7 @@ alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r do
 alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias hgrep='history | grep -iP'
+alias tmux='TERM=xterm-256color tmux -2'
 
 # Location aliases
 alias -g ...='../..'
@@ -345,6 +346,10 @@ precmd() {
 
     if [[ $LASTPATH != `pwd` ]]; then
         LASTPATH=`pwd`
-        export PATH=`npm bin`:$PATH
+        npm_bin=`npm bin`
+        npm_exit=$?
+        if [[ $npm_exit -eq 0 ]]; then
+            export PATH=$npm_bin:$PATH
+        fi
     fi
 }
