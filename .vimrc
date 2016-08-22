@@ -131,7 +131,7 @@ Plug 'fsharp/fsharpbinding', {
       \ 'rtp': 'vim',
       \ 'do': 'make -C vim fsautocomplete',
       \}
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
 Plug 'scrooloose/syntastic'
 Plug 'altercation/solarized', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/solarized/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
 Plug 'tomasr/molokai', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/molokai/colors/molokai.vim ~/.vim/colors' }
@@ -147,6 +147,12 @@ Plug 'vim-misc'  " dependency of vim-session
 Plug 'xolox/vim-session'
 
 call plug#end()
+
+" Syntastic support for Tsuquyomi TypeScript errors
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
+" Tsuquyomi tooltips
+autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
 
 "" CtrlP settings
 " Use ag with CtrlP file-opening plugin
@@ -168,3 +174,12 @@ let g:rehash256 = 1  " Molokai/Solarized 256 color support
 let g:session_autosave_periodic = 1  " Vim session autosave frequency
 
 let g:fsharp_xbuild_path = "/usr/bin/xbuild"
+
+" Syntastic recommended settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
