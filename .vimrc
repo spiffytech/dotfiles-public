@@ -145,14 +145,18 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-misc'  " dependency of vim-session
 Plug 'xolox/vim-session'
+Plug 'dag/vim-fish'
 
 call plug#end()
 
 " Syntastic support for Tsuquyomi TypeScript errors
 let g:tsuquyomi_disable_quickfix = 1
-let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
+let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint'] " You shouldn't use 'tsc' checker.
 " Tsuquyomi tooltips
 autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+
+" Syntastic support for ESLint
+let g:syntastic_javascript_checkers = ['eslint']
 
 "" CtrlP settings
 " Use ag with CtrlP file-opening plugin
@@ -164,6 +168,9 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   let g:ctrlp_use_caching = 0  " ag is fast enough that CtrlP doesn't need to cache for us
 endif
+
+" TypeScript tooltips
+autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
 
 set t_Co=256  " 256 color support
 
