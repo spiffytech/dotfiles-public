@@ -172,6 +172,7 @@ colorscheme molokai
 let g:rehash256 = 1  " Molokai/Solarized 256 color support
 
 let g:session_autosave_periodic = 1  " Vim session autosave frequency
+let g:session_autosave = 'no'  " Don't prompt to save session on quit
 
 let g:fsharp_xbuild_path = "/usr/bin/xbuild"
 
