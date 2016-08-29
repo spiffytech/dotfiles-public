@@ -42,6 +42,11 @@ set wildmenu
 set scrolloff=5
 set sidescrolloff=5
 
+" Reload buffer when some other process changes the file on disk.
+" Checks every 4 seconds.
+set autoread
+au CursorHold,CursorHoldI * checktime
+
 "Enable omni-compl (Intellisense)
 filetype plugin on
 "set ofu=syntaxcomplete#Complete
