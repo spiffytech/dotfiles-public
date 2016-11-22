@@ -335,7 +335,7 @@ function lintDirty {
 
 export PATH=~/bin:$PATH
 # Support latest version of git, if available
-gitpath=`ls -d ~/Documents/programs/cloned/git*(om[1])`
+gitpath=`ls -d ~/cloned_programs/git*(om[1])`
 export PATH=$gitpath:$gitpath/contrib/diff-highlight:$PATH
 
 ### MUST BE FINAL
@@ -354,3 +354,5 @@ precmd() {
         fi
     fi
 }
+
+export PATH=$PATH:~/Downloads/yad-0.37.0/src
