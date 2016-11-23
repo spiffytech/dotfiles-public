@@ -106,6 +106,7 @@ alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 alias hgrep='history | grep -iP'
 alias tmux='TERM=xterm-256color tmux -2'
+alias tmuxinator='TERM=xterm-256color tmuxinator'
 alias ag='ag --path-to-ignore ~/.agignore'
 
 # Location aliases
