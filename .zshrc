@@ -193,28 +193,6 @@ haste() {
 
 alias ack='ack --type-set tpl=.tpl --type-add tpl=.xtpl --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear --ignore-dir=languages'
 
-coffeewatch() {
-    while true; do
-        inotifywait --format '%w' -qe modify -e create **/*.coffee
-        for f in `ls **/*.coffee`; do
-            echo "Recompiling $f"
-            jsfile=${f%.*}.js
-            jsfilename=`basename $jsfile`
-            jsdirname=`dirname $jsfile`
-            coffeefilename=`basename $f`
-
-            coffee --js -i $f > $jsfile && 
-            cd $jsdirname
-            echo '' >> $jsfilename
-            echo '//@ sourceMappingURL='$jsfilename'.map' >> $jsfilename
-            coffee --source-map -i $coffeefilename > $jsfilename.map
-            cd - >> /dev/null
-        done 
-        echo 
-    done
-}
-
-
 # Sets the tmux window title when you open a file in Vim
 function vim {
     has_tmux=`hash tmux 2>/dev/null`
@@ -303,7 +281,9 @@ function tssh {
     tmux set-window-option synchronize-panes on 
 }
 
-if [ -r $HOME/.dircolors ]; then
+`hash dircolors 2>/dev/null`
+has_dircolors=$?
+if [[ -r $HOME/.dircolors && $has_dircolors -eq 0 ]]; then
     eval `dircolors -b $HOME/.dircolors`
 fi
 
@@ -336,8 +316,16 @@ function lintDirty {
 
 export PATH=~/bin:$PATH
 # Support latest version of git, if available
-gitpath=`ls -d ~/cloned_programs/git*(om[1])`
-export PATH=$gitpath:$gitpath/contrib/diff-highlight:$PATH
+gitpath=`ls -d ~/cloned_programs/git*(om[1]N)`
+if [[ $gitpath != "" ]]; then
+    export PATH=$gitpath:$gitpath/contrib/diff-highlight:$PATH
+fi
+if [[ -r ~/Downloads/yad-0.37.0/src ]]; then
+    export PATH=$PATH:~/Downloads/yad-0.37.0/src
+fi
+if [[ -r ~/$HOME/.rvm/bin ]]; then
+    export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+fi
 
 ### MUST BE FINAL
 # Add `npm bin` to path every time we change directories
@@ -355,5 +343,3 @@ precmd() {
         fi
     fi
 }
-
-export PATH=$PATH:~/Downloads/yad-0.37.0/src
