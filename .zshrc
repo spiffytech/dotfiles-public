@@ -104,7 +104,14 @@ alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
 alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
-alias hgrep='history | grep -iP'
+
+# No PCRE grep regex on Mac OS
+if [[ $OS != 'Darwin' ]]; then
+    alias hgrep='history | grep -iP'
+else
+    alias hgrep='history | ag'
+fi
+
 alias tmux='TERM=xterm-256color tmux -2'
 alias tmuxinator='TERM=xterm-256color tmuxinator'
 alias ag='ag --path-to-ignore ~/.agignore'
