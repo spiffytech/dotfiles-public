@@ -141,9 +141,6 @@ alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroo
 
 NW='/home/spiffytech/Documents/programs/npcworld_fsharp/'
 
-export EDITOR=vim
-bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
-
 ##############
 # Prompt stuff
 ##############
@@ -291,9 +288,17 @@ fi
 #node $ZDOTDIR/bin/loudbot.js
 
 
-# These have to come down here for some reason. I presume they get overwritten if you set them higher up.
-bindkey '5C' emacs-forward-word
-bindkey '5D' emacs-backward-word
+export EDITOR=vim
+bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
+
+# Fix Ctrl-arrow keys
+if [ $OS = 'Darwin' ]; then
+    bindkey "^[[1;5C" forward-word
+    bindkey "^[[1;5D" backward-word
+else
+    bindkey '5C' emacs-forward-word
+    bindkey '5D' emacs-backward-word
+fi
 
 export DV=~/devops/chef/solo/
 
