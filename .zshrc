@@ -308,7 +308,6 @@ alias npm-exec='PATH=$(npm bin):$PATH'
 
 export YDFOLDER=~/Documents/youthdigital/ws/
 export YDKEYSDIR=~/.ssh/youthdigital
-[[ -e $YDfOLDER/misc/yd.sh ]] && source $YDFOLDER/misc/yd.sh
 [[ -e ~/.local.sh ]] && source ~/.local.sh
 
 autoload zargs  # zsh alternative to xargs that accepts zsh globs instead of relying on 'find'
