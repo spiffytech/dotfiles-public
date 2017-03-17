@@ -66,21 +66,12 @@ if [[ "$terminfo[colors]" -ge 8 ]]; then
   colors
 fi
 
-
 # Personal stuff
 # ==============
 OS=`uname`
 
 # Paths and files
-if [ $OS = 'Darwin' ]; then
-else
-    ARCH=`arch`
-    if [ $ARCH = 'i686' ]; then
-    else
-    fi
-fi
-PATH=$PATH:/sbin/:/usr/sbin
-
+PATH=$PATH:/sbin/:/usr/sbin:$HOME/bin
 
 # Aliases
 # Command aliases
@@ -89,10 +80,7 @@ alias la='ls -lA'
 alias lah='ls -lAh'
 if [ $OS = 'Darwin' ]; then
     alias ls='ls -G'
-    alias cssh='~/Downloads/csshX-0.74/csshX'
-    #alias weball='cssh --screen 2 brian@web{{1..2},{4..10}}.sourcekit.com'
 else
-    #alias weball='cssh brian@web{{1..2},{4..10}}.sourcekit.com'
     alias ls='ls --color=auto'
 fi
 
@@ -103,7 +91,6 @@ alias igrep='grep -i'
 alias gcc='gcc -Wall -std=c99'
 alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
 alias vi=vim
-alias ch='sl'  # Gimme teh trainz!
 
 alias versionsort='sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n'
 
@@ -119,36 +106,17 @@ alias tmuxinator='TERM=xterm-256color tmuxinator'
 alias ag='ag --path-to-ignore ~/.agignore'
 
 # Location aliases
-alias -g ...='../..'
-alias -g ....='../../..'
-alias -g .....='../../../..'
 alias -g L=" | less"
 alias -g T=" | tail"
 alias -g VG=" | grep -v"
 alias -g t2h=" | ansi2html.sh"
-alias history='history 1'  # By default, `history` only shows a handful of recent commands. This shows all of them.
-# File extension openers
-alias -s tex=vim
-alias -s txt=vim
-alias -s py=python
-alias -s pdf=okular
-alias -s tc=truecrypt
-alias -s rpm="sudo yum install"
-alias -s tar.gz=dtrx
-alias -s tar.bz2=dtrx
-alias -s rar=dtrx
-alias -s zip=dtrx
-alias -s 7z=dtrx
+alias history='history 1'  # Shows complete shell history
+
 # Server aliases
-alias ncsu='mssh -YC bpcottin@remote-linux.eos.ncsu.edu'
 alias trilug='mssh -YC spiffytech@pilot.trilug.org'
-alias xa='mssh -Y -p 1122 ncsuxa@xa-ncsu.com'
 #alias sbox='mssh -XC spiffytech@direct.spiffybox.spiffyte.ch'
 alias sbox='mssh spiffytech@sbox.spiffyte.ch'
 alias short='mssh spiffytech@short.csc.ncsu.edu'
-alias share_file='scp $1 spiffytech@short.csc.ncsu.edu:apache/spiffyte.ch/docroot/applications/init/static/'
-
-NW='/home/spiffytech/Documents/programs/npcworld_fsharp/'
 
 ##############
 # Prompt stuff
@@ -170,7 +138,6 @@ hostname | grep spiffy > /dev/null
 if [ `echo $?` -ne 0 ]; then
     prompt_host="blue"
 fi
-
 
 # Set the prompt
 zstyle ':vcs_info:git*' formats "%r %b %m%{$fg[red]%}%u%{$fg[green]%}%c%{$prompt_default_color%}"
@@ -195,9 +162,6 @@ haste() {
     curl -X POST -s --data-binary "@$tmpFile" $HASTE_SERVER/documents | awk -F '"' '{print ENVIRON["HASTE_SERVER"]"/"$4}'
     rm $tmpFile
 }
-
-
-alias ack='ack --type-set tpl=.tpl --type-add tpl=.xtpl --type-add php=.tpl --type-add php=.xtpl --type-add html=.tpl --type-add html=.xtpl --type-set less=.less --ignore-dir=zend --ignore-dir=adodb --ignore-dir=PHPExcel --ignore-dir=cases.nonworking --ignore-dir=phpQuery --ignore-dir=swiftmail --ignore-dir=pear --ignore-dir=languages'
 
 # Sets the tmux window title when you open a file in Vim
 function vim {
@@ -294,8 +258,6 @@ if [[ -r $HOME/.dircolors && $has_dircolors -eq 0 ]]; then
 fi
 
 #$ZDOTDIR/bin/screenfetch.sh
-#node $ZDOTDIR/bin/loudbot.js
-
 
 export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
@@ -309,32 +271,18 @@ else
     bindkey '5D' emacs-backward-word
 fi
 
-export DV=~/devops/chef/solo/
-
 alias foodcritic="foodcritic -t '~FC001'"
 
-alias npm-exec='PATH=$(npm bin):$PATH'
-
-export YDFOLDER=~/Documents/youthdigital/ws/
-export YDKEYSDIR=~/.ssh/youthdigital
 [[ -e ~/.local.sh ]] && source ~/.local.sh
 
 autoload zargs  # zsh alternative to xargs that accepts zsh globs instead of relying on 'find'
 
 #export TERM=konsole-256color
 
-function lintDirty {
-    for f in `git status --short | grep -P '.php$' | awk -F' ' '{print $2}'`; do dockerrun php -l $f; done
-}
-
-export PATH=~/bin:$PATH
 # Support latest version of git, if available
 gitpath=`ls -d ~/cloned_programs/git*(om[1]N)`
 if [[ $gitpath != "" ]]; then
     export PATH=$gitpath:$gitpath/contrib/diff-highlight:$PATH
-fi
-if [[ -r ~/Downloads/yad-0.37.0/src ]]; then
-    export PATH=$PATH:~/Downloads/yad-0.37.0/src
 fi
 if [[ -r ~/$HOME/.rvm/bin ]]; then
     export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
