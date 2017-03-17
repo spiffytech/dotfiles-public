@@ -173,7 +173,7 @@ fi
 
 
 # Set the prompt
-zstyle ':vcs_info:git*' formats "%r/%b %m%{$fg[red]%}%u%{$fg[green]%}%c%{$prompt_default_color%}"
+zstyle ':vcs_info:git*' formats "%r %b %m%{$fg[red]%}%u%{$fg[green]%}%c%{$prompt_default_color%}"
 
 if [ `whoami` = "root" ]
 then
