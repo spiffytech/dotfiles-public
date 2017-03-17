@@ -352,7 +352,7 @@ precmd() {
         npm_bin=`npm bin`
         npm_exit=$?
         if [[ $npm_exit -eq 0 ]]; then
-            export PATH=$npm_bin:$PATH
+            export PATH=$OLDPATH:$npm_bin
         fi
     fi
 }
