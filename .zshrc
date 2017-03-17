@@ -105,6 +105,8 @@ alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r do
 alias vi=vim
 alias ch='sl'  # Gimme teh trainz!
 
+alias versionsort='sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n'
+
 # No PCRE grep regex on Mac OS
 if [[ $OS != 'Darwin' ]]; then
     alias hgrep='history | grep -iP'
