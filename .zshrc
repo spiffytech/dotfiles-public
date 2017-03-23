@@ -284,9 +284,27 @@ gitpath=`ls -d ~/cloned_programs/git*(om[1]N)`
 if [[ $gitpath != "" ]]; then
     export PATH=$gitpath:$gitpath/contrib/diff-highlight:$PATH
 fi
-if [[ -r ~/$HOME/.rvm/bin ]]; then
-    export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+if [[ -d ~/.rbenv ]]; then
+    export PATH="$HOME/.rbenv/shims:$PATH"
+	source '/usr/local/Cellar/rbenv/1.1.0/libexec/../completions/rbenv.zsh'
+	export RBENV_SHELL=zsh
+	command rbenv rehash 2>/dev/null
 fi
+
+rbenv() {
+  local command
+  command="$1"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "$command" in
+  rehash|shell)
+    eval "$(rbenv "sh-$command" "$@")";;
+  *)
+    command rbenv "$command" "$@";;
+  esac
+}
 
 ### MUST BE FINAL
 # Add `npm bin` to path every time we change directories
