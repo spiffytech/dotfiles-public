@@ -118,6 +118,26 @@ alias trilug='mssh -YC spiffytech@pilot.trilug.org'
 alias sbox='mssh spiffytech@sbox.spiffyte.ch'
 alias short='mssh spiffytech@short.csc.ncsu.edu'
 
+# EC2 API utils
+alias getinstances="jq '.Reservations | map(.Instances) | flatten'"
+alias awstags="jq 'map(.Tags = (.Tags // [] | from_entries))'"
+function byname() {
+    local name=$1
+    jq 'map(select(.Tags.Name // "" | test("'$name'"; "i")))'
+}
+function bygroup () {
+    local group=$1
+    jq 'map(select(.SecurityGroups | map(.GroupName | test("'$group'"; "i")) | any))'
+}
+function showinstances() {
+    jq 'map({Name: (.Tags.Name // ""), SecurityGroups: (.SecurityGroups | map(.GroupName)), PrivateIpAddress: .PrivateIpAddress})'
+}
+function findinstances() {
+    local name=$1
+    local group=${2:-}
+    getinstances | awstags | byname $name | bygroup $group | showinstances
+}
+
 ##############
 # Prompt stuff
 ##############
