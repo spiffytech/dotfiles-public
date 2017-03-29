@@ -129,13 +129,16 @@ function bygroup () {
     local group=$1
     jq 'map(select(.SecurityGroups | map(.GroupName | test("'$group'"; "i")) | any))'
 }
-function showinstances() {
+function simpleinstances() {
     jq 'map({Name: (.Tags.Name // ""), SecurityGroups: (.SecurityGroups | map(.GroupName)), PrivateIpAddress: .PrivateIpAddress})'
+}
+function simpleinstance() {
+    jq 'map({Name: .Tags?.Name, Environment: .Tags?.Environment, IP: (.NetworkInterfaces[] | .PrivateIpAddresses[] | .PrivateIpAddress)})';
 }
 function findinstances() {
     local name=$1
     local group=${2:-}
-    getinstances | awstags | byname $name | bygroup $group | showinstances
+    getinstances | awstags | byname $name | bygroup $group 
 }
 
 ##############
