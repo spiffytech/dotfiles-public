@@ -1,16 +1,20 @@
-[color]
-	ui = auto
+# This is Git's per-user configuration file.
 [user]
-	email = brian@contactology.com
-	name = Brian Cottingham
-[alias]
-	w = diff --word-diff
-	s = status --short
+name = Brian Cottingham
+email = spiffytech@gmail.com
 [merge]
 	conflictstyle = diff3
-	renormalize = true
-[rerere]
-	enabled = 1
+[core]
+	excludesfile = ~/.gitignore
 [push]
-	default = current
-	default = upstream
+	followTags = true
+[diff]
+	compactionHeuristic = true
+[pager]
+	log = git-diff-highlight | less
+	show = git-diff-highlight | less
+	diff = git-diff-highlight | less
+[interactive]
+	diffFilter = git-diff-highlight
+[log]
+	decorate = auto
