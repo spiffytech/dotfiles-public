@@ -152,6 +152,9 @@ function simpleinstance() {
     done
     jq 'map({Name: .Tags?.Name, Environment: .Tags?.Environment, IP: (.NetworkInterfaces[] | .PrivateIpAddresses[] | .PrivateIpAddress) '$extraStr'})';
 }
+function simpleinstance() {
+    jq 'map({Name: .Tags?.Name, Environment: .Tags?.Environment, IP: (.NetworkInterfaces[] | .PrivateIpAddresses[] | .PrivateIpAddress)})';
+}
 function findinstances() {
     local name=$1
     local group=${2:-}
