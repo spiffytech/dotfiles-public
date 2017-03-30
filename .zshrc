@@ -132,8 +132,19 @@ function bygroup () {
 function simpleinstances() {
     jq 'map({Name: (.Tags.Name // ""), SecurityGroups: (.SecurityGroups | map(.GroupName)), PrivateIpAddress: .PrivateIpAddress})'
 }
+# Pass in extra map keys/values items in $@
+# If an argument is a simple property (e.g., .Tags?.Name), you don't need to provide a key
 function simpleinstance() {
-    jq 'map({Name: .Tags?.Name, Environment: .Tags?.Environment, IP: (.NetworkInterfaces[] | .PrivateIpAddresses[] | .PrivateIpAddress)})';
+    extraStr=""
+    for extra in $@; do
+        # Simple properties
+        if [[ $extra =~ "^\.[^ ]+$" ]]; then
+            extraStr+=", $(echo $extra | tr "." "_" | tr "?" "_"): $extra"
+        else
+            extraStr+=", ${extra}"
+        fi
+    done
+    jq 'map({Name: .Tags?.Name, Environment: .Tags?.Environment, IP: (.NetworkInterfaces[] | .PrivateIpAddresses[] | .PrivateIpAddress) '$extraStr'})';
 }
 function findinstances() {
     local name=$1
