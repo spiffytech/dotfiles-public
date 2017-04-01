@@ -151,6 +151,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-misc'  " dependency of vim-session
 Plug 'xolox/vim-session'
 Plug 'dag/vim-fish'
+Plug 'elzr/vim-json'
 
 call plug#end()
 
@@ -173,6 +174,7 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   let g:ctrlp_use_caching = 0  " ag is fast enough that CtrlP doesn't need to cache for us
 endif
+let g:ctrlp_switch_buffer = 'et'  " Open files in new buffers, instead of switching buffers
 
 " TypeScript tooltips
 autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
@@ -196,3 +198,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+set sessionoptions-=blank  " Don't save/restore Syntastic error panes when saving/restoring sessions
+
+set foldmethod=syntax  " Attempt to fold code blocks
