@@ -98,7 +98,7 @@ alias versionsort='sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n'
 if [[ $OS != 'Darwin' ]]; then
     alias hgrep='history | grep -iP'
 else
-    alias hgrep='history | ag'
+    alias hgrep='history | rg'
 fi
 
 alias tmux='TERM=xterm-256color tmux -2'
@@ -136,7 +136,7 @@ function simpleinstances() {
 # If an argument is a simple property (e.g., .Tags?.Name), you don't need to provide a key
 function simpleinstance() {
     extraStr=""
-    for extra in $@; do
+    for extra in "$@"; do
         # Simple properties
         if [[ $extra =~ "^\.[^ ]+$" ]]; then
             extraStr+=", $(echo $extra | tr "." "_" | tr "?" "_"): $extra"
@@ -271,6 +271,11 @@ mssh() {
     if [ $has_tmux -eq 0 ]; then
         tmux set automatic-rename on > /dev/null
     fi
+}
+
+ag() {
+    echo "Tried using ag. Use ripgrep"
+    return 1
 }
 
 function tssh {
