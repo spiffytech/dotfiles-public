@@ -97,8 +97,15 @@ let s:plug_tab = get(s:, 'plug_tab', -1)
 let s:plug_buf = get(s:, 'plug_buf', -1)
 let s:mac_gui = has('gui_macvim') && has('gui_running')
 let s:is_win = has('win32') || has('win64')
+<<<<<<< HEAD
 let s:nvim = has('nvim-0.2') || (has('nvim') && exists('*jobwait') && !s:is_win)
 let s:vim8 = has('patch-8.0.0039') && exists('*job_start')
+||||||| merged common ancestors
+let s:nvim = has('nvim') && exists('*jobwait') && !s:is_win
+=======
+let s:nvim = has('nvim') && exists('*jobwait') && !s:is_win
+let s:vim8 = has('patch-8.0.0039') && exists('*job_start')
+>>>>>>> Upgrade vim Plug plugin
 let s:me = resolve(expand('<sfile>:p'))
 let s:base_spec = { 'branch': 'master', 'frozen': 0 }
 let s:TYPE = {
