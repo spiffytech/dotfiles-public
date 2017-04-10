@@ -18,3 +18,5 @@ email = spiffytech@gmail.com
 	diffFilter = git-diff-highlight
 [log]
 	decorate = auto
+[rebase]
+	autoStash = true
