@@ -119,8 +119,13 @@ alias sbox='mssh spiffytech@sbox.spiffyte.ch'
 alias short='mssh spiffytech@short.csc.ncsu.edu'
 
 # EC2 API utils
-alias getinstances="jq '.Reservations | map(.Instances) | flatten'"
 alias awstags="jq 'map(.Tags = (.Tags // [] | from_entries))'"
+alias extractinstances="jq '.Reservations | map(.Instances) | flatten'"
+function getinstances() {
+    CACHEPERIOD=60 runcached aws ec2 describe-instances $@ |
+    extractinstances |
+    awstags
+}
 function byname() {
     local name=$1
     jq 'map(select(.Tags.Name // "" | test("'$name'"; "i")))'
@@ -128,9 +133,6 @@ function byname() {
 function bygroup () {
     local group=$1
     jq 'map(select(.SecurityGroups | map(.GroupName | test("'$group'"; "i")) | any))'
-}
-function simpleinstances() {
-    jq 'map({Name: (.Tags.Name // ""), SecurityGroups: (.SecurityGroups | map(.GroupName)), PrivateIpAddress: .PrivateIpAddress})'
 }
 # Pass in extra map keys/values items in $@
 # If an argument is a simple property (e.g., .Tags?.Name), you don't need to provide a key
@@ -149,7 +151,7 @@ function simpleinstance() {
 function findinstances() {
     local name=$1
     local group=${2:-}
-    getinstances | awstags | byname $name | bygroup $group 
+    byname $name | bygroup $group
 }
 
 ##############

@@ -8,7 +8,7 @@
 # Thu Jun 14 13:11:28 EEST 2012
 ####################################################33
 
-cacheperiod=60 #seconds
+cacheperiod=${CACHEPERIOD:-60} #seconds
 savedir="/tmp"
 ####################################################33
 
@@ -21,14 +21,14 @@ do
         let "i+=1"
 done
 
-cmdmd5=`echo -n "${cmd[@]}" |md5sum|awk '{print $1}'`
+cmdsha=`echo -n "${cmd[@]}" | shasum |awk '{print $1}'`
 
 #random sleep to avoid racing condition of creating the pid on the same time
 sleep .$[ ( $RANDOM % 10 ) + 1 ]s
 
 #don't run the same command in parallel, wait for it to finish the 1st time
 count=15
-while [ -f /tmp/${cmdmd5}-runcached.pid ]; do
+while [ -f /tmp/${cmdsha}-runcached.pid ]; do
 	sleep 2
 	count=`expr $count -1`
 	if [ $count -eq 0 ]; then
@@ -37,13 +37,13 @@ while [ -f /tmp/${cmdmd5}-runcached.pid ]; do
 	fi
 done
 
-echo $$ >/tmp/${cmdmd5}-runcached.pid
+echo $$ >/tmp/${cmdsha}-runcached.pid
 
 
 cachedir="/tmp"
-cmddatafile="${cachedir}/${cmdmd5}.data"
-cmdexitcode="${cachedir}/${cmdmd5}.exitcode"
-cmdfile="${cachedir}/${cmdmd5}.cmd"
+cmddatafile="${cachedir}/${cmdsha}.data"
+cmdexitcode="${cachedir}/${cmdsha}.exitcode"
+cmdfile="${cachedir}/${cmdsha}.cmd"
 ##########
 
 function runit {
@@ -56,7 +56,11 @@ function runit {
 
 if [ ! -f "$cmddatafile"  ] ; then  runit ; fi
 
-lastrun=`stat -c %Y $cmddatafile`
+if [[ $(strings `which stat` | grep 'GNU coreutils') == 'Darwin' ]]; then
+    lastrun=`stat -c %Y $cmddatafile`
+else
+    lastrun=`stat -f %m $cmddatafile`
+fi
 currtime=`date +%s`
 diffsec=$(( (currtime - lastrun) ))
 
@@ -66,7 +70,7 @@ fi
 
 cat $cmddatafile
 
-/bin/rm /tmp/${cmdmd5}-runcached.pid
+/bin/rm /tmp/${cmdsha}-runcached.pid
 
 exit `cat $cmdexitcode`
 
