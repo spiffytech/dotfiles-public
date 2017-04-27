@@ -152,6 +152,7 @@ Plug 'vim-misc'  " dependency of vim-session
 Plug 'xolox/vim-session'
 Plug 'dag/vim-fish'
 Plug 'elzr/vim-json'
+Plug 'hashivim/vim-terraform'
 
 call plug#end()
 
