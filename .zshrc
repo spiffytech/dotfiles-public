@@ -104,6 +104,7 @@ fi
 alias tmux='TERM=xterm-256color tmux -2'
 alias tmuxinator='TERM=xterm-256color tmuxinator'
 alias ag='ag --path-to-ignore ~/.agignore'
+alias rg='rg --smart-case'
 
 # Location aliases
 alias -g L=" | less"
