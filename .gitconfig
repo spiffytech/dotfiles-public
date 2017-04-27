@@ -8,6 +8,7 @@ email = spiffytech@gmail.com
 	excludesfile = ~/.gitignore
 [push]
 	followTags = true
+	default = current
 [diff]
 	compactionHeuristic = true
 [pager]
@@ -18,5 +19,8 @@ email = spiffytech@gmail.com
 	diffFilter = git-diff-highlight
 [log]
 	decorate = auto
+	abbrevCommit = true
 [rebase]
 	autoStash = true
+[format]
+	pretty = %Cred%h%Creset %ar -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
