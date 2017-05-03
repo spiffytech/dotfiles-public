@@ -27,4 +27,4 @@ email = spiffytech@gmail.com
 [rerere]
 	enabled = true
 [format]
-	pretty = %Cred%h%Creset %ar -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+	pretty = %Cred%h%Creset %C(bold blue)<%<(15,trunc)%an> %Cgreen(%>>(14,trunc)%cr) %Creset %s%Creset%C(yellow)%d
