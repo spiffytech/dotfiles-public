@@ -153,6 +153,7 @@ Plug 'xolox/vim-session'
 Plug 'dag/vim-fish'
 Plug 'elzr/vim-json'
 Plug 'hashivim/vim-terraform'
+Plug 'posva/vim-vue'
 
 call plug#end()
 
@@ -203,3 +204,5 @@ let g:syntastic_check_on_wq = 0
 set sessionoptions-=blank  " Don't save/restore Syntastic error panes when saving/restoring sessions
 
 set foldmethod=syntax  " Attempt to fold code blocks
+"autocmd Syntax * normal zR
+
