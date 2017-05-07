@@ -121,7 +121,6 @@ alias trilug='mssh -YC spiffytech@pilot.trilug.org'
 alias sbox='mssh spiffytech@sbox.spiffyte.ch'
 alias short='mssh spiffytech@short.csc.ncsu.edu'
 
-<<<<<<< HEAD
 # EC2 API utils
 alias awstags="jq 'map(.Tags = (.Tags // [] | from_entries))'"
 alias extractinstances="jq '.Reservations | map(.Instances) | flatten'"
