@@ -184,8 +184,10 @@ set t_Co=256  " 256 color support
 " let g:rehash256 = 1  " Molokai/Solarized 256 color support
 
 " Base16 color schemes
-let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-harmonic-light
+if filereadable(expand("~/.vimrc_background"))
+	let base16colorspace=256
+	source ~/.vimrc_background
+endif
 
 
 let g:session_autosave_periodic = 1  " Vim session autosave frequency
