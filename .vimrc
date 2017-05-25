@@ -154,6 +154,7 @@ Plug 'dag/vim-fish'
 Plug 'elzr/vim-json'
 Plug 'hashivim/vim-terraform'
 Plug 'posva/vim-vue'
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
@@ -184,8 +185,15 @@ autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()
 set t_Co=256  " 256 color support
 
 " colorscheme solarized
-colorscheme molokai
-let g:rehash256 = 1  " Molokai/Solarized 256 color support
+
+" Molokai color schemes
+" colorscheme molokai
+" let g:rehash256 = 1  " Molokai/Solarized 256 color support
+
+" Base16 color schemes
+let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme base16-harmonic-light
+
 
 let g:session_autosave_periodic = 1  " Vim session autosave frequency
 let g:session_autosave = 'no'  " Don't prompt to save session on quit
