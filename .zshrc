@@ -124,10 +124,16 @@ alias short='mssh spiffytech@short.csc.ncsu.edu'
 # EC2 API utils
 alias awstags="jq 'map(.Tags = (.Tags // [] | from_entries))'"
 alias extractinstances="jq '.Reservations | map(.Instances) | flatten'"
+function checkAwsCredentials() {
+    aws sts get-caller-identity > /dev/null
+    if [[ $? -ne 0 ]]; then echo "invalid credentials"; return 1; fi
+}
 function getinstances() {
-    CACHEPERIOD=60 runcached aws ec2 describe-instances $@ |
+    checkAwsCredentials &&
+    CACHEPERIOD=${CACHEPERIOD:-300} runcached aws ec2 describe-instances $@ |
     extractinstances |
-    awstags
+    awstags |
+    jq 'sort_by(.Tags?.Name)'
 }
 function byname() {
     local name=$1
