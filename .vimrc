@@ -1,10 +1,3 @@
-"call pathogen#runtime_append_all_bundles() 
-execute pathogen#infect()
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe  "normal g'\"" | endif
-endif
-
 set showcmd	 " Show (partial) command in status line.
 set showmatch  " Show matching brackets.
 "set hidden  " Hide buffers when they are abandoned
@@ -87,7 +80,7 @@ if version >= 703
     set rnu  " Displayed line numbers are relative to your current position
     set undofile  " Sets a permanent undo file, so your undo history is preserved between Vim sessions
     set undodir=/tmp  " Store the undo files here
-    set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default with a real encryption function
+    "set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default with a real encryption function
 endif
 
 "setlocal foldmethod=manual  " Don't use the PHP syntax folding 
