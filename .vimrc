@@ -1,10 +1,3 @@
-"call pathogen#runtime_append_all_bundles() 
-execute pathogen#infect()
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe  "normal g'\"" | endif
-endif
-
 set showcmd	 " Show (partial) command in status line.
 set showmatch  " Show matching brackets.
 "set hidden  " Hide buffers when they are abandoned
@@ -87,7 +80,7 @@ if version >= 703
     set rnu  " Displayed line numbers are relative to your current position
     set undofile  " Sets a permanent undo file, so your undo history is preserved between Vim sessions
     set undodir=/tmp  " Store the undo files here
-    set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default with a real encryption function
+    "set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default with a real encryption function
 endif
 
 "setlocal foldmethod=manual  " Don't use the PHP syntax folding 
@@ -152,6 +145,9 @@ Plug 'vim-misc'  " dependency of vim-session
 Plug 'xolox/vim-session'
 Plug 'dag/vim-fish'
 Plug 'elzr/vim-json'
+Plug 'hashivim/vim-terraform'
+Plug 'posva/vim-vue'
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
@@ -182,8 +178,17 @@ autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()
 set t_Co=256  " 256 color support
 
 " colorscheme solarized
-colorscheme molokai
-let g:rehash256 = 1  " Molokai/Solarized 256 color support
+
+" Molokai color schemes
+" colorscheme molokai
+" let g:rehash256 = 1  " Molokai/Solarized 256 color support
+
+" Base16 color schemes
+if filereadable(expand("~/.vimrc_background"))
+	let base16colorspace=256
+	source ~/.vimrc_background
+endif
+
 
 let g:session_autosave_periodic = 1  " Vim session autosave frequency
 let g:session_autosave = 'no'  " Don't prompt to save session on quit
@@ -202,3 +207,5 @@ let g:syntastic_check_on_wq = 0
 set sessionoptions-=blank  " Don't save/restore Syntastic error panes when saving/restoring sessions
 
 set foldmethod=syntax  " Attempt to fold code blocks
+"autocmd Syntax * normal zR
+

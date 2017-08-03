@@ -13,3 +13,6 @@ has_git=$?
 if [[ $has_git && ! -d ~/.tmux/plugins/tpm ]]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
+if [[ $has_git && ! -d ~/.config/base16-shell ]]; then
+    git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
+fi

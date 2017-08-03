@@ -98,12 +98,13 @@ alias versionsort='sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n'
 if [[ $OS != 'Darwin' ]]; then
     alias hgrep='history | grep -iP'
 else
-    alias hgrep='history | ag'
+    alias hgrep='history | rg'
 fi
 
 alias tmux='TERM=xterm-256color tmux -2'
 alias tmuxinator='TERM=xterm-256color tmuxinator'
 alias ag='ag --path-to-ignore ~/.agignore'
+alias rg='rg --smart-case'
 
 # Location aliases
 alias -g L=" | less"
@@ -119,8 +120,19 @@ alias sbox='mssh spiffytech@sbox.spiffyte.ch'
 alias short='mssh spiffytech@short.csc.ncsu.edu'
 
 # EC2 API utils
-alias getinstances="jq '.Reservations | map(.Instances) | flatten'"
 alias awstags="jq 'map(.Tags = (.Tags // [] | from_entries))'"
+alias extractinstances="jq '.Reservations | map(.Instances) | flatten'"
+function checkAwsCredentials() {
+    aws sts get-caller-identity > /dev/null
+    if [[ $? -ne 0 ]]; then echo "invalid credentials"; return 1; fi
+}
+function getinstances() {
+    checkAwsCredentials &&
+    CACHEPERIOD=${CACHEPERIOD:-300} runcached aws ec2 describe-instances $@ |
+    extractinstances |
+    awstags |
+    jq 'sort_by(.Tags?.Name)'
+}
 function byname() {
     local name=$1
     jq 'map(select(.Tags.Name // "" | test("'$name'"; "i")))'
@@ -129,8 +141,19 @@ function bygroup () {
     local group=$1
     jq 'map(select(.SecurityGroups | map(.GroupName | test("'$group'"; "i")) | any))'
 }
-function simpleinstances() {
-    jq 'map({Name: (.Tags.Name // ""), SecurityGroups: (.SecurityGroups | map(.GroupName)), PrivateIpAddress: .PrivateIpAddress})'
+# Pass in extra map keys/values items in $@
+# If an argument is a simple property (e.g., .Tags?.Name), you don't need to provide a key
+function simpleinstance() {
+    extraStr=""
+    for extra in "$@"; do
+        # Simple properties
+        if [[ $extra =~ "^\.[^ ]+$" ]]; then
+            extraStr+=", $(echo $extra | tr "." "_" | tr "?" "_"): $extra"
+        else
+            extraStr+=", ${extra}"
+        fi
+    done
+    jq 'map({Name: .Tags?.Name, Environment: .Tags?.Environment, IP: (.NetworkInterfaces[] | .PrivateIpAddresses[] | .PrivateIpAddress) '$extraStr'})';
 }
 function simpleinstance() {
     jq 'map({Name: .Tags?.Name, Environment: .Tags?.Environment, IP: (.NetworkInterfaces[] | .PrivateIpAddresses[] | .PrivateIpAddress)})';
@@ -138,7 +161,7 @@ function simpleinstance() {
 function findinstances() {
     local name=$1
     local group=${2:-}
-    getinstances | awstags | byname $name | bygroup $group 
+    byname $name | bygroup $group
 }
 
 ##############
@@ -262,6 +285,11 @@ mssh() {
     fi
 }
 
+ag() {
+    echo "Tried using ag. Use ripgrep"
+    return 1
+}
+
 function tssh {
     for server in $@
     do
@@ -345,3 +373,8 @@ precmd() {
         fi
     fi
 }
+
+# Set terminal colors _without_ relying on the terminal itself!
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+base16_harmonic-dark  # Enables this theme
