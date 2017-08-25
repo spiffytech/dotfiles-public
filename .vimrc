@@ -74,17 +74,20 @@ au BufRead,BufNewFile *.go set filetype=go
 set cursorline  " Horizontal line where cursor is
 highlight CursorLine cterm=underline  " Solarized theme overrides the underline
 
-set number  " Show line numbers. rnu overrides this if Vim >= 7.3 is available
-
 if version >= 703
     set rnu  " Displayed line numbers are relative to your current position
     set undofile  " Sets a permanent undo file, so your undo history is preserved between Vim sessions
     set undodir=/tmp  " Store the undo files here
     "set cryptmethod=blowfish  " Override the weak encryption scheme Vim uses by default with a real encryption function
+else
+    set number  " Show line numbers
 endif
 
 "setlocal foldmethod=manual  " Don't use the PHP syntax folding 
 "EnableFastPHPFolds  " Turn on PHP fast folds 
+
+" Don't apply folds when opening a file
+set foldlevelstart=99
 
 " Splits appear in sensible places- on the right, or below
 set splitbelow
@@ -161,10 +164,11 @@ autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()
 let g:syntastic_javascript_checkers = ['eslint']
 
 "" CtrlP settings
-" Use ag with CtrlP file-opening plugin
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
+" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" Use rg with CtrlP file-opening plugin
+if executable('rg')
+  " Use Rg over Grep
+  set grepprg=rg\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'

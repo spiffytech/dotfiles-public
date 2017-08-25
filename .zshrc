@@ -101,7 +101,8 @@ else
     alias hgrep='history | rg'
 fi
 
-alias tmux='TERM=xterm-256color tmux -2'
+#alias tmux='TERM=xterm-256color tmux -2'
+alias tmux='TERM=screen-256color tmux -2'
 alias tmuxinator='TERM=xterm-256color tmuxinator'
 alias ag='ag --path-to-ignore ~/.agignore'
 alias rg='rg --smart-case'
@@ -154,9 +155,6 @@ function simpleinstance() {
         fi
     done
     jq 'map({Name: .Tags?.Name, Environment: .Tags?.Environment, IP: (.NetworkInterfaces[] | .PrivateIpAddresses[] | .PrivateIpAddress) '$extraStr'})';
-}
-function simpleinstance() {
-    jq 'map({Name: .Tags?.Name, Environment: .Tags?.Environment, IP: (.NetworkInterfaces[] | .PrivateIpAddresses[] | .PrivateIpAddress)})';
 }
 function findinstances() {
     local name=$1

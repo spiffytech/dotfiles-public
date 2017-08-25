@@ -10,7 +10,7 @@
 # set to wherever beneath .dockerrun your local cwd is
 #
 # Commands look like `IMAGE=debian dockerrun bash`
-# `dockerrun pwd > /tmp/pwd.txt` writes to your /local/ /tmp/pwd.txt
+# `dockerrun pwd > /tmp/pwd.txt` writes to your _local_ /tmp/pwd.txt
 
 set -e
 
