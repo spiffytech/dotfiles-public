@@ -283,7 +283,7 @@ mssh() {
     fi
 }
 
-ag() {
+function ag {
     echo "Tried using ag. Use ripgrep"
     return 1
 }
