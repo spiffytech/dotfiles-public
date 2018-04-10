@@ -86,22 +86,17 @@ fi
 
 alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use my personal .zshrc and zsh scripts
 alias grep='grep --color="auto"'
-alias igrep='grep -i'
-#alias ssh='ssh -Y'  # Automatic X forwarding  # Disabled because ssh-ident on sbox doesn't support it
 alias gcc='gcc -Wall -std=c99'
-alias cronedit='crontab -e'  # Since -e and -r are next to each other, and -r doesn't confirm before clearing your cron entries
-alias vi=vim
 
 alias versionsort='sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n'
 
-# No PCRE grep regex on Mac OS
-if [[ $OS != 'Darwin' ]]; then
-    alias hgrep='history | grep -iP'
-else
+# Always do PCRE grep, except on Mac (BSD grep doesn't have that)
+if [[ $OS == 'Darwin' ]]; then
     alias hgrep='history | rg'
+else
+    alias hgrep='history | grep -iP'
 fi
 
-#alias tmux='TERM=xterm-256color tmux -2'
 alias tmux='TERM=screen-256color tmux -2'
 alias tmuxinator='TERM=xterm-256color tmuxinator'
 alias ag='ag --path-to-ignore ~/.agignore'
@@ -110,9 +105,8 @@ alias rg='rg --smart-case'
 # Location aliases
 alias -g L=" | less"
 alias -g T=" | tail"
-alias -g VG=" | grep -v"
 alias -g t2h=" | ansi2html.sh"
-alias history='history 1'  # Shows complete shell history
+alias history='history 1'  # Shows complete shell history instead of a limited number of results
 
 # Server aliases
 alias trilug='mssh -YC spiffytech@pilot.trilug.org'
