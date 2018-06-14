@@ -178,6 +178,14 @@ if [ `echo $?` -ne 0 ]; then
     prompt_host="blue"
 fi
 
+
+has_tmux=`hash kubectl 2>/dev/null`
+if [[ $? -eq 0 ]]; then
+    kubeprompt="($(kubectl config current-context))"
+else
+    kubeprompt=
+fi
+
 # Set the prompt
 zstyle ':vcs_info:git*' formats "%r %b %m%{$fg[red]%}%u%{$fg[green]%}%c%{$prompt_default_color%}"
 
@@ -189,7 +197,7 @@ else
 fi
 PROMPT='
 
-%{$prompt_default_color%}%~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}%{$prompt_default_color%}
+%{$prompt_default_color%}%~ %* %{${fg[$prompt_user]}%}%n%{$prompt_default_color%}@%{${fg[$prompt_host]}%}%M%{$prompt_default_color%} ${vcs_info_msg_0_}%{$prompt_default_color%} ${kubeprompt}
 
 $ %{${fg[default]}%}'
 
