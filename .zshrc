@@ -307,13 +307,8 @@ export EDITOR=vim
 bindkey -e  # Override the viins line editor setting the previous line sets with the normal emacs-style line editor
 
 # Fix Ctrl-arrow keys
-if [ $OS = 'Darwin' ]; then
-    bindkey "^[[1;5C" forward-word
-    bindkey "^[[1;5D" backward-word
-else
-    bindkey '5C' emacs-forward-word
-    bindkey '5D' emacs-backward-word
-fi
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
 
 alias foodcritic="foodcritic -t '~FC001'"
 
