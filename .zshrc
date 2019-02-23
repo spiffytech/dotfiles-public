@@ -97,7 +97,8 @@ else
     alias hgrep='history | grep -iP'
 fi
 
-alias tmux='TERM=screen-256color tmux -2'
+# This breaks Windows WSL, ChromeOS terminal
+#alias tmux='TERM=screen-256color tmux -2'
 alias tmuxinator='TERM=xterm-256color tmuxinator'
 alias ag='ag --path-to-ignore ~/.agignore'
 alias rg='rg --smart-case'
