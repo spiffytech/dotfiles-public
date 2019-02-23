@@ -370,4 +370,4 @@ precmd() {
 # Set terminal colors _without_ relying on the terminal itself!
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-sh ~/.config/base16-shell/scripts/base16-harmonic16-dark.sh  # Enables this theme
+sh ~/.config/base16-shell/scripts/base16-harmonic-dark.sh  # Enables this theme
