@@ -213,3 +213,5 @@ set sessionoptions-=blank  " Don't save/restore Syntastic error panes when savin
 set foldmethod=syntax  " Attempt to fold code blocks
 "autocmd Syntax * normal zR
 
+" Highlight tabs in files
+set list
