@@ -131,7 +131,7 @@ function getinstances() {
 }
 function byname() {
     local name=$1
-    jq 'map(select(.Tags.Name // "" | test("'$name'"; "i")))'
+    jq 'map(select(.Tags.Name // "" | test("^'$name'$"; "i")))'
 }
 function bygroup () {
     local group=$1
@@ -155,6 +155,7 @@ function findinstances() {
     local name=$1
     local group=${2:-}
     byname $name | bygroup $group
+    byname $name
 }
 
 ##############
