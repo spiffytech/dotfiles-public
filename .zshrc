@@ -296,7 +296,7 @@ function tssh {
     for server in $@
     do
         tmux send-keys "ssh $server"
-        tmux send-keys "Enter"
+        #tmux send-keys "Enter"
         tmux select-layout tiled
         tmux split-window
     done
@@ -375,3 +375,19 @@ precmd() {
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 sh ~/.config/base16-shell/scripts/base16-harmonic-dark.sh  # Enables this theme
+
+# Makes watch work with shell aliases
+alias watch='watch '
+
+vault-readwrite() {
+    vault read -format json "$@" | jq -r '.data' > /tmp/data.json
+    vim /tmp/data.json
+    vault write "$@" @/tmp/data.json
+    vault rm /tmp/data.json
+}
+
+ssl-verify() {
+    HOST=$1
+    PORT=$2
+    openssl s_client -connect $HOST:$PORT -servername $HOST
+}
