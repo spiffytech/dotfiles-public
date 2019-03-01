@@ -1,7 +1,4 @@
 # This is Git's per-user configuration file.
-[user]
-name = Brian Cottingham
-email = spiffytech@gmail.com
 [merge]
 	conflictstyle = diff3
 [core]
