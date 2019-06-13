@@ -144,13 +144,17 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'Quramy/tsuquyomi'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'vim-misc'  " dependency of vim-session
-Plug 'xolox/vim-session'
+"Plug 'vim-misc'  " dependency of vim-session
+"Plug 'xolox/vim-session'
 Plug 'dag/vim-fish'
 Plug 'elzr/vim-json'
 Plug 'hashivim/vim-terraform'
 Plug 'posva/vim-vue'
 Plug 'chriskempson/base16-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
 call plug#end()
 
