@@ -383,11 +383,18 @@ vault-readwrite() {
     vault read -format json "$@" | jq -r '.data' > /tmp/data.json
     vim /tmp/data.json
     vault write "$@" @/tmp/data.json
-    vault rm /tmp/data.json
+    rm /tmp/data.json
 }
 
 ssl-verify() {
     HOST=$1
     PORT=$2
     openssl s_client -connect $HOST:$PORT -servername $HOST
+}
+
+ansible-make-role() {
+    mkdir $1 && cd $1
+    mkdir tasks handlers templates files defaults meta
+    echo "---" > {handlers,meta,tasks,defaults}/main.yml
+    cd ..
 }
