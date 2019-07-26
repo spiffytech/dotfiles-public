@@ -133,7 +133,7 @@ Plug 'fsharp/fsharpbinding', {
       \ 'do': 'make -C vim fsautocomplete',
       \}
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
-Plug 'scrooloose/syntastic'
+Plug 'vim-syntastic/syntastic'
 Plug 'altercation/solarized', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/solarized/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
 Plug 'tomasr/molokai', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/molokai/colors/molokai.vim ~/.vim/colors' }
 Plug 'tpope/vim-surround'
@@ -142,6 +142,7 @@ Plug 'sickill/vim-monokai'
 Plug 'leafgarland/typescript-vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'Quramy/tsuquyomi'
+Plug 'Quramy/tsuquyomi-vue'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
 "Plug 'vim-misc'  " dependency of vim-session
@@ -155,14 +156,31 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'branch': 'release/1.x',
+  \ 'for': [
+    \ 'javascript',
+    \ 'typescript',
+    \ 'css',
+    \ 'less',
+    \ 'scss',
+    \ 'json',
+    \ 'graphql',
+    \ 'markdown',
+    \ 'vue',
+    \ 'lua',
+    \ 'php',
+    \ 'python',
+    \ 'ruby',
+    \ 'html',
+    \ 'swift' ] }
 
 call plug#end()
 
 " Syntastic support for Tsuquyomi TypeScript errors
 let g:tsuquyomi_disable_quickfix = 1
-let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint'] " You shouldn't use 'tsc' checker.
-" Tsuquyomi tooltips
-autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
 
 " Syntastic support for ESLint
 let g:syntastic_javascript_checkers = ['eslint']
@@ -219,3 +237,12 @@ set foldmethod=syntax  " Attempt to fold code blocks
 
 " Highlight tabs in files
 set list
+
+" Enable syntastic/eslint
+let g:syntastic_javascript_checkers=['eslint']
+let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
+
+autocmd BufNewFile,BufRead *.vue set filetype=vue
+
+
+let g:tsuquyomi_use_local_typescript = 0
