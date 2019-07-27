@@ -127,27 +127,16 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'fsharp/fsharpbinding', {
-      \ 'for': 'fsharp',
-      \ 'rtp': 'vim',
-      \ 'do': 'make -C vim fsautocomplete',
-      \}
-"Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
+" Dependency of vim-session
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
 Plug 'vim-syntastic/syntastic'
-Plug 'altercation/solarized', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/solarized/vim-colors-solarized/colors/solarized.vim ~/.vim/colors' }
-Plug 'tomasr/molokai', { 'do': 'mkdir ~/.vim/colors; cp ~/.vim/plugged/molokai/colors/molokai.vim ~/.vim/colors' }
 Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
-Plug 'sickill/vim-monokai'
-Plug 'leafgarland/typescript-vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'Quramy/tsuquyomi'
 Plug 'Quramy/tsuquyomi-vue'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
-"Plug 'vim-misc'  " dependency of vim-session
-"Plug 'xolox/vim-session'
-Plug 'dag/vim-fish'
 Plug 'elzr/vim-json'
 Plug 'hashivim/vim-terraform'
 Plug 'posva/vim-vue'
@@ -175,6 +164,9 @@ Plug 'prettier/vim-prettier', {
     \ 'ruby',
     \ 'html',
     \ 'swift' ] }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'evanleck/vim-svelte'
 
 call plug#end()
 
@@ -217,7 +209,7 @@ endif
 
 
 let g:session_autosave_periodic = 1  " Vim session autosave frequency
-let g:session_autosave = 'no'  " Don't prompt to save session on quit
+let g:session_autosave = 'yes'  " Don't prompt to save session on quit
 
 let g:fsharp_xbuild_path = "/usr/bin/xbuild"
 
@@ -244,5 +236,12 @@ let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
 
 autocmd BufNewFile,BufRead *.vue set filetype=vue
 
-
 let g:tsuquyomi_use_local_typescript = 0
+
+" Enable RipGrep + FZF searching
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "!{.git,node_modules,vendor}/*" '
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+nnoremap <C-p> :Files<Cr>

@@ -398,3 +398,6 @@ ansible-make-role() {
     echo "---" > {handlers,meta,tasks,defaults}/main.yml
     cd ..
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'

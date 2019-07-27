@@ -110,3 +110,5 @@ function duf {
 
 source /etc/bash_completion
 fortune
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
