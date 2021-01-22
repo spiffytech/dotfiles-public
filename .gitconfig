@@ -24,4 +24,4 @@
 [rerere]
 	enabled = true
 [format]
-	pretty = %Cred%h%Creset %C(bold blue)<%<(15,trunc)%an> %Cgreen(%>>(14,trunc)%cr) %Creset %s%Creset%C(yellow)%d
+	pretty = %Cred%h%Creset %C(bold blue)<%<(16,trunc)%an> %Cgreen(%>>(14,trunc)%cr) %Creset %s%Creset%C(yellow)%d
