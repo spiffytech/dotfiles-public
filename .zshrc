@@ -84,6 +84,13 @@ else
     alias ls='ls --color=auto'
 fi
 
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gc='git commit -am'
+alias ga='git add'
+alias gl='git log'
+
 alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use my personal .zshrc and zsh scripts
 alias grep='grep --color="auto"'
 alias gcc='gcc -Wall -std=c99'
@@ -401,3 +408,6 @@ ansible-make-role() {
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+
+# Johnny Decimal tab completion
+CDPATH=$(find $HOME/Documents* -maxdepth 0 -type d -print0 | xargs -0 printf "%s:")
