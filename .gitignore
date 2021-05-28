@@ -10,3 +10,6 @@
 .emacs.d/recentf
 .emacs.d/session*
 bin/attic.sh
+.vim/sessions
+bin/fossil
+bin/hasura-completions.sh
