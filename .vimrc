@@ -151,6 +151,7 @@ Plug 'prettier/vim-prettier', {
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'evanleck/vim-svelte'
+Plug 'tpope/vim-sleuth'
 
 call plug#end()
 
