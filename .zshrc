@@ -99,6 +99,9 @@ gpt() {
 
 alias utc='TZ=utc date'
 
+alias fch="fossil changes"
+alias fex="fossil extra"
+
 alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use my personal .zshrc and zsh scripts
 alias grep='grep --color="auto"'
 alias gcc='gcc -Wall -std=c99'
@@ -195,12 +198,13 @@ if [ `echo $?` -ne 0 ]; then
 fi
 
 
-has_tmux=`hash kubectl 2>/dev/null`
-if [[ $? -eq 0 ]]; then
-    kubeprompt="($(kubectl config current-context))"
-else
-    kubeprompt=
-fi
+#has_tmux=`hash kubectl 2>/dev/null`
+#if [[ $? -eq 0 ]]; then
+#    kubeprompt="($(kubectl config current-context))"
+#else
+#    kubeprompt=
+#fi
+kubeprompt=
 
 # Set the prompt
 zstyle ':vcs_info:git*' formats "%r %b %m%{$fg[red]%}%u%{$fg[green]%}%c%{$prompt_default_color%}"
