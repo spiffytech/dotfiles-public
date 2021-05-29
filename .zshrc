@@ -90,8 +90,14 @@ alias gdc='git diff --cached'
 alias gc='git commit'
 alias ga='git add'
 alias gl='git log'
+alias gls='git log --stat'
 alias gp='git push'
 alias gpu='git pull'
+gpt() {
+    git push "$@" && git push --tags "$@"
+}
+
+alias utc='TZ=utc date'
 
 alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use my personal .zshrc and zsh scripts
 alias grep='grep --color="auto"'
