@@ -237,7 +237,6 @@ function vim {
     if [ $has_tmux -eq 0 ]; then
         filename=`echo ${@:-1} | awk -F'/' '{print $NF}' | cut -d '+' -f 1`  # We don't want the whole path to the file- just the filename. Also, remove Vim line number from filename
         filename=`echo $filename`  # Remove trailing whitespace
-        tmux rename-window $filename
     fi
 
     has_vimx=`hash vimx 2>/dev/null`
@@ -252,11 +251,6 @@ function vim {
         else
             $ZDOTDIR/bin/vim $@
         fi
-    fi
-
-    if [ $has_tmux -eq 0 ]; then
-        #tmux set-window-option automatic-rename on > /dev/null
-        tmux set-window-option automatic-rename on
     fi
 }
 
@@ -286,8 +280,6 @@ mssh() {
         #    host="ssh"
         #fi
         host=$1  # mssh doesn't take any parameters besides a host, so this should work
-
-        tmux rename-window $host
     fi
 
     remote_ssh_config_dir=/tmp/tmp_ssh_config_`hostname`
@@ -299,10 +291,6 @@ mssh() {
         ssh $proxy_host rm -rf $remote_ssh_config_dir
     else
         ssh $@
-    fi
-
-    if [ $has_tmux -eq 0 ]; then
-        tmux set automatic-rename on > /dev/null
     fi
 }
 
