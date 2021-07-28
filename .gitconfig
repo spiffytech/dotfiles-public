@@ -9,11 +9,11 @@
 [diff]
 	compactionHeuristic = true
 [pager]
-	log = git-diff-highlight | less
-	show = git-diff-highlight | less
-	diff = git-diff-highlight | less
+	log = delta
+	show = delta
+	diff = delta
 [interactive]
-	diffFilter = git-diff-highlight
+	diffFilter = delta --color-only
 [log]
 	decorate = auto
 	abbrevCommit = true
