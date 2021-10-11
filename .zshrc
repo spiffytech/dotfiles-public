@@ -106,6 +106,8 @@ alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use m
 alias grep='grep --color="auto"'
 alias gcc='gcc -Wall -std=c99'
 
+alias btop='btop -lc'
+
 alias versionsort='sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n'
 
 # Always do PCRE grep, except on Mac (BSD grep doesn't have that)
