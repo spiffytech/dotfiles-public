@@ -90,8 +90,17 @@ alias gdc='git diff --cached'
 alias gc='git commit'
 alias ga='git add'
 alias gl='git log'
+alias gls='git log --stat'
 alias gp='git push'
 alias gpu='git pull'
+gpt() {
+    git push "$@" && git push --tags "$@"
+}
+
+alias utc='TZ=utc date'
+
+alias fch="fossil changes"
+alias fex="fossil extra"
 
 alias fch="fossil changes"
 alias fex="fossil extra"
@@ -99,6 +108,8 @@ alias fex="fossil extra"
 alias s='sudo su -c "/usr/bin/env ZDOTDIR=$HOME zsh"'  # Makes root logins use my personal .zshrc and zsh scripts
 alias grep='grep --color="auto"'
 alias gcc='gcc -Wall -std=c99'
+
+alias btop='btop -lc'
 
 alias versionsort='sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n'
 
@@ -113,7 +124,7 @@ fi
 #alias tmux='TERM=screen-256color tmux -2'
 alias tmuxinator='TERM=xterm-256color tmuxinator'
 alias ag='ag --path-to-ignore ~/.agignore'
-alias rg='rg --smart-case'
+alias rg='rg --smart-case --ignore-file=$HOME/.rgignore'
 
 # Location aliases
 alias -g L=" | less"
@@ -231,7 +242,6 @@ function vim {
     if [ $has_tmux -eq 0 ]; then
         filename=`echo ${@:-1} | awk -F'/' '{print $NF}' | cut -d '+' -f 1`  # We don't want the whole path to the file- just the filename. Also, remove Vim line number from filename
         filename=`echo $filename`  # Remove trailing whitespace
-        tmux rename-window $filename
     fi
 
     has_vimx=`hash vimx 2>/dev/null`
@@ -246,11 +256,6 @@ function vim {
         else
             $ZDOTDIR/bin/vim $@
         fi
-    fi
-
-    if [ $has_tmux -eq 0 ]; then
-        #tmux set-window-option automatic-rename on > /dev/null
-        tmux set-window-option automatic-rename on
     fi
 }
 
@@ -280,8 +285,6 @@ mssh() {
         #    host="ssh"
         #fi
         host=$1  # mssh doesn't take any parameters besides a host, so this should work
-
-        tmux rename-window $host
     fi
 
     remote_ssh_config_dir=/tmp/tmp_ssh_config_`hostname`
@@ -293,10 +296,6 @@ mssh() {
         ssh $proxy_host rm -rf $remote_ssh_config_dir
     else
         ssh $@
-    fi
-
-    if [ $has_tmux -eq 0 ]; then
-        tmux set automatic-rename on > /dev/null
     fi
 }
 
