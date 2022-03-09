@@ -71,7 +71,7 @@ fi
 OS=`uname`
 
 # Paths and files
-PATH=$PATH:/sbin/:/usr/sbin:$HOME/bin
+PATH=$HOME/bin:$PATH:/sbin/:/usr/sbin
 
 # Aliases
 # Command aliases
